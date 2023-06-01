@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-johndeerecostofharve-staging-195455-authRole",
+      "UnauthRoleArn": "arn:aws:iam::406488761048:role/amplify-johndeerecostofharve-staging-195455-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::406488761048:role/amplify-johndeerecostofharve-staging-195455-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-johndeerecostofharve-staging-195455-deployment",
+      "UnauthRoleName": "amplify-johndeerecostofharve-staging-195455-unauthRole",
+      "StackName": "amplify-johndeerecostofharve-staging-195455",
+      "StackId": "arn:aws:cloudformation:us-east-1:406488761048:stack/amplify-johndeerecostofharve-staging-195455/d4087a40-8d32-11ed-8cd9-0e66ffc61147",
+      "AmplifyAppId": "d1vytid7tu4h7z"
+    },
+    "categories": {
+      "auth": {
+        "JohnDeereCostOfHarvestApp": {}
+      }
+    }
+  }
+}
