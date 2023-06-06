@@ -1,0 +1,12 @@
+.NavBar {
+    background-color: #5e775a;
+    color: white;
+}
+
+.NavMenu {
+    background-color: #1b178e;
+    flex-direction: column;
+    color: white;
+    width: 30%;
+    visibility:hidden;
+}
