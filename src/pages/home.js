@@ -1,12 +1,12 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import Header from "../components/header";
 
 const Home = () => {
   return (
     <div>
-        <h1>Home</h1>
-   
-    <Link to="/signup">
+      <Header title="Home"></Header>
+      {/* <Link to="/signup">
         <button>Create a new account</button>
     </Link>
     <Link to="/login">
@@ -17,9 +17,9 @@ const Home = () => {
     </Link>
     <Link to="/simulate">
         <button>Simulate</button>
-    </Link>
-      </div>
+    </Link> */}
+    </div>
   );
 };
-  
+
 export default Home;
