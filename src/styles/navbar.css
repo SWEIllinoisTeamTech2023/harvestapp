@@ -4,9 +4,27 @@
 }
 
 .NavMenu {
-    background-color: #1b178e;
+    background-color: #5e775a;
     flex-direction: column;
+    display: flex;
     color: white;
-    width: 30%;
-    visibility:hidden;
+    width: 0%;
+    height:100%;
+    position:fixed;
+    top:75px;
+    left:0px;
+    z-index: 1;
+    visibility: hidden;
+    padding-top:5%;
+    margin-left: 0%;
+
+
+}
+
+.MenuLogo {
+    margin-left: 0%;
+    position:fixed;
+    top:35px;
+    left:15px;
+    z-index: 1;
 }

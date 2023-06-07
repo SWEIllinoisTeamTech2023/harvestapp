@@ -1,40 +1,54 @@
 import React from "react";
 import Hamburger from "hamburger-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import "../styles/navbar.css";
 
 function Navbar() {
-  const [isOpen, setOpen] = useState(false);
+  //   const [isOpen, setOpen] = useState(false);
+
   return (
-    <div className="NavBar" id="NavBar1">
-      <Hamburger
-        onToggle={(toggled) => {
-          if (toggled) {
-            document.getElementById("NavMenu").style.visibility = "visible";
-            console.log("open");
-            // openMenu();
-          } else {
-            document.getElementById("NavMenu").style.visibility = "hidden";
-            console.log("closed");
-            // closeMenu();
-          }
-        }}
-      />
-      <section className="NavMenu" id="NavMenu"></section>
+    <div className="NavBar" id="NavBar">
+      <div className="MenuLogo" id="MenuLogo">
+        <Hamburger
+          onToggle={(toggled) => {
+            if (toggled) {
+              openMenu();
+            } else {
+              closeMenu();
+            }
+          }}
+        />
+      </div>
+      <div className="NavMenu" id="NavMenu">
+        <Link to="/signup">
+          <button>Create a new account</button>
+        </Link>
+        <Link to="/login">
+          <button>Login</button>
+        </Link>
+        <Link to="/inputdata">
+          <button>Input Data</button>
+        </Link>
+        <Link to="/simulate">
+          <button>Simulate</button>
+        </Link>
+      </div>
     </div>
   );
 }
 
 function openMenu() {
-  console.log("hi");
+  document.getElementById("NavMenu").style.visibility = "visible";
+  document.getElementById("NavMenu").style.width = "15%";
+  document.getElementById("MenuLogo").style.marginLeft = "10%";
 }
 
 function closeMenu() {
-  console.log("bye");
-  return (
-    <div>
-      <h1>close</h1>
-    </div>
-  );
+  document.getElementById("NavMenu").style.visibility = "hidden";
+  document.getElementById("NavMenu").style.width = "15%";
+  document.getElementById("Home").style.marginLeft = "0%";
+  document.getElementById("MenuLogo").style.marginLeft = "0%";
 }
 
 export default Navbar;
