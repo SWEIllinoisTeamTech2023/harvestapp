@@ -22,16 +22,16 @@ function Navbar() {
       </div>
       <div className="NavMenu" id="NavMenu">
         <Link to="/signup">
-          <button>Create a new account</button>
+          <button className="NavButton">Create a new account</button>
         </Link>
         <Link to="/login">
-          <button>Login</button>
+          <button className="NavButton">Login</button>
         </Link>
         <Link to="/inputdata">
-          <button>Input Data</button>
+          <button className="NavButton">Input Data</button>
         </Link>
         <Link to="/simulate">
-          <button>Simulate</button>
+          <button className="NavButton">Simulate</button>
         </Link>
       </div>
     </div>

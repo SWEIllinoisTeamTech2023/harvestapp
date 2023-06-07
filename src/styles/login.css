@@ -1,0 +1,107 @@
+.LoginTitle {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+  
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #fff;
+    
+}
+
+.LoginHeader {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    justify-content:end;
+    margin-top:2%;
+    padding-right:5%;
+    color: #fff;
+}
+
+.LoginLayout {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-top: 10vh;
+    text-align: center;
+}
+.LoginForm {
+    display: -ms-grid;
+    display: grid;
+    margin: 40px;
+    width: 433px;
+    @media (max-width: 550px) {
+        width: 95%;
+    }
+}
+
+.icon {
+    position: absolute;
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+  .input {
+    border-radius: 10px;
+    height: 50px;
+    background: none;
+    width: -webkit-fill-available;
+    border: 1px solid #fff;
+    margin-top: 20px;
+    padding-left: 75px;
+    
+  }
+
+  input.input::placeholder {
+    color:#fff;
+    font-weight: 600;
+  }
+
+  .loginButton {
+    border-radius: 10px;
+    height: 50px;
+    background: none;
+    width: -webkit-fill-available;
+    border: 2px solid #20582a;
+    margin-top: 50px;
+    font-size: medium;
+    color: #20582a;
+    cursor: pointer;
+    &:active {
+      opacity: 50%;
+    }
+    &:hover {
+        color: #cbd2cc;
+        border: 2px solid #cbd2cc;
+    }
+  }
+
+  .createAccountButton {
+    background: none;
+    border: none;
+    width: -webkit-fill-available;
+    margin-top: 20px;
+    font-size: medium;
+    color: #cbd2cc;
+    cursor: pointer;
+    &:active {
+      opacity: 50%;
+    }
+    &:hover {
+        color: #cbd2cc;
+        /* border: 2px solid #cbd2cc; */
+    }
+  }
