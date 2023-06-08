@@ -11,19 +11,19 @@ app = Flask(__name__)
 rdsData = boto3.client('rds-data')
 
 # Request made when user clicks on compute cost of harvest
-@app.route('/storeInputs', methods=['GET'])
+@app.route('/storeInputs', methods=['POST'])
 def storeInputs():
-    # data = request.get_json()  # Get the JSON data from the request
-    data = {"machine_type":"X", "header_width":"12", "yield":200, "crop_type":"corn"} # Testing purposes
+    data = request.get_json()  # Get the JSON data from the request
+    # data = {"machine_type":data[], "header_width":"12", "yield":200, "crop_type":"corn"} # Testing purposes
     response = rdsData.execute_statement(
         resourceArn = CLUSTER_ARN,
         secretArn = SECRET_ARN,
         database = 'harvest',
-        sql = 'INSERT INTO harvest.Inputs (machine_type, header_width, yield, crop_type) VALUES ("{}", {}, {}, "{}")'.format(data["machine_type"], data["header_width"],data["yield"],data["crop_type"]))
+        sql = 'INSERT INTO harvest.Inputs (machine_type, header_width, yield, crop_type, trade_cost) VALUES ("{}", {}, {}, "{}",{})'.format(data["machine_type"], data["header_width"],data["yield"],data["crop_type"],data["trade_cost"]))
 
     # Call API and store API results into APIPrice Table
-    fuel_price = getFuelPrice()
-    crop_price = getCropPrice(data['crop_type'])
+    # fuel_price = getFuelPrice()
+    # crop_price = getCropPrice(data['crop_type'])
 
     # TODO: Run model with inputs
 
@@ -67,4 +67,4 @@ def storeOutputs():
         sql = 'INSERT INTO harvest.Outputs (fan_speed, rotor_speed, concave_clearance, speed, chaffer_clearance, sieve_clearance, optimized_cost_of_harvest, id) VALUES ({},{},{},{},{},{},{},{})'.format(data["fan_speed"], data["rotor_speed"],data["concave_clearance"],data["speed"], data["chaffer_clearance"], data["sieve_clearance"],data["optimized_cost_of_harvest"], data["id"]))
     
 if __name__ == '__main__':
-    app.run()
+    app.run(host='localhost', port=3000)
