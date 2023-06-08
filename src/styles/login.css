@@ -90,6 +90,26 @@
     }
   }
 
+  .forgotpasswordbutton {
+    background: none;
+    border: none;
+    display: flex;
+    width: -webkit-fill-available;
+    margin-top: 10px;
+    font-size: small;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    &:active {
+      opacity: 50%;
+    }
+  }
+
+.modal-modal-title {
+    color:green;
+    font-size: xx-large;
+
+}
   /* .createAccountButton {
     background: none;
     border: none;

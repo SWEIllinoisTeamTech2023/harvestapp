@@ -19,6 +19,7 @@ function App() {
           {/* <Route exact path="/signup" element={<CreateAccount />} /> */}
           <Route exact path="/inputdata" element={<InputData />} />
           <Route exact path="/simulate" element={<Simulate />} />
+          {/* <Route exact path="/forgotpassword" element={<Simulate />} /> */}
         </Routes>
       </Router>
     </div>
