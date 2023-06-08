@@ -1,4 +1,4 @@
-.LoginTitle {
+.CreateAccountTitle {
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -13,7 +13,7 @@
     
 }
 
-.LoginHeader {
+.CreateAccountHeader {
     box-sizing: border-box;
     width: 100%;
     display: flex;
@@ -23,7 +23,7 @@
     color: #fff;
 }
 
-.LoginLayout {
+.CreateAccountLayout {
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -38,7 +38,7 @@
     margin-top: 10vh;
     text-align: center;
 }
-.LoginForm {
+.CreateAccountForm {
     display: -ms-grid;
     display: grid;
     margin: 40px;
@@ -71,7 +71,7 @@
     font-weight: 600;
   }
 
-  .loginButton {
+  .createAccountButton {
     border-radius: 10px;
     height: 50px;
     background: none;
@@ -90,7 +90,7 @@
     }
   }
 
-  /* .createAccountButton {
+  .loginButton {
     background: none;
     border: none;
     width: -webkit-fill-available;
@@ -103,6 +103,6 @@
     }
     &:hover {
         color: #cbd2cc;
+        /* border: 2px solid #cbd2cc; */
     }
   }
-   */

@@ -1,7 +1,8 @@
 import { useRef, useEffect, useContext } from "react";
-import "../styles/login.css";
+import "../styles/createaccount.css";
 import logo from "../images/logo.png";
-import { useNavigate } from "react-router-dom";
+import { Route, useNavigate } from "react-router-dom";
+import login from "./login";
 
 // import classes from "./LoginForm.module.scss";
 import usernameIcon from "../images/akar-icons_person.svg";
@@ -10,11 +11,10 @@ import passwordIcon from "../images/carbon_password.svg";
 
 let isInitial = true;
 
-function LoginForm() {
+function CreateAccountForm() {
   let navigate = useNavigate();
   const routeChange = () => {
-    let path = "/";
-    //CHANGE PATH
+    let path = "/login";
     navigate(path);
   };
   //   const validUserContext = useContext(ValidUserContext);
@@ -40,16 +40,13 @@ function LoginForm() {
 
   return (
     <div>
-      <div className="LoginHeader">
+      <div className="CreateAccountHeader">
         <img src={logo} width={100} height={100} alt="Logo"></img>
       </div>
-      <div className="LoginLayout">
-        <form className="LoginForm">
+      <div className="CreateAccountLayout">
+        <form className="CreateAccountForm">
           <div>
-            <title className="LoginTitle">Login</title>
-            {/* <div style={{ color: "white" }}>
-              Please enter your email and password
-            </div> */}
+            <title className="CreateAccountTitle">Sign Up</title>
           </div>
           <div>
             <img
@@ -88,18 +85,36 @@ function LoginForm() {
               //   required={!validUserContext.isLoggedIn}
             ></input>
           </div>
+          <div>
+            <img
+              className="icon"
+              src={passwordIcon}
+              alt="Password icon"
+              htmlFor="user-password"
+            ></img>
+            <input
+              className="input"
+              type="password"
+              id="user-password"
+              name="user-password"
+              autoComplete="off"
+              placeholder="Confirm Password"
+              ref={passwordInputRef}
+              //   required={!validUserContext.isLoggedIn}
+            ></input>
+          </div>
           <button
             className="createAccountButton"
             // disabled={validUserContext.isLoggedIn}
           >
-            Login
+            Create Account
           </button>
           <button
             className="loginButton"
-            onClick={routeChange}
             // disabled={validUserContext.isLoggedIn}
+            onClick={routeChange}
           >
-            Don't have an account? Create one
+            Already have an account? Login
           </button>
         </form>
       </div>
@@ -107,4 +122,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default CreateAccountForm;

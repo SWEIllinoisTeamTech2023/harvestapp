@@ -1,6 +1,7 @@
 import "./App.css";
 import Home from "./pages/home";
 import Login from "./pages/login";
+import CreateAccount from "./pages/createAccount";
 import SignUp from "./pages/signup";
 import InputData from "./pages/inputData";
 import Simulate from "./pages/simulate";
@@ -12,9 +13,10 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route exact path="/" element={<Login />} />
+          <Route exact path="/" element={<CreateAccount />} />
+          {/* <Route exact path="/" element={<Home />} /> */}
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/signup" element={<SignUp />} />
+          {/* <Route exact path="/signup" element={<CreateAccount />} /> */}
           <Route exact path="/inputdata" element={<InputData />} />
           <Route exact path="/simulate" element={<Simulate />} />
         </Routes>
