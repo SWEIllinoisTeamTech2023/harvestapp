@@ -67,4 +67,4 @@ def storeOutputs():
         sql = 'INSERT INTO harvest.Outputs (fan_speed, rotor_speed, concave_clearance, speed, chaffer_clearance, sieve_clearance, optimized_cost_of_harvest, id) VALUES ({},{},{},{},{},{},{},{})'.format(data["fan_speed"], data["rotor_speed"],data["concave_clearance"],data["speed"], data["chaffer_clearance"], data["sieve_clearance"],data["optimized_cost_of_harvest"], data["id"]))
     
 if __name__ == '__main__':
-    app.run(host='localhost', port=3000)
+    app.run(host='localhost', port=5000)
