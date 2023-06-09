@@ -3,6 +3,7 @@ import "../styles/createaccount.css";
 import logo from "../images/logo.png";
 import { Route, useNavigate } from "react-router-dom";
 import login from "./login";
+import { Amplify, Auth } from "aws-amplify";
 
 // import classes from "./LoginForm.module.scss";
 import usernameIcon from "../images/akar-icons_person.svg";
@@ -22,21 +23,21 @@ function CreateAccountForm() {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
-  //   useEffect(() => {
-  //     if (isInitial) {
-  //       validUserContext.localAuthCheck();
-  //       isInitial = false;
-  //     }
-  //   }, [validUserContext]);
-
-  //   const submitHandler = (event) => {
-  //     event.preventDefault();
-
-  //     validUserContext.apiAuthCheck(
-  //       emailInputRef.current.value,
-  //       passwordInputRef.current.value
-  //     );
-  //   };
+  async function signUp() {
+    try {
+      const { user } = await Auth.signUp({
+        emailInputRef,
+        passwordInputRef,
+        autoSignIn: {
+          // optional - enables auto sign in after user is confirmed
+          enabled: true,
+        },
+      });
+      console.log(user);
+    } catch (error) {
+      console.log("error signing up:", error);
+    }
+  }
 
   return (
     <div>
@@ -105,6 +106,7 @@ function CreateAccountForm() {
           </div>
           <button
             className="createAccountButton"
+            onClick={signUp}
             // disabled={validUserContext.isLoggedIn}
           >
             Create Account
