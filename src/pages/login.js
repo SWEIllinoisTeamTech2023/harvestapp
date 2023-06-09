@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import Input from "@mui/material/Input";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { white } from "@mui/material/colors";
 
@@ -56,6 +57,7 @@ function LoginForm() {
     border: "2px solid #000",
     borderRadius: 10,
     p: 4,
+    justifyContent: "center",
   };
 
   const theme = createTheme({
@@ -143,6 +145,7 @@ function LoginForm() {
                     className="modal-modal-title"
                     variant="h6"
                     component="h2"
+                    sx={{ fontWeight: "bold", fontSize: "30px" }}
                   >
                     Forgot Password
                   </Typography>
@@ -154,9 +157,10 @@ function LoginForm() {
                     Enter your email to recieve link
                   </Typography>
                   <TextField
-                    id="outlined-basic"
-                    label="Outlined"
-                    variant="outlined"
+                    sx={{ marginTop: "2%", width: "75%" }}
+                    id="outlined"
+                    label="Email"
+                    variant="filled"
                   />
                 </ThemeProvider>
               </Box>
