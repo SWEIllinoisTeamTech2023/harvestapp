@@ -7,19 +7,20 @@ import InputData from "./pages/inputData";
 import Simulate from "./pages/simulate";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import { Amplify, Auth } from "aws-amplify";
+// import awsconfig from "../amplify/backend/";
 
 function App() {
+  // Amplify.configure(awsconfig);
   return (
     <div className="App">
       <Router>
         <Routes>
-          {/* <Route exact path="/" element={<CreateAccount />} /> */}
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/login" element={<Login />} />
-          {/* <Route exact path="/signup" element={<CreateAccount />} /> */}
+          {/* <Route exact path="/login" element={<Login />} />
+          <Route exact path="/signup" element={<CreateAccount />} />
           <Route exact path="/inputdata" element={<InputData />} />
-          <Route exact path="/simulate" element={<Simulate />} />
-          {/* <Route exact path="/forgotpassword" element={<Simulate />} /> */}
+          <Route exact path="/simulate" element={<Simulate />} /> */}
         </Routes>
       </Router>
     </div>

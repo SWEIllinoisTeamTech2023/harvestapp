@@ -1,5 +1,4 @@
 import Modal from "@mui/material/Modal";
-// import Modal from "react-modal";
 import { useRef } from "react";
 import * as React from "react";
 import "../styles/login.css";
@@ -22,10 +21,8 @@ function LoginForm() {
   let navigate = useNavigate();
   const routeChange = () => {
     let path = "/";
-    //CHANGE PATH
     navigate(path);
   };
-  //   const validUserContext = useContext(ValidUserContext);
 
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
