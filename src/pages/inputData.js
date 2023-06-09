@@ -1,15 +1,18 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const AddData = () => {
 
-  const [yieldValue, setYieldValue] = useState(0);
+  const navigate = useNavigate();
+
+  const [yieldValue, setYieldValue] = useState();
   const [cropTypeValue, setCropTypeValue] = useState('');
   const [machineTypeValue, setMachineTypeValue] = useState('');
-  const [headerWidthValue, setHeaderWidthValue] = useState(0);
-  const [tradeCostValue, setTradeCostValue] = useState(0);  
+  const [headerWidthValue, setHeaderWidthValue] = useState();
+  const [tradeCostValue, setTradeCostValue] = useState();  
 
   const handleYieldChange = (event) => {
     const value = parseFloat(event.target.value);
@@ -47,6 +50,7 @@ const AddData = () => {
     setMachineTypeValue('');
     setHeaderWidthValue(0);
     setTradeCostValue(0);
+    navigate('/simulate');
 
     const param = {machine_type: machineTypeValue, header_width: headerWidthValue, yield: yieldValue, crop_type: cropTypeValue, trade_cost: tradeCostValue};
     fetch('/storeInputs', {
@@ -71,35 +75,37 @@ const AddData = () => {
     <h1>Input data here</h1>
     <form onSubmit={handleSubmit}>
     <div>
-      <label> Crop Yield: 
-        <input type="number" value={yieldValue} onChange={handleYieldChange} />
-      </label>
+        <input type="number" value={yieldValue} onChange={handleYieldChange} placeholder='Enter Crop Yield' min="0" style={{width: '200px'}}/>
     </div>
     <div>
-      <label> Crop Type: 
-        <input type="text" value={cropTypeValue} onChange={handleCropTypeChange} />
-      </label>
+      <select id="cropTypeDropdown" value={cropTypeValue} onChange={handleCropTypeChange}  style={{width: '200px'}}>
+        <option value="">Choose Crop Type</option>
+        <option value="corn">Corn</option>
+        <option value="wheat">Wheat</option>
+        <option value="soy">Soy</option>
+        <option value="canola">Canola</option>
+        <option value="barley">Barley</option>
+      </select>
     </div>
     <div>
-      <label> Machine Type: 
-        <input type="text" value={machineTypeValue} onChange={handleMachineTypeChange} />
-      </label>
+      <select id="machineTypeDropdown" value={machineTypeValue} onChange={handleMachineTypeChange} style={{width: '200px'}}>
+        <option value="">Choose Machine Type</option>
+        <option value="X">X-series</option>
+        <option value="S">S-series</option>
+      </select>
+      
     </div>
     <div>
-      <label> Header Width: 
-        <input type="number" value={headerWidthValue} onChange={handleHeaderWidthChange} />
-      </label>
+      <input type="number" value={headerWidthValue} onChange={handleHeaderWidthChange} min="0" placeholder='Enter Header Width (unit)'  style={{width: '200px'}} />
     </div>
     <div>
-      <label> Trade Cost: 
-        <input type="number" value={tradeCostValue} onChange={handleTradeCostChange} />
-      </label>
+      <input type="number" value={tradeCostValue} onChange={handleTradeCostChange} min="0" placeholder='Enter Trade Cost ($)'  style={{width: '200px'}} />
     </div>
-    <button type="submit">Calculate Cost of Harvest</button>
+    <button type="submit" style={{marginTop: '30px', height: '40px'}} >Calculate Cost of Harvest</button>
     </form>
     
     <Link to="/">
-        <button>Home</button>
+        <button style={{marginTop: '30px'}} >Home </button>
     </Link>
     </div>
   );
