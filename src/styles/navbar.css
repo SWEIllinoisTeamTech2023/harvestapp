@@ -31,16 +31,25 @@
 }
 
 .NavButton {
-    padding: 8px 8px 8px 32px;
-    margin-bottom: 15%;
-  text-decoration: none;
-  font-size: 25px;
-  background-color: #5e775a;
-  display: block;
-  transition: 0.3s;
-  border: none;
+    padding-top:15px;
+    padding-bottom:15px;
+    margin-bottom: 30%;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 20px;
+    background-color: #5e775a;
+    display: block;
+    transition: 0.3s;
+    border-width: 2px;
+    border-radius: 10px;
+    border: 2px solid #8d8c8c;
+    color:white;
+    margin-left:10%;
+    margin-right:10%;
+    justify-content:"center";
+    &:hover {
+        color: #cbd2cc;
+        border: 2px solid #cbd2cc;
+    }
+
 }
-/* 
-.NavButton hover {
-    color: #f1f1f1;
-} */

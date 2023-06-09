@@ -21,18 +21,11 @@ function Navbar() {
         />
       </div>
       <div className="NavMenu" id="NavMenu">
-        <Link to="/signup">
-          <button className="NavButton">Create a new account</button>
-        </Link>
-        <Link to="/login">
-          <button className="NavButton">Login</button>
-        </Link>
-        <Link to="/inputdata">
-          <button className="NavButton">Input Data</button>
-        </Link>
-        <Link to="/simulate">
-          <button className="NavButton">Simulate</button>
-        </Link>
+        <button className="NavButton" style={{ marginTop: "15%" }}>
+          Input
+        </button>
+        <button className="NavButton">Simulate</button>
+        <button className="NavButton">View Saved Simulations</button>
       </div>
     </div>
   );
