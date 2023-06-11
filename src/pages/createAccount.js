@@ -1,43 +1,97 @@
-import { useRef, useEffect, useContext } from "react";
-import "../styles/createaccount.css";
-import logo from "../images/logo.png";
+import { useRef, useState, useEffect, useContext } from "react";
 import { Route, useNavigate } from "react-router-dom";
-import login from "./login";
 import { Amplify, Auth } from "aws-amplify";
+import awsconfig from "../aws-exports";
 
-// import classes from "./LoginForm.module.scss";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+
 import usernameIcon from "../images/akar-icons_person.svg";
 import passwordIcon from "../images/carbon_password.svg";
-// import ValidUserContext from "../authCheck";
-
-let isInitial = true;
+import logo from "../images/logo.png";
+import "../styles/createaccount.css";
+import { Dialog, Snackbar } from "@mui/material";
 
 function CreateAccountForm() {
+  Amplify.configure(awsconfig);
   let navigate = useNavigate();
   const routeChange = () => {
     let path = "/login";
     navigate(path);
   };
-  //   const validUserContext = useContext(ValidUserContext);
 
-  const emailInputRef = useRef();
-  const passwordInputRef = useRef();
+  const routeChangeHome = () => {
+    let path = "/home";
+    navigate(path);
+  };
 
-  async function signUp() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [user, setUser] = useState("");
+  const [openError, setOpenError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
+  };
+
+  const showError = (error) => {
+    setOpenError(true);
+    if (
+      error ===
+      "InvalidPasswordException: Password did not conform with policy: Password not long enough"
+    ) {
+      setErrorMessage("Password needs to be at least 8 characters");
+    } else if (
+      error === "InvalidParameterException: Invalid email address format."
+    ) {
+      setErrorMessage("Please enter a valid email");
+    } else if (
+      error ===
+      "UsernameExistsException: An account with the given email already exists."
+    ) {
+      setErrorMessage(
+        "An account with this email already exists. Please use another"
+      );
+    } else if (error === "AuthError: Password cannot be empty") {
+      setErrorMessage("Password is empty, please enter a password");
+    } else if (error === "AuthError: Username cannot be empty") {
+      setErrorMessage("Email is empty, please enter an email");
+    }
+  };
+
+  const signup = async () => {
+    console.log("BUTT");
+    if (password !== confirmPassword) {
+      setErrorMessage("Password needs to match");
+      console.log(password, confirmPassword);
+      setOpenError(true);
+    }
     try {
-      const { user } = await Auth.signUp({
-        emailInputRef,
-        passwordInputRef,
-        autoSignIn: {
-          // optional - enables auto sign in after user is confirmed
-          enabled: true,
+      console.log(email, password);
+      const username = email;
+      const { localUser } = await Auth.signUp({
+        username,
+        password,
+        attributes: {
+          email: email,
         },
       });
-      console.log(user);
+      console.log(localUser);
+      setUser(localUser);
+      routeChangeHome();
     } catch (error) {
       console.log("error signing up:", error);
+      showError(error);
     }
-  }
+  };
 
   return (
     <div>
@@ -63,7 +117,8 @@ function CreateAccountForm() {
               name="user-name"
               autoComplete="on"
               placeholder="E-mail"
-              ref={emailInputRef}
+              onChange={handleEmailChange}
+              ref={email.useRef}
               //   required={!validUserContext.isLoggedIn}
             ></input>
           </div>
@@ -82,7 +137,8 @@ function CreateAccountForm() {
               name="user-password"
               autoComplete="off"
               placeholder="Password"
-              ref={passwordInputRef}
+              onChange={handlePasswordChange}
+              ref={password.useRef}
               //   required={!validUserContext.isLoggedIn}
             ></input>
           </div>
@@ -96,17 +152,19 @@ function CreateAccountForm() {
             <input
               className="input"
               type="password"
-              id="user-password"
-              name="user-password"
+              id="user-password-confirm"
+              name="user-password-confirm"
               autoComplete="off"
               placeholder="Confirm Password"
-              ref={passwordInputRef}
+              onChange={handleConfirmPasswordChange}
+              ref={confirmPassword.useRef}
               //   required={!validUserContext.isLoggedIn}
             ></input>
           </div>
           <button
             className="createAccountButton"
-            onClick={signUp}
+            onClick={signup}
+            type="button"
             // disabled={validUserContext.isLoggedIn}
           >
             Create Account
@@ -115,10 +173,22 @@ function CreateAccountForm() {
             className="loginButton"
             // disabled={validUserContext.isLoggedIn}
             onClick={routeChange}
+            type="button"
           >
             Already have an account? Login
           </button>
         </form>
+        <Snackbar open={openError} autoHideDuration={6000}>
+          <Alert
+            severity="error"
+            onClose={() => {
+              setOpenError(false);
+            }}
+          >
+            <AlertTitle>Error</AlertTitle>
+            {errorMessage}
+          </Alert>
+        </Snackbar>
       </div>
     </div>
   );

@@ -106,3 +106,10 @@
         /* border: 2px solid #cbd2cc; */
     }
   }
+
+  .errorAlert {
+    top:10px;
+    left:10px;
+    position: fixed;
+    z-index: 1;
+  }
