@@ -1,11 +1,12 @@
 import React from "react";
 import Hamburger from "hamburger-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/navbar.css";
 
 function Navbar() {
   //   const [isOpen, setOpen] = useState(false);
+  let navigate = useNavigate();
 
   return (
     <div className="NavBar" id="NavBar">
@@ -21,7 +22,15 @@ function Navbar() {
         />
       </div>
       <div className="NavMenu" id="NavMenu">
-        <button className="NavButton" style={{ marginTop: "15%" }}>
+        <button
+          className="NavButton"
+          type="button"
+          onClick={() => {
+            let path = "/input";
+            navigate(path);
+          }}
+          style={{ marginTop: "15%" }}
+        >
           Input
         </button>
         <button className="NavButton">Simulate</button>
@@ -40,7 +49,7 @@ function openMenu() {
 function closeMenu() {
   document.getElementById("NavMenu").style.visibility = "hidden";
   document.getElementById("NavMenu").style.width = "15%";
-  document.getElementById("Home").style.marginLeft = "0%";
+  // document.getElementById("Home").style.marginLeft = "0%";
   document.getElementById("MenuLogo").style.marginLeft = "0%";
 }
 
