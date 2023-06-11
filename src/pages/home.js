@@ -4,7 +4,8 @@ import Header from "../components/header";
 import "../styles/home.css";
 import Navbar from "../components/navbar";
 
-const Home = () => {
+const Home = ({ route }) => {
+  console.log("this is uuse in home: ", route.params.user);
   return (
     <div className="Home" id="Home">
       <Header title="Home"></Header>

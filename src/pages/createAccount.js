@@ -10,14 +10,23 @@ import usernameIcon from "../images/akar-icons_person.svg";
 import passwordIcon from "../images/carbon_password.svg";
 import logo from "../images/logo.png";
 import "../styles/createaccount.css";
-import { Dialog, Snackbar } from "@mui/material";
+import {
+  Dialog,
+  Snackbar,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  DialogActions,
+  Button,
+} from "@mui/material";
 
 function CreateAccountForm() {
   Amplify.configure(awsconfig);
   let navigate = useNavigate();
   const routeChange = () => {
     let path = "/login";
-    navigate(path);
+    navigate(path, { user: user });
   };
 
   const routeChangeHome = () => {
@@ -31,6 +40,8 @@ function CreateAccountForm() {
   const [user, setUser] = useState("");
   const [openError, setOpenError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [openConfirmDialog, setConfirmDialog] = useState(false);
+  const [verificationCode, setVerificationCode] = useState("");
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -40,6 +51,10 @@ function CreateAccountForm() {
   };
   const handleConfirmPasswordChange = (event) => {
     setConfirmPassword(event.target.value);
+  };
+
+  const handleVerificationCodeChange = (event) => {
+    setVerificationCode(event.target.value);
   };
 
   const showError = (error) => {
@@ -86,10 +101,29 @@ function CreateAccountForm() {
       });
       console.log(localUser);
       setUser(localUser);
-      routeChangeHome();
+      setConfirmDialog(true);
+      verifyAccountHandler();
     } catch (error) {
       console.log("error signing up:", error);
       showError(error);
+    }
+  };
+
+  const verifyAccountHandler = async () => {
+    try {
+      await Auth.confirmSignUp(email, verificationCode);
+      routeChangeHome();
+    } catch (e) {
+      console.log("this is error: ", e);
+    }
+  };
+
+  const resendCode = async () => {
+    try {
+      await Auth.resendSignUp(email);
+      setOpenError(true);
+    } catch (e) {
+      console.log("this is error", e);
     }
   };
 
@@ -169,12 +203,7 @@ function CreateAccountForm() {
           >
             Create Account
           </button>
-          <button
-            className="loginButton"
-            // disabled={validUserContext.isLoggedIn}
-            onClick={routeChange}
-            type="button"
-          >
+          <button className="loginButton" onClick={routeChange}>
             Already have an account? Login
           </button>
         </form>
@@ -188,7 +217,57 @@ function CreateAccountForm() {
             <AlertTitle>Error</AlertTitle>
             {errorMessage}
           </Alert>
+          <Alert
+            severity="success"
+            onClose={() => {
+              setOpenError(false);
+            }}
+          >
+            <AlertTitle>Success</AlertTitle>
+            Verification code has been resent
+          </Alert>
         </Snackbar>
+        <Dialog
+          className="confirmEmail"
+          open={openConfirmDialog}
+          fullWidth
+          maxWidth="sm"
+          PaperProps={{
+            style: {
+              maxWidth: "40%",
+              minHeight: "40%",
+              maxHeight: "40%",
+              border: "2px",
+              borderRadius: "30px",
+              paddingLeft: "8px",
+              paddingRight: "30px",
+              paddingBottom: "10px",
+            },
+          }}
+        >
+          <DialogTitle sx={{ fontSize: "30px", fontWeight: "bold" }}>
+            Confirm Email
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText sx={{ marginBottom: "10%" }}>
+              Please enter the verification code sent to your email.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="email"
+              label="Code"
+              type="password"
+              variant="standard"
+              sx={{ fontSize: "50px" }}
+              onChange={handleVerificationCodeChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={resendCode}>Resend Code</Button>
+            <Button onClick={verifyAccountHandler}>Submit</Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );

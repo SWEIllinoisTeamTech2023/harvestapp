@@ -1,10 +1,11 @@
 import Modal from "@mui/material/Modal";
 // import Modal from "react-modal";
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import * as React from "react";
 import "../styles/login.css";
 import logo from "../images/logo.png";
 import { useNavigate } from "react-router-dom";
+import { Amplify, Auth } from "aws-amplify";
 import usernameIcon from "../images/akar-icons_person.svg";
 import passwordIcon from "../images/carbon_password.svg";
 
@@ -12,39 +13,15 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Input from "@mui/material/Input";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { white } from "@mui/material/colors";
-
-let isInitial = true;
 
 function LoginForm() {
   let navigate = useNavigate();
   const routeChange = () => {
-    let path = "/";
+    let path = "/home";
     //CHANGE PATH
-    navigate(path);
+    navigate(path, { user: user });
   };
-  //   const validUserContext = useContext(ValidUserContext);
-
-  const emailInputRef = useRef();
-  const passwordInputRef = useRef();
-
-  //   useEffect(() => {
-  //     if (isInitial) {
-  //       validUserContext.localAuthCheck();
-  //       isInitial = false;
-  //     }
-  //   }, [validUserContext]);
-
-  //   const submitHandler = (event) => {
-  //     event.preventDefault();
-
-  //     validUserContext.apiAuthCheck(
-  //       emailInputRef.current.value,
-  //       passwordInputRef.current.value
-  //     );
-  //   };
 
   const style = {
     position: "absolute",
@@ -81,9 +58,30 @@ function LoginForm() {
     },
   });
 
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState("");
+  const [openForgotPassword, setOpenForgotPassword] = React.useState(false);
+  const handleOpenForgotPassword = () => setOpenForgotPassword(true);
+  const handleCloseForgotPassword = () => setOpenForgotPassword(false);
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const signIn = async () => {
+    console.log(email, password);
+    try {
+      const localuser = await Auth.signIn(email, password);
+      setUser(localuser);
+      routeChange();
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <div>
@@ -109,7 +107,8 @@ function LoginForm() {
               name="user-name"
               autoComplete="on"
               placeholder="E-mail"
-              ref={emailInputRef}
+              ref={email.useRef}
+              onChange={handleEmailChange}
               //   required={!validUserContext.isLoggedIn}
             ></input>
           </div>
@@ -128,14 +127,15 @@ function LoginForm() {
               name="user-password"
               autoComplete="off"
               placeholder="Password"
-              ref={passwordInputRef}
+              onChange={handlePasswordChange}
+              ref={password.useRef}
               //   required={!validUserContext.isLoggedIn}
             ></input>
           </div>
-          <div class="forgot">
+          <div className="forgot">
             <Modal
-              open={open}
-              onClose={handleClose}
+              open={openForgotPassword}
+              onClose={handleCloseForgotPassword}
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
@@ -169,8 +169,9 @@ function LoginForm() {
           <ThemeProvider theme={theme}>
             <Button
               className="forgotpasswordbutton"
-              onClick={handleOpen}
+              onClick={handleOpenForgotPassword}
               color="primary"
+              type="button"
               // disabled={validUserContext.isLoggedIn}
             >
               Forgot Password?
@@ -178,13 +179,18 @@ function LoginForm() {
           </ThemeProvider>
           <button
             className="createAccountButton"
+            type="button"
+            onClick={signIn}
             // disabled={validUserContext.isLoggedIn}
           >
             Login
           </button>
           <button
             className="loginButton"
-            onClick={routeChange}
+            type="button"
+            onClick={() => {
+              navigate("/");
+            }}
             // disabled={validUserContext.isLoggedIn}
           >
             Don't have an account? Create one

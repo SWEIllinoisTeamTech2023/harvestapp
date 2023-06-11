@@ -54,62 +54,63 @@
     margin-left: 20px;
 }
 
-  .input {
-    border-radius: 10px;
-    height: 50px;
-    background: none;
-    width: -webkit-fill-available;
-    border: 1px solid #fff;
-    margin-top: 20px;
-    padding-left: 75px;
-    color:white;
-    
-  }
+.input {
+  border-radius: 10px;
+  height: 50px;
+  background: none;
+  width: -webkit-fill-available;
+  border: 1px solid #fff;
+  margin-top: 20px;
+  padding-left: 75px;
+  color:white;
+  
+}
 
-  input.input::placeholder {
-    color:#fff;
-    font-weight: 600;
-  }
+input.input::placeholder {
+  color:#fff;
+  font-weight: 600;
+}
 
-  .createAccountButton {
-    border-radius: 10px;
-    height: 50px;
-    background: none;
-    width: -webkit-fill-available;
-    border: 2px solid #20582a;
-    margin-top: 50px;
-    font-size: medium;
-    color: #20582a;
-    cursor: pointer;
-    &:active {
-      opacity: 50%;
-    }
-    &:hover {
-        color: #cbd2cc;
-        border: 2px solid #cbd2cc;
-    }
+.createAccountButton {
+  border-radius: 10px;
+  height: 50px;
+  background: none;
+  width: -webkit-fill-available;
+  border: 2px solid #20582a;
+  margin-top: 50px;
+  font-size: medium;
+  color: #20582a;
+  cursor: pointer;
+  &:active {
+    opacity: 50%;
   }
+  &:hover {
+      color: #cbd2cc;
+      border: 2px solid #cbd2cc;
+  }
+}
 
-  .loginButton {
-    background: none;
-    border: none;
-    width: -webkit-fill-available;
-    margin-top: 20px;
-    font-size: medium;
-    color: #cbd2cc;
-    cursor: pointer;
-    &:active {
-      opacity: 50%;
-    }
-    &:hover {
-        color: #cbd2cc;
-        /* border: 2px solid #cbd2cc; */
-    }
+.loginButton {
+  background: none;
+  border: none;
+  width: -webkit-fill-available;
+  margin-top: 20px;
+  font-size: medium;
+  color: #cbd2cc;
+  cursor: pointer;
+  &:active {
+    opacity: 50%;
   }
+  &:hover {
+      color: #cbd2cc;
+      /* border: 2px solid #cbd2cc; */
+  }
+}
 
-  .errorAlert {
-    top:10px;
-    left:10px;
-    position: fixed;
-    z-index: 1;
-  }
+.errorAlert {
+  top:10px;
+  left:10px;
+  position: fixed;
+  z-index: 1;
+}
+
