@@ -3,7 +3,7 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import CreateAccount from "./pages/createAccount";
 import SignUp from "./pages/signup";
-import InputData from "./pages/inputData";
+import Input from "./pages/input";
 import Simulate from "./pages/simulate";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -20,7 +20,7 @@ function App() {
           {/* <Route exact path="/" element={<Home />} /> */}
           <Route exact path="/login" element={<Login />} />
           {/* <Route exact path="/signup" element={<CreateAccount />} /> */}
-          <Route exact path="/inputdata" element={<InputData />} />
+          <Route exact path="/input" element={<Input />} />
           <Route exact path="/simulate" element={<Simulate />} />
           {/* <Route exact path="/forgotpassword" element={<Simulate />} /> */}
         </Routes>
