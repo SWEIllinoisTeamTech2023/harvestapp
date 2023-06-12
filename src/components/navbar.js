@@ -33,7 +33,16 @@ function Navbar() {
         >
           Input
         </button>
-        <button className="NavButton">Simulate</button>
+        <button
+          className="NavButton"
+          type="button"
+          onClick={() => {
+            let path = "/simulate";
+            navigate(path);
+          }}
+        >
+          Simulate
+        </button>
         <button className="NavButton">View Saved Simulations</button>
       </div>
     </div>

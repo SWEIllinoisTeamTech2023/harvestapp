@@ -112,7 +112,8 @@ function CreateAccountForm() {
   const verifyAccountHandler = async () => {
     try {
       await Auth.confirmSignUp(email, verificationCode);
-      routeChangeHome();
+      navigate("/home", { state: { user: email } });
+      // routeChangeHome();
     } catch (e) {
       console.log("this is error: ", e);
     }
