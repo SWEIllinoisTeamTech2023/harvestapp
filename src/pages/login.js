@@ -87,6 +87,28 @@ function LoginForm({ navigation }) {
 
   const showError = (error) => {
     setOpenError(true);
+    if (error === "AuthError: Username cannot be empty") {
+      setErrorMessage("Invalid Email, please try again");
+    } else if (
+      error === "NotAuthorizedException: Incorrect username or password."
+    ) {
+      setErrorMessage("Incorrect email or password, please try again");
+    } else if (error === "UserNotFoundException: User does not exist.") {
+      setErrorMessage("Email doesn't exist, please enter a valid email");
+    } else if (
+      error === "InvalidParameterException" ||
+      error ===
+        "UserNotFoundException: Username/client id combination not found." ||
+      error ===
+        "InvalidParameterException: Custom auth lambda trigger is not configured for the user pool."
+    ) {
+      setErrorMessage("Email doesn't exist, please enter a valid email");
+    } else if (
+      error ===
+      "InvalidPasswordException: Password does not conform to policy: Password not long enough"
+    ) {
+      setErrorMessage("Password needs to be at least 8 characters");
+    }
   };
 
   const signIn = async () => {
@@ -98,6 +120,7 @@ function LoginForm({ navigation }) {
       navigate("/home", { state: { user: email } });
       // routeChange();
     } catch (e) {
+      showError(e);
       console.log(e);
     }
   };
@@ -112,6 +135,7 @@ function LoginForm({ navigation }) {
         Auth.forgotPassword(email);
       }
     } catch (e) {
+      showError(e);
       console.log("from forgotpassword: ", e);
     }
   };
@@ -234,6 +258,7 @@ function LoginForm({ navigation }) {
               </DialogContent>
               <DialogActions>
                 <Button onClick={signInForgotPassword}>Submit</Button>
+                <Button onClick={forgotPasswordHandler}>Resend</Button>
               </DialogActions>
             </Dialog>
           </div>
