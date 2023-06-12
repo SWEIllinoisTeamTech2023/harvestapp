@@ -8,20 +8,25 @@ import { useNavigate } from "react-router-dom";
 import { Amplify, Auth } from "aws-amplify";
 import usernameIcon from "../images/akar-icons_person.svg";
 import passwordIcon from "../images/carbon_password.svg";
+import {
+  Dialog,
+  Snackbar,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  DialogActions,
+  Button,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-function LoginForm() {
+function LoginForm({ navigation }) {
   let navigate = useNavigate();
-  const routeChange = () => {
-    let path = "/home";
-    //CHANGE PATH
-    navigate(path, { user: user });
-  };
 
   const style = {
     position: "absolute",
@@ -61,9 +66,13 @@ function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState("");
+  const [forgotCode, setForgotCode] = useState("");
+  const [openError, setOpenError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [openForgotPassword, setOpenForgotPassword] = React.useState(false);
-  const handleOpenForgotPassword = () => setOpenForgotPassword(true);
-  const handleCloseForgotPassword = () => setOpenForgotPassword(false);
+  const handleOpenForgotPassword = () => {
+    forgotPasswordHandler();
+  };
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -72,15 +81,45 @@ function LoginForm() {
     setPassword(event.target.value);
   };
 
+  const handleCodeChange = (event) => {
+    setForgotCode(event.target.value);
+  };
+
+  const showError = (error) => {
+    setOpenError(true);
+  };
+
   const signIn = async () => {
     console.log(email, password);
     try {
       const localuser = await Auth.signIn(email, password);
       setUser(localuser);
-      routeChange();
+      console.log("in signin: ", localuser);
+      navigate("/home", { state: { user: email } });
+      // routeChange();
     } catch (e) {
       console.log(e);
     }
+  };
+
+  const forgotPasswordHandler = () => {
+    try {
+      if (email === "") {
+        setOpenError(true);
+        setErrorMessage("Email is empty, please enter and try again");
+      } else {
+        setOpenForgotPassword(true);
+        Auth.forgotPassword(email);
+      }
+    } catch (e) {
+      console.log("from forgotpassword: ", e);
+    }
+  };
+
+  const signInForgotPassword = async () => {
+    await Auth.forgotPasswordSubmit(email, forgotCode, password);
+    const user = Auth.signIn(email, password);
+    navigate("/home", { state: { user: email } });
   };
 
   return (
@@ -132,39 +171,71 @@ function LoginForm() {
               //   required={!validUserContext.isLoggedIn}
             ></input>
           </div>
-          <div className="forgot">
-            <Modal
-              open={openForgotPassword}
-              onClose={handleCloseForgotPassword}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
+          <Snackbar open={openError} autoHideDuration={6000}>
+            <Alert
+              severity="error"
+              onClose={() => {
+                setOpenError(false);
+              }}
             >
-              <Box sx={style}>
-                <ThemeProvider theme={theme}>
-                  <Typography
-                    className="modal-modal-title"
-                    variant="h6"
-                    component="h2"
-                    sx={{ fontWeight: "bold", fontSize: "30px" }}
-                  >
-                    Forgot Password
-                  </Typography>
-                  <Typography
-                    id="modal-modal-description"
-                    variant="h6"
-                    sx={{ mt: 2 }}
-                  >
-                    Enter your email to recieve link
-                  </Typography>
-                  <TextField
-                    sx={{ marginTop: "2%", width: "75%" }}
-                    id="outlined"
-                    label="Email"
-                    variant="filled"
-                  />
-                </ThemeProvider>
-              </Box>
-            </Modal>
+              <AlertTitle>Error</AlertTitle>
+              {errorMessage}
+            </Alert>
+          </Snackbar>
+          <div>
+            <Dialog
+              className="forgotPassword"
+              open={openForgotPassword}
+              fullWidth
+              onClose={() => setOpenForgotPassword(false)}
+              maxWidth="sm"
+              PaperProps={{
+                style: {
+                  maxWidth: "40%",
+                  minHeight: "40%",
+                  maxHeight: "40%",
+                  border: "2px",
+                  borderRadius: "30px",
+                  paddingLeft: "8px",
+                  paddingRight: "30px",
+                  paddingBottom: "10px",
+                },
+              }}
+            >
+              <DialogTitle sx={{ fontSize: "30px", fontWeight: "bold" }}>
+                Forgot Password
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText sx={{ marginBottom: "10%" }}>
+                  Please enter the code sent to your email.
+                </DialogContentText>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  fullWidth
+                  id="code"
+                  label="Code"
+                  type="password"
+                  variant="standard"
+                  sx={{ fontSize: "50px" }}
+                  onChange={handleCodeChange}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  fullWidth
+                  id="new_password"
+                  label="New Password"
+                  type="password"
+                  variant="standard"
+                  sx={{ fontSize: "50px" }}
+                  onChange={handlePasswordChange}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={signInForgotPassword}>Submit</Button>
+              </DialogActions>
+            </Dialog>
           </div>
           <ThemeProvider theme={theme}>
             <Button
@@ -172,7 +243,6 @@ function LoginForm() {
               onClick={handleOpenForgotPassword}
               color="primary"
               type="button"
-              // disabled={validUserContext.isLoggedIn}
             >
               Forgot Password?
             </Button>
