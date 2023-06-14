@@ -63,6 +63,7 @@ function CreateAccountForm() {
       error ===
       "InvalidPasswordException: Password did not conform with policy: Password not long enough"
     ) {
+      console.log("in error");
       setErrorMessage("Password needs to be at least 8 characters");
     } else if (
       error === "InvalidParameterException: Invalid email address format."
@@ -208,7 +209,7 @@ function CreateAccountForm() {
             Already have an account? Login
           </button>
         </form>
-        <Snackbar open={openError} autoHideDuration={6000}>
+        <Snackbar open={openError}>
           <Alert
             severity="error"
             onClose={() => {
@@ -218,7 +219,7 @@ function CreateAccountForm() {
             <AlertTitle>Error</AlertTitle>
             {errorMessage}
           </Alert>
-          <Alert
+          {/* <Alert
             severity="success"
             onClose={() => {
               setOpenError(false);
@@ -226,7 +227,7 @@ function CreateAccountForm() {
           >
             <AlertTitle>Success</AlertTitle>
             Verification code has been resent
-          </Alert>
+          </Alert> */}
         </Snackbar>
         <Dialog
           className="confirmEmail"
