@@ -219,15 +219,6 @@ function CreateAccountForm() {
             <AlertTitle>Error</AlertTitle>
             {errorMessage}
           </Alert>
-          {/* <Alert
-            severity="success"
-            onClose={() => {
-              setOpenError(false);
-            }}
-          >
-            <AlertTitle>Success</AlertTitle>
-            Verification code has been resent
-          </Alert> */}
         </Snackbar>
         <Dialog
           className="confirmEmail"
