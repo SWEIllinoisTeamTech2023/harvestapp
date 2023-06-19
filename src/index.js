@@ -1,14 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useParams,
+} from "react-router-dom";
+import { Amplify, Auth } from "aws-amplify";
+import awsconfig from "./aws-exports";
+import { Authenticator } from "@aws-amplify/ui-react";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+Amplify.configure(awsconfig);
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <Authenticator.Provider>
     <App />
-  </React.StrictMode>
+  </Authenticator.Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

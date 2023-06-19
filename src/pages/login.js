@@ -92,6 +92,7 @@ function LoginForm({ navigation }) {
     } else if (
       error === "NotAuthorizedException: Incorrect username or password."
     ) {
+      console.log("here");
       setErrorMessage("Incorrect email or password, please try again");
     } else if (error === "UserNotFoundException: User does not exist.") {
       setErrorMessage("Email doesn't exist, please enter a valid email");
