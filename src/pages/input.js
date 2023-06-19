@@ -15,7 +15,7 @@ const AddData = () => {
   const [cropTypeValue, setCropTypeValue] = useState("");
   const [machineTypeValue, setMachineTypeValue] = useState("");
   const [headerWidthValue, setHeaderWidthValue] = useState();
-  const [tradeCostValue, setTradeCostValue] = useState();
+  const [annualHoursValue, setAnnualHoursValue] = useState();
   const [user, setUser] = useState();
 
   async function fetchUser() {
@@ -27,7 +27,7 @@ const AddData = () => {
         setUser(user);
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   useEffect(() => {
     fetchUser();
@@ -57,9 +57,9 @@ const AddData = () => {
     setHeaderWidthValue(value);
   };
 
-  const handleTradeCostChange = (event) => {
+  const handleAnnualHoursChange = (event) => {
     const value = parseFloat(event.target.value);
-    setTradeCostValue(value);
+    setAnnualHoursValue(value);
   };
 
   const handleSubmit = (event) => {
@@ -68,13 +68,13 @@ const AddData = () => {
     console.log("Crop Type: ", cropTypeValue);
     console.log("Machine Type: ", machineTypeValue);
     console.log("Header Width: ", headerWidthValue);
-    console.log("Trade Cost: ", tradeCostValue);
+    console.log("Annual Hours: ", annualHoursValue);
 
     setYieldValue(0);
     setCropTypeValue("");
     setMachineTypeValue("");
     setHeaderWidthValue(0);
-    setTradeCostValue(0);
+    setAnnualHoursValue(0);
     navigate("/simulate");
 
     const param = {
@@ -83,7 +83,7 @@ const AddData = () => {
       header_width: headerWidthValue,
       yield: yieldValue,
       crop_type: cropTypeValue,
-      trade_cost: tradeCostValue,
+      annual_hours: annualHoursValue,
     };
     console.log("Param: ", param);
     fetch("/storeInputs", {
@@ -157,18 +157,16 @@ const AddData = () => {
             value={headerWidthValue}
             onChange={handleHeaderWidthChange}
             min="0"
-            placeholder="Header Width (unit)"
+            placeholder="Header Width (ft)"
           />
         </div>
         <div>
-          <input
-            className="inputBox"
-            type="number"
-            value={tradeCostValue}
-            onChange={handleTradeCostChange}
-            min="0"
-            placeholder="Trade Cost ($)"
-          />
+          <select id="dropdown" value={annualHoursValue} className="inputBox" onChange={handleAnnualHoursChange}>
+            <option value="">Select Estimated Annual Hours</option>
+            <option value={100}>100</option>
+            <option value={300}>300</option>
+            <option value={500}>500</option>
+          </select>
         </div>
         <button
           className="button"
