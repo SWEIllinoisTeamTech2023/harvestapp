@@ -99,9 +99,9 @@ function LoginForm({ navigation }) {
     } else if (
       error === "InvalidParameterException" ||
       error ===
-        "UserNotFoundException: Username/client id combination not found." ||
+      "UserNotFoundException: Username/client id combination not found." ||
       error ===
-        "InvalidParameterException: Custom auth lambda trigger is not configured for the user pool."
+      "InvalidParameterException: Custom auth lambda trigger is not configured for the user pool."
     ) {
       setErrorMessage("Email doesn't exist, please enter a valid email");
     } else if (
@@ -173,7 +173,7 @@ function LoginForm({ navigation }) {
               placeholder="E-mail"
               ref={email.useRef}
               onChange={handleEmailChange}
-              //   required={!validUserContext.isLoggedIn}
+            //   required={!validUserContext.isLoggedIn}
             ></input>
           </div>
 
@@ -193,7 +193,7 @@ function LoginForm({ navigation }) {
               placeholder="Password"
               onChange={handlePasswordChange}
               ref={password.useRef}
-              //   required={!validUserContext.isLoggedIn}
+            //   required={!validUserContext.isLoggedIn}
             ></input>
           </div>
           <Snackbar open={openError} autoHideDuration={6000}>
@@ -277,7 +277,7 @@ function LoginForm({ navigation }) {
             className="createAccountButton"
             type="button"
             onClick={signIn}
-            // disabled={validUserContext.isLoggedIn}
+          // disabled={validUserContext.isLoggedIn}
           >
             Login
           </button>
@@ -287,7 +287,7 @@ function LoginForm({ navigation }) {
             onClick={() => {
               navigate("/");
             }}
-            // disabled={validUserContext.isLoggedIn}
+          // disabled={validUserContext.isLoggedIn}
           >
             Don't have an account? Create one
           </button>

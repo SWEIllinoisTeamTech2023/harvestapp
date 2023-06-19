@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import corn from "../images/corn.png";
@@ -15,6 +16,22 @@ const AddData = () => {
   const [machineTypeValue, setMachineTypeValue] = useState("");
   const [headerWidthValue, setHeaderWidthValue] = useState();
   const [tradeCostValue, setTradeCostValue] = useState();
+  const [user, setUser] = useState();
+
+  async function fetchUser() {
+    Auth.currentAuthenticatedUser({
+      bypassCache: true, // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
+    })
+      .then((user) => {
+        console.log("in fetchUser: ", user.attributes.email);
+        setUser(user);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   const handleYieldChange = (event) => {
     const value = parseFloat(event.target.value);
@@ -61,6 +78,7 @@ const AddData = () => {
     navigate("/simulate");
 
     const param = {
+      user: user.attributes.email,
       machine_type: machineTypeValue,
       header_width: headerWidthValue,
       yield: yieldValue,
@@ -78,12 +96,12 @@ const AddData = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data.message);
-        // Perform any additional actions based on the response
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
+
 
   return (
     <div>
@@ -113,9 +131,8 @@ const AddData = () => {
           {cropTypeOptions.map((option) => (
             <div
               key={option.id}
-              className={`crop-type ${
-                cropTypeValue === option.id ? "selected" : ""
-              }`}
+              className={`crop-type ${cropTypeValue === option.id ? "selected" : ""
+                }`}
               onClick={() => handleCropTypeChange(option.id)}
             >
               <img src={option.src} alt={option.alt} width={100} height={100} />
