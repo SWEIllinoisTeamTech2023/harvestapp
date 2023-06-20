@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
+import Header from "../components/header";
 
 const Simulate = () => {
   const [user, setUser] = useState();
@@ -20,10 +21,9 @@ const Simulate = () => {
     fetchUser();
   }, []);
 
-
   return (
     <div>
-      <h1>Simulation here</h1>
+      <Header title="Simulate"></Header>
     </div>
   );
 };
