@@ -1,0 +1,34 @@
+
+.simulate-parent {
+    width: 100%;
+    flex-direction: column;
+    flex:2;
+    justify-content: flex-start;
+}
+
+.edit-simulation {
+    margin-left:8%;
+    margin-bottom:10%;
+    width: 25%;
+    height: 70%;
+    position: absolute;
+    background-color: white;
+    border-radius: 20px;
+    border-width:2px;
+    border-color: white;
+    color: #20582a;
+}
+
+.display-simulation {
+    margin-left:35%;
+    margin-bottom:10%;
+    margin-right: 8%;
+    width: 57%;
+    height: 70%;
+    position: absolute;
+    background-color: white;
+    border-radius: 20px;
+    border-width:2px;
+    border-color: white;
+    color: #20582a;
+}

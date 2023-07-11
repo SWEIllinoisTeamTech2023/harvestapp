@@ -23,17 +23,16 @@ function App() {
       {/* {authStatus !== "authenticated" ? <Authenticator /> : <Home />} */}
       <Router>
         <Routes>
-          <Route exact path="/" element={<CreateAccount />} />
+          {/* <Route exact path="/" element={<CreateAccount />} /> */}
+          <Route exact path="/" element={<Simulate />} />
           <Route exact path="/home" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/input" element={<Input />} />
-          <Route exact path="/simulate" element={<Simulate />} />
+          {/* <Route exact path="/simulate" element={<Simulate />} /> */}
         </Routes>
       </Router>
     </div>
   );
 }
-
-
 
 export default App;
