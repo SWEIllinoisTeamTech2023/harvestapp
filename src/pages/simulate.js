@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Header from "../components/header";
 import "../styles/simulate.css";
 import { TextField } from "@mui/material";
+import Piechart from "../components/piechart";
 
 const Simulate = () => {
   const [user, setUser] = useState();
@@ -98,7 +99,7 @@ const Simulate = () => {
           </button>
         </div>
 
-        <div class="display-simulation"></div>
+        <div class="display-simulation">{/* <Piechart></Piechart> */}</div>
       </div>
     </div>
   );

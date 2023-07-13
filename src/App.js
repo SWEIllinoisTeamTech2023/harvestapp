@@ -14,10 +14,12 @@ import {
 } from "react-router-dom";
 import { Amplify, Auth } from "aws-amplify";
 import awsconfig from "./aws-exports";
+import * as d3 from "d3";
 
 function App() {
   const { user, signOut } = useAuthenticator((context) => [context.user]);
   const { authStatus } = useAuthenticator((context) => [context.authStatus]);
+  var d3 = require("react-d3");
   return (
     <div className="App">
       {/* {authStatus !== "authenticated" ? <Authenticator /> : <Home />} */}
