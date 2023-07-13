@@ -32,3 +32,37 @@
     border-color: white;
     color: #20582a;
 }
+
+.inputBox {
+    width: 250px;
+    height: 40px;
+    margin-top: 10px;
+    padding-left: 8px;
+    margin-right: 20px;
+    margin-left : 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: large;
+  }
+
+  button {
+    margin-bottom: 3px;
+    font-size: 16px;
+    background-color: #ffffff;
+    border: 2px solid #20582a;
+    border-color: #20582a;
+    border-width: 2px;
+    border-radius: 10px;
+    cursor: pointer;
+  
+    &:active {
+      opacity: 50%;
+    }
+  
+    &:hover {
+      color: #22663e9b;
+    }
+  
+    transition: background-color 0.3s ease;
+  }
+  
