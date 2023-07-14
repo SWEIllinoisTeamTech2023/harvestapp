@@ -2,15 +2,32 @@ import React, { useEffect } from "react";
 import * as d3 from "d3";
 
 const Piechart = () => {
-  const data = [4000, 80000, 30000, 93840, 19420, 24472];
+  //   const data = [
+  //     { name: 4000, value: 4000 },
+  //     { name: 8000, value: 8000 },
+  //     { name: 30000, value: 30000 },
+  //     { name: 93840, value: 93840 },
+  //     { name: 19420, value: 19420 },
+  //     { name: 24472, value: 24472 },
+  //   ];
+
+  const data = [
+    { name: 100, value: 100 },
+    { name: 8000, value: 200 },
+    { name: 30000, value: 300 },
+    { name: 93840, value: 400 },
+    { name: 19420, value: 500 },
+    { name: 24472, value: 600 },
+  ];
 
   useEffect(() => {
     createChart();
   });
 
   function createChart() {
+    console.log("in chreat");
     // Specify the chart’s dimensions.
-    const width = 928;
+    const width = 500;
     const height = Math.min(width, 500);
 
     // Create the color scale.
@@ -43,7 +60,7 @@ const Piechart = () => {
 
     // Create the SVG container.
     const svg = d3
-      .create("#pie-container")
+      .create("pie")
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", [-width / 2, -height / 2, width, height])
@@ -59,7 +76,7 @@ const Piechart = () => {
       .attr("fill", (d) => color(d.data.name))
       .attr("d", arc)
       .append("title")
-      .text((d) => `${d.data.name}: ${d.data.value.toLocaleString("en-US")}`);
+      .text((d) => `${d.data.name}: ${d.data.value.toLocaleString("en-us")}`);
 
     // Create a new arc generator to place a label close to the edge.
     // The label shows the value if there is enough room.
@@ -84,13 +101,13 @@ const Piechart = () => {
           .attr("x", 0)
           .attr("y", "0.7em")
           .attr("fill-opacity", 0.7)
-          .text((d) => d.data.value.toLocaleString("en-US"))
+          .text((d) => d.data.value.toLocaleString("en-us"))
       );
 
-    return svg.node();
+    // return svg.node();
   }
 
-  return <div id="pie-container" />;
+  return <div id="pie" />;
 };
 
 export default Piechart;

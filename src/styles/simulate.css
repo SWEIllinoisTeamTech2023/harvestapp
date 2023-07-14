@@ -66,3 +66,11 @@
     transition: background-color 0.3s ease;
   }
   
+  #pie {
+    background-color: black;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+
+  }
