@@ -98,11 +98,9 @@ const Simulate = () => {
             Copy Optimized Variables
           </button>
         </div>
-        <Piechart />
-
-        {/* <div class="display-simulation">
+        <div class="display-simulation">
           <Piechart />
-        </div> */}
+        </div>
       </div>
     </div>
   );
