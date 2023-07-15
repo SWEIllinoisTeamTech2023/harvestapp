@@ -67,10 +67,10 @@
   }
   
   #pie {
-    background-color: black;
+    /* background-color: black; */
     position: relative;
-    top: 50%;
-    left: 50%;
+    /* top: 50%;
+    left: 10%; */
     z-index: 1;
 
   }
