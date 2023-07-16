@@ -27,7 +27,7 @@ const Simulate = () => {
   return (
     <div>
       <Header title="Simulate"></Header>
-      <div class="simulate-parent">
+      {/* <div class="simulate-parent">
         <div class="edit-simulation">
           <h2>Input Parameters</h2>
           <div class="input-variables"></div>
@@ -99,7 +99,81 @@ const Simulate = () => {
           </button>
         </div>
         <div class="display-simulation">
-          <h2>Visualize Data</h2>
+          <h2>Pie Chart</h2>
+          <Piechart />
+        </div>
+      </div> */}
+      <div class="simulate-piechart">
+        <div class="input-variables">
+          <input
+            className="inputBox"
+            type="number"
+            // value={yieldValue}
+            // onChange={handleYieldChange}
+            min="0"
+            placeholder="Chaffer Clearance"
+          />
+          <input
+            className="inputBox"
+            type="number"
+            // value={yieldValue}
+            // onChange={handleYieldChange}
+            min="0"
+            placeholder="Concave Clearance"
+          />
+          <input
+            className="inputBox"
+            type="number"
+            // value={yieldValue}
+            // onChange={handleYieldChange}
+            min="0"
+            placeholder="Sieve Clearance"
+          />
+          <input
+            className="inputBox"
+            type="number"
+            // value={yieldValue}
+            // onChange={handleYieldChange}
+            min="0"
+            placeholder="Harvest Cost"
+          />
+          <input
+            className="inputBox"
+            type="number"
+            // value={yieldValue}
+            // onChange={handleYieldChange}
+            min="0"
+            placeholder="Speed"
+          />
+          <input
+            className="inputBox"
+            type="number"
+            // value={yieldValue}
+            // onChange={handleYieldChange}
+            min="0"
+            placeholder="Fan Speed"
+          />
+          <input
+            className="inputBox"
+            type="number"
+            // value={yieldValue}
+            // onChange={handleYieldChange}
+            min="0"
+            placeholder="Rotor Speed"
+          />
+          <button
+            className="button"
+            type="submit"
+            style={{ marginTop: "30px" }}
+          >
+            Save Edited Variables
+          </button>
+          <button className="button" type="submit">
+            Copy Optimized Variables
+          </button>
+        </div>
+        <div class="display-simulation">
+          <h2>Pie Chart</h2>
           <Piechart />
         </div>
       </div>

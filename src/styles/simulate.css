@@ -8,9 +8,10 @@
 
 .edit-simulation {
     margin-left:8%;
-    margin-bottom:10%;
-    width: 25%;
-    height: 70%;
+    margin-bottom:10px;
+    padding-bottom:10px;
+    width: 30%;
+    height: 45%;
     position: absolute;
     background-color: white;
     border-radius: 20px;
@@ -20,22 +21,45 @@
 }
 
 .display-simulation {
-    margin-left:35%;
+    margin-left:5%;
     margin-bottom:10%;
+    padding-bottom:2%;
     margin-right: 8%;
-    width: 57%;
-    height: 70%;
-    position: absolute;
+    width: 95%;
+    height: 95%;
+    position:relative;
     background-color: white;
-    border-radius: 20px;
-    border-width:2px;
-    border-color: white;
     color: #20582a;
+}
+
+.simulate-piechart {
+  margin-left:10%;
+  margin-bottom:10%;
+  padding-bottom:2%;
+  margin-right: 10%;
+  width: 80%;
+  height: 50%;
+  position: absolute;
+  background-color: white;
+  border-radius: 20px;
+  border-width:2px;
+  border-color: white;
+  color: #20582a;
+  display:flex;
+  flex-direction: row;
+}
+
+.input-variables {
+  width:50%;
+  margin-left:2%;
+  margin-top:2%;
+  padding-bottom:2%;
+
 }
 
 .inputBox {
     width: 80%;
-    height: 40px;
+    height: 30px;
     margin-top: 10px;
     padding-left: 8px;
     margin-right: 20px;
@@ -46,7 +70,7 @@
   }
 
   button {
-    margin-bottom: 3px;
+    margin-bottom: 0.5px;
     font-size: 16px;
     background-color: #ffffff;
     border: 2px solid #20582a;
