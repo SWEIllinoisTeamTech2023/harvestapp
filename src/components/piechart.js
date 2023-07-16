@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { setRef } from "@mui/material";
+import "../styles/simulate.css";
 
 const Piechart = () => {
   const data = [
@@ -19,8 +20,6 @@ const Piechart = () => {
   });
 
   function createChart() {
-    console.log("in chreat");
-
     // Specify the chart’s dimensions.
 
     const width = 50;
@@ -37,7 +36,7 @@ const Piechart = () => {
         "#48800d",
         "#6b6e68",
         "#5fed80",
-        " #023d10",
+        "#023d10",
       ]);
 
     // Create the pie layout and arc generator.
@@ -55,6 +54,7 @@ const Piechart = () => {
 
     // A separate arc generator for labels.
     const arcLabel = d3.arc().innerRadius(labelRadius).outerRadius(labelRadius);
+    const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
     const arcs = pie(data);
 
@@ -64,47 +64,39 @@ const Piechart = () => {
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", [-width / 2, -height / 2, width, height])
-      .attr("transform", `translate(${width / 10}, ${height * 1.5})`)
+      .attr("transform", `translate(${width - 100}, ${height - 10})`)
       .attr("style", "width: 80%; height: 80%; font: 1px sans-serif;");
 
     // Add a sector path for each value.
     svg
       .append("g")
-      .attr("stroke", "#000")
+      .attr("stroke", "#FFF")
       .attr("stroke-width", "0.25px")
       .selectAll()
       .data(arcs)
       .join("path")
       .attr("fill", (d) => color(d.data.name))
       .attr("d", arc)
-      .append("title")
-      .text((d) => `${d.data.name}: ${d.data.value.toLocaleString("en-us")}`);
-
-    // Create a new arc generator to place a label close to the edge.
-    // The label shows the value if there is enough room.
-    svg
-      .append("g")
-      .attr("text-anchor", "middle")
-      .selectAll()
-      .data(arcs)
-      .join("text")
-      .attr("transform", (d) => `translate(${arcLabel.centroid(d)})`)
-      .call((text) =>
-        text
-          .append("tspan")
-          .attr("y", "-0.4em")
-          .attr("font-weight", "bold")
-          .text((d) => d.data.name)
-      )
-      .call((text) =>
-        text
-          .filter((d) => d.endAngle - d.startAngle > 0.25)
-          .append("tspan")
-          .attr("x", 0)
-          .attr("y", "0.7em")
-          .attr("fill-opacity", 0.7)
-          .text((d) => d.data.value.toLocaleString("en-us"))
-      );
+      .on("mouseenter", function (event, d) {
+        d3.select(this).attr("opacity", 0.5);
+      })
+      .on("mouseleave", function (event, d) {
+        d3.select(this).attr("opacity", 1);
+      })
+      // Make div appear
+      .on("mouseover", function () {
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (event, d) {
+        return tooltip
+          .style("top", event.pageY + 30 + "px")
+          .style("left", event.pageX + 20 + "px")
+          .html(d.data.name + ": $" + d.data.value);
+      })
+      // Make div disappear
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
   }
 
   return (

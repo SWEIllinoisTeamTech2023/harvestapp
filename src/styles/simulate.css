@@ -65,6 +65,25 @@
   
     transition: background-color 0.3s ease;
   }
+
+  .tooltip {
+    position: absolute;
+    z-index: 10;
+    display: inline-block;
+    background-color: black;
+    padding: 10px;
+    border-width: 2px;
+    border-color: white;
+    border-radius: 5px;
+    fill-opacity: 100;
+    font-family: "Robot Mono", sans-serif;
+    color: whitesmoke;
+    padding: 1rem;
+    font-size: 15px;
+    z-index: 100;
+    visibility: hidden;
+  }
+  
   
   #pie {
     /* background-color: black; */
