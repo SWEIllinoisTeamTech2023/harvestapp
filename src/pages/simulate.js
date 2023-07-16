@@ -99,6 +99,7 @@ const Simulate = () => {
           </button>
         </div>
         <div class="display-simulation">
+          <h2>Visualize Data</h2>
           <Piechart />
         </div>
       </div>

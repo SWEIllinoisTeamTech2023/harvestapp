@@ -64,7 +64,7 @@ const Piechart = () => {
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", [-width / 2, -height / 2, width, height])
-      .attr("transform", `translate(${width - 100}, ${height - 10})`)
+      .attr("transform", `translate(${width - 100}, ${height - 60})`)
       .attr("style", "width: 80%; height: 80%; font: 1px sans-serif;");
 
     // Add a sector path for each value.
