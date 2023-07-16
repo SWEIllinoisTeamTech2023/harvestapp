@@ -1,9 +1,10 @@
 
 .simulate-parent {
-    width: 100%;
+    /* width: 100%; */
+    height:100%;
+    display: flex;
     flex-direction: column;
-    flex:2;
-    justify-content: flex-start;
+    /* justify-content: flex-start; */
 }
 
 .edit-simulation {
@@ -36,6 +37,23 @@
   margin-left:10%;
   margin-bottom:10%;
   padding-bottom:2%;
+  margin-right: 10%;
+  width: 80%;
+  height: 50%;
+  position: absolute;
+  background-color: white;
+  border-radius: 20px;
+  border-width:2px;
+  border-color: white;
+  color: #20582a;
+  display:flex;
+  flex-direction: row;
+}
+
+.simulate-linegraph {
+  margin-left:10%;
+  margin-bottom:10%;
+  margin-top:550px;
   margin-right: 10%;
   width: 80%;
   height: 50%;
