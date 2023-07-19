@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import * as d3Fetch from "d3-fetch";
+import "../styles/simulate.css";
 
 const Linegraph = () => {
   const data = [
@@ -38,6 +39,8 @@ const Linegraph = () => {
     var yAxisLeft = d3.axisLeft(y0).ticks(6);
 
     var yAxisRight = d3.axisRight(y1).ticks(6);
+
+    const tooltip = d3.select("body").append("div").attr("class", "tooltip");
 
     const svg = d3
       .select(svgRef.current)
@@ -167,6 +170,27 @@ const Linegraph = () => {
             return y0(d.machineCost);
           })
       );
+    //   .on("mouseenter", function (event, d) {
+    //     d3.select(this).attr("opacity", 0.5);
+    //   })
+    //   .on("mouseleave", function (event, d) {
+    //     d3.select(this).attr("opacity", 1);
+    //   })
+    //   // Make div appear
+    //   .on("mouseover", function () {
+    //     return tooltip.style("visibility", "visible");
+    //   })
+    //   .on("mousemove", function (event, d) {
+    //     console.log("in mouseoue: ", data.feedrate);
+    //     return tooltip
+    //       .style("top", event.pageY + 30 + "px")
+    //       .style("left", event.pageX + 20 + "px")
+    //       .html(data.feedrate + " : " + data.machineCost);
+    //   })
+    //   // Make div disappear
+    //   .on("mouseout", function () {
+    //     return tooltip.style("visibility", "hidden");
+    //   });
 
     // Legend
     var legend = svg
