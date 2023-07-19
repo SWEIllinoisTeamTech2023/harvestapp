@@ -122,7 +122,7 @@ const Linegraph = () => {
       .datum(data)
       .attr("fill", "none")
       .attr("stroke", "green")
-      .attr("stroke-width", 1.5)
+      .attr("stroke-width", 5)
       .attr(
         "d",
         d3
@@ -133,14 +133,44 @@ const Linegraph = () => {
           .y(function (d) {
             return y0(d.totalCost);
           })
-      );
+      )
+      .on("mouseenter", function (event, d) {
+        d3.select(this).attr("opacity", 0.5);
+      })
+      .on("mouseleave", function (event, d) {
+        d3.select(this).attr("opacity", 1);
+      })
+      // Make div appear
+      .on("mouseover", function () {
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (event, d) {
+        // console.log("hereeeee: ", d);
+        d.forEach((element) => {
+          console.log("ojoijo: ", element);
+          return tooltip
+            .style("top", event.pageY + 30 + "px")
+            .style("left", event.pageX + 20 + "px")
+            .html(
+              "Feedrate : " +
+                element.feedrate +
+                " Total Cost: $" +
+                element.totalCost
+            );
+        });
+      })
+      // Make div disappear
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
 
     svg
       .append("path")
       .datum(data)
       .attr("fill", "none")
       .attr("stroke", "#9cd95b")
-      .attr("stroke-width", 1.5)
+      .attr("stroke-width", 5)
+      .attr("class", "line")
       .attr(
         "d",
         d3
@@ -151,14 +181,45 @@ const Linegraph = () => {
           .y(function (d) {
             return y1(d.harvestLoss);
           })
-      );
+      )
+      .on("mouseenter", function (event, d) {
+        d3.select(this).attr("opacity", 0.5);
+      })
+      .on("mouseleave", function (event, d) {
+        d3.select(this).attr("opacity", 1);
+      })
+      // Make div appear
+      .on("mouseover", function () {
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (event, d) {
+        // console.log("hereeeee: ", d);
+        d.forEach((element) => {
+          console.log("ojoijo: ", element);
+          return tooltip
+            .style("top", event.pageY + 30 + "px")
+            .style("left", event.pageX + 20 + "px")
+            .html(
+              "Feedrate : " +
+                element.feedrate +
+                " Harvest Loss: " +
+                element.harvestLoss +
+                "%"
+            );
+        });
+      })
+      // Make div disappear
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
 
     svg
       .append("path")
-      .datum(data)
+      .data([data])
       .attr("fill", "none")
       .attr("stroke", "#6b6e68")
-      .attr("stroke-width", 1.5)
+      .attr("stroke-width", 5)
+      .attr("class", "line")
       .attr(
         "d",
         d3
@@ -169,30 +230,37 @@ const Linegraph = () => {
           .y(function (d) {
             return y0(d.machineCost);
           })
-      );
-    //   .on("mouseenter", function (event, d) {
-    //     d3.select(this).attr("opacity", 0.5);
-    //   })
-    //   .on("mouseleave", function (event, d) {
-    //     d3.select(this).attr("opacity", 1);
-    //   })
-    //   // Make div appear
-    //   .on("mouseover", function () {
-    //     return tooltip.style("visibility", "visible");
-    //   })
-    //   .on("mousemove", function (event, d) {
-    //     console.log("in mouseoue: ", data.feedrate);
-    //     return tooltip
-    //       .style("top", event.pageY + 30 + "px")
-    //       .style("left", event.pageX + 20 + "px")
-    //       .html(data.feedrate + " : " + data.machineCost);
-    //   })
-    //   // Make div disappear
-    //   .on("mouseout", function () {
-    //     return tooltip.style("visibility", "hidden");
-    //   });
+      )
+      .on("mouseenter", function (event, d) {
+        d3.select(this).attr("opacity", 0.5);
+      })
+      .on("mouseleave", function (event, d) {
+        d3.select(this).attr("opacity", 1);
+      })
+      // Make div appear
+      .on("mouseover", function () {
+        return tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function (event, d) {
+        // console.log("hereeeee: ", d);
+        d.forEach((element) => {
+          console.log("ojoijo: ", element);
+          return tooltip
+            .style("top", event.pageY + 30 + "px")
+            .style("left", event.pageX + 20 + "px")
+            .html(
+              "Feedrate : " +
+                element.feedrate +
+                " Machine Cost: $" +
+                element.machineCost
+            );
+        });
+      })
+      // Make div disappear
+      .on("mouseout", function () {
+        return tooltip.style("visibility", "hidden");
+      });
 
-    // Legend
     var legend = svg
       .selectAll(".legend")
       .data(["Total Cost", "Harvest Loss", "Machine Cost"].slice())
