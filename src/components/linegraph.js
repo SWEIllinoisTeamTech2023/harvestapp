@@ -3,6 +3,19 @@ import * as d3 from "d3";
 import * as d3Fetch from "d3-fetch";
 
 const Linegraph = () => {
+  const data = [
+    { feedrate: 10, totalCost: 30, machineCost: 30 },
+    { feedrate: 20, totalCost: 25, machineCost: 30 },
+    { feedrate: 30, totalCost: 15, machineCost: 30 },
+    { feedrate: 40, totalCost: 10, machineCost: 30 },
+    { feedrate: 50, totalCost: 9, machineCost: 30 },
+    { feedrate: 60, totalCost: 8, machineCost: 30 },
+    { feedrate: 70, totalCost: 7, machineCost: 30 },
+    { feedrate: 80, totalCost: 8, machineCost: 30 },
+    { feedrate: 90, totalCost: 9, machineCost: 30 },
+    { feedrate: 100, totalCost: 10, machineCost: 30 },
+  ];
+
   const svgRef = React.useRef(null);
   useEffect(() => {
     createChart();
@@ -10,114 +23,96 @@ const Linegraph = () => {
 
   function createChart() {
     var margin = { top: 20, right: 40, bottom: 30, left: 50 },
-      width = 960 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
-
-    // parse the date / time
-    var parseTime = d3.timeParse("%d-%b-%y");
+      width = "100%",
+      height = "100%";
 
     // set the ranges
-    var x = d3.scaleTime().range([0, width]);
-    var y0 = d3.scaleLinear().range([height, 0]);
-    var y1 = d3.scaleLinear().range([height, 0]);
+    var x = d3.scaleLinear().range([0, 200]);
+    var y0 = d3.scaleLinear().range([0, 200]);
+    var y1 = d3.scaleLinear().range([0, 200]);
 
     // define the 1st line
     var valueline = d3
       .line()
       .x(function (d) {
-        return x(d.date);
+        return x(d.feedrate);
       })
       .y(function (d) {
-        return y0(d.close);
+        return y0(d.totalCost);
       });
 
-    // define the 2nd line
+    // // define the 2nd line
     var valueline2 = d3
       .line()
       .x(function (d) {
-        return x(d.date);
+        return x(d.feedrate);
       })
       .y(function (d) {
-        return y1(d.open);
+        return y1(d.machineCost);
       });
 
-    // append the svg obgect to the body of the page
-    // appends a 'group' element to 'svg'
-    // moves the 'group' element to the top left margin
-    var svg = d3
+    const svg = d3
       .select(svgRef.current)
-      .append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      .attr("transform", "translate(" + -100 + "," + 10 + ")");
 
-    // Get the data
-
-    d3Fetch.csv("test.csv").then((data) => {
-      // format the data
-      data.forEach(function (d) {
-        d.date = parseTime(d.date);
-        d.close = +d.close;
-        d.open = +d.open;
-      });
-
-      // Scale the range of the data
-      x.domain(
-        d3.extent(data, function (d) {
-          return d.date;
-        })
-      );
-      y0.domain([
-        0,
-        d3.max(data, function (d) {
-          return Math.max(d.close);
-        }),
-      ]);
-      y1.domain([
-        0,
-        d3.max(data, function (d) {
-          return Math.max(d.open);
-        }),
-      ]);
-
-      // Add the valueline path.
-      svg
-        .append("path")
-        .data([data])
-        .attr("class", "line")
-        .attr("d", valueline);
-
-      // Add the valueline2 path.
-      svg
-        .append("path")
-        .data([data])
-        .attr("class", "line")
-        .style("stroke", "red")
-        .attr("d", valueline2);
-
-      // Add the X Axis
-      svg
-        .append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x));
-
-      // Add the Y0 Axis
-      svg.append("g").attr("class", "axisSteelBlue").call(d3.axisLeft(y0));
-
-      // Add the Y1 Axis
-      svg
-        .append("g")
-        .attr("class", "axisRed")
-        .attr("transform", "translate( " + width + ", 0 )")
-        .call(d3.axisRight(y1));
-    });
-    return (
-      <div style={{ width: "110%", height: "110%" }}>
-        <svg ref={svgRef} />
-      </div>
+    // // Scale the range of the data
+    x.domain(
+      d3.extent(data, function (d) {
+        return d.feedrate;
+      })
     );
+    y0.domain([
+      0,
+      d3.max(data, function (d) {
+        return Math.max(d.totalCost);
+      }),
+    ]);
+    y1.domain([
+      0,
+      d3.max(data, function (d) {
+        return Math.max(d.machineCost);
+      }),
+    ]);
+
+    // // Add the valueline path.
+    svg.join("path").data([data]).attr("class", "line").attr("d", valueline);
+    // svg.join("path").attr("class", "line").attr("d", valueline);
+
+    // // Add the valueline2 path.
+    svg
+      .join("path")
+      .data([data])
+      .attr("class", "line")
+      .style("stroke", "red")
+      .attr("d", valueline2);
+
+    // // Add the X Axis
+    svg
+      .append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+    // // Add the Y0 Axis
+    svg
+      .append("g")
+      .attr("class", "axisSteelBlue")
+      //   .attr("transform", "translate( " + width + ", 0 )")
+      .call(d3.axisLeft(y0));
+
+    // // Add the Y1 Axis
+    svg
+      .append("g")
+      .attr("class", "axisRed")
+      .attr("transform", "translate( " + width + ", 0 )")
+      .call(d3.axisRight(y1));
   }
+  return (
+    <div style={{ width: "100%", height: "100%" }}>
+      <svg ref={svgRef} />
+    </div>
+  );
 };
 
 export default Linegraph;
