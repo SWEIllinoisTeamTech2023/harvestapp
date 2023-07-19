@@ -5,109 +5,21 @@ import * as d3Fetch from "d3-fetch";
 const Linegraph = () => {
   const data = [
     { feedrate: 10, totalCost: 30, machineCost: 30, harvestLoss: 0.1 },
-    { feedrate: 20, totalCost: 25, machineCost: 30, harvestLoss: 0.2 },
-    { feedrate: 30, totalCost: 15, machineCost: 30, harvestLoss: 0.25 },
-    { feedrate: 40, totalCost: 10, machineCost: 30, harvestLoss: 0.35 },
-    { feedrate: 50, totalCost: 9, machineCost: 30, harvestLoss: 0.5 },
-    { feedrate: 60, totalCost: 8, machineCost: 30, harvestLoss: 0.75 },
-    { feedrate: 70, totalCost: 7, machineCost: 30, harvestLoss: 1 },
-    { feedrate: 80, totalCost: 8, machineCost: 30, harvestLoss: 2 },
-    { feedrate: 90, totalCost: 9, machineCost: 30, harvestLoss: 2.5 },
-    { feedrate: 100, totalCost: 10, machineCost: 30, harvestLoss: 3.0 },
+    { feedrate: 20, totalCost: 25, machineCost: 25, harvestLoss: 0.2 },
+    { feedrate: 30, totalCost: 15, machineCost: 15, harvestLoss: 0.25 },
+    { feedrate: 40, totalCost: 10, machineCost: 8, harvestLoss: 0.35 },
+    { feedrate: 50, totalCost: 9, machineCost: 7, harvestLoss: 0.5 },
+    { feedrate: 60, totalCost: 8, machineCost: 6, harvestLoss: 0.75 },
+    { feedrate: 70, totalCost: 7, machineCost: 5.5, harvestLoss: 1 },
+    { feedrate: 80, totalCost: 8, machineCost: 4, harvestLoss: 2 },
+    { feedrate: 90, totalCost: 9, machineCost: 3.5, harvestLoss: 2.5 },
+    { feedrate: 100, totalCost: 10, machineCost: 3, harvestLoss: 3.0 },
   ];
 
   const svgRef = React.useRef(null);
   useEffect(() => {
     createChart();
   });
-
-  function createChart2() {
-    var margin = { top: 20, right: 40, bottom: 30, left: 50 },
-      width = 200,
-      height = 100;
-
-    // set the ranges
-    var x = d3.scaleLinear().range([0, 110]);
-    var y0 = d3.scaleLinear().range([0, height]);
-    var y1 = d3.scaleLinear().range([height, 0]);
-
-    // define the 1st line
-    var valueline = d3
-      .line()
-      .x(function (d) {
-        return x(d.feedrate);
-      })
-      .y(function (d) {
-        return y0(d.totalCost);
-      });
-
-    // // define the 2nd line
-    var valueline2 = d3
-      .line()
-      .x(function (d) {
-        return x(d.feedrate);
-      })
-      .y(function (d) {
-        return y1(d.harvestLoss);
-      });
-
-    const svg = d3
-      .select(svgRef.current)
-      .attr("width", width * 2)
-      .attr("height", height * 2)
-      .attr("transform", "translate(" + -100 + "," + 10 + ")");
-
-    // // Scale the range of the data
-    x.domain(
-      d3.extent(data, function (d) {
-        return d.feedrate;
-      })
-    );
-    y0.domain([
-      0,
-      d3.max(data, function (d) {
-        return Math.max(d.totalCost);
-      }),
-    ]);
-    y1.domain([
-      0,
-      d3.max(data, function (d) {
-        return Math.max(d.harvestLoss);
-      }),
-    ]);
-
-    // // Add the valueline path.
-    svg.join("path").data([data]).attr("class", "line").attr("d", valueline);
-    // svg.join("path").attr("class", "line").attr("d", valueline);
-
-    // // Add the valueline2 path.
-    // svg
-    //   .join("path")
-    //   .data([data])
-    //   .attr("class", "line")
-    //   .style("stroke", "red")
-    //   .attr("d", valueline2);
-
-    // // Add the X Axis
-    svg
-      .append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
-
-    // // Add the Y0 Axis
-    svg
-      .append("g")
-      .attr("class", "green")
-      .attr("transform", "translate( " + 0 + ", 0 )")
-      .call(d3.axisLeft(y0));
-
-    // // Add the Y1 Axis
-    svg
-      .append("g")
-      .attr("class", "axisRed")
-      .attr("transform", "translate( " + width + ", 0 )")
-      .call(d3.axisRight(y1));
-  }
 
   function createChart() {
     var margin = { top: 20, right: 40, bottom: 30, left: 40 },
@@ -119,7 +31,7 @@ const Linegraph = () => {
     var y0 = d3.scaleLinear().range([height, 0]);
     var y1 = d3.scaleLinear().range([height, 0]);
 
-    var color = d3.scaleOrdinal().range(["steelblue", "red"]);
+    var color = d3.scaleOrdinal().range(["green", "#9cd95b", "#6b6e68"]);
 
     var xAxis = d3.axisBottom(x0).ticks(5);
 
@@ -159,7 +71,15 @@ const Linegraph = () => {
       .append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
+      .call(xAxis)
+      .append("text")
+      .attr("y", 3)
+      .attr("x", 100)
+      .attr("dy", "1em")
+      .style("text-anchor", "right")
+      .style("fill", "grey")
+      .attr("font-size", "1.5em")
+      .text("Grain Feedrate");
 
     svg
       .append("g")
@@ -167,11 +87,12 @@ const Linegraph = () => {
       .call(yAxisLeft)
       .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", 6)
+      .attr("y", -40)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .style("fill", "#98abc5")
-      .text("Total Cost");
+      .style("fill", "green")
+      .attr("font-size", "1.5em")
+      .text("Harvesting Cost");
 
     svg.select(".y0.axis").selectAll(".tick").style("fill", "#98abc5");
 
@@ -182,10 +103,12 @@ const Linegraph = () => {
       .call(yAxisRight)
       .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -16)
+      .attr("y", 30)
+      .attr("x", -15)
+      .attr("font-size", "1.5em")
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .style("fill", "#d0743c")
+      .style("fill", "#9cd95b")
       .text("Losses");
 
     svg.select(".y1.axis").selectAll(".tick").style("fill", "#d0743c");
@@ -195,7 +118,7 @@ const Linegraph = () => {
       .append("path")
       .datum(data)
       .attr("fill", "none")
-      .attr("stroke", "steelblue")
+      .attr("stroke", "green")
       .attr("stroke-width", 1.5)
       .attr(
         "d",
@@ -213,7 +136,7 @@ const Linegraph = () => {
       .append("path")
       .datum(data)
       .attr("fill", "none")
-      .attr("stroke", "red")
+      .attr("stroke", "#9cd95b")
       .attr("stroke-width", 1.5)
       .attr(
         "d",
@@ -227,28 +150,47 @@ const Linegraph = () => {
           })
       );
 
+    svg
+      .append("path")
+      .datum(data)
+      .attr("fill", "none")
+      .attr("stroke", "#6b6e68")
+      .attr("stroke-width", 1.5)
+      .attr(
+        "d",
+        d3
+          .line()
+          .x(function (d) {
+            return x0(d.feedrate);
+          })
+          .y(function (d) {
+            return y0(d.machineCost);
+          })
+      );
+
     // Legend
     var legend = svg
       .selectAll(".legend")
-      .data(["Total Cost", "Harvest Loss"].slice())
+      .data(["Total Cost", "Harvest Loss", "Machine Cost"].slice())
       .enter()
       .append("g")
       .attr("class", "legend")
       .attr("transform", function (d, i) {
-        return "translate(0," + i * 20 + ")";
+        return "translate(0," + i * 13 + ")";
       });
 
     legend
       .append("rect")
       .attr("x", width - 48)
-      .attr("width", 18)
-      .attr("height", 18)
+      .attr("width", 12)
+      .attr("height", 12)
       .style("fill", color);
 
     legend
       .append("text")
       .attr("x", width - 54)
       .attr("y", 9)
+      .attr("font-size", "0.75em")
       .attr("dy", ".35em")
       .style("text-anchor", "end")
       .text(function (d) {
