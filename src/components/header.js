@@ -9,8 +9,8 @@ function Header(props) {
   return (
     <div className="Header">
       <Navbar />
-      <h1>{props.title}</h1>
-      <img src={logo} width={100} height={100} alt="Logo"></img>
+      <h1 style={{paddingLeft:120}}>{props.title}</h1>
+      <img src={logo} width={120} height={100} alt="Logo"></img>
     </div>
   );
 }

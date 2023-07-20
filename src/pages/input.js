@@ -142,7 +142,7 @@ const AddData = () => {
         </div>
         <div>
           <input
-            className="inputBox"
+            className="inputBoxMain"
             type="number"
             value={yieldValue}
             onChange={handleYieldChange}
@@ -152,7 +152,7 @@ const AddData = () => {
         </div>
         <div>
           <input
-            className="inputBox"
+            className="inputBoxMain"
             type="number"
             value={headerWidthValue}
             onChange={handleHeaderWidthChange}
@@ -161,7 +161,7 @@ const AddData = () => {
           />
         </div>
         <div>
-          <select id="dropdown" value={annualHoursValue} className="inputBox" onChange={handleAnnualHoursChange}>
+          <select id="dropdown" value={annualHoursValue} className="inputBoxMain" onChange={handleAnnualHoursChange}>
             <option value="">Select Estimated Annual Hours</option>
             <option value={100}>100</option>
             <option value={300}>300</option>
@@ -171,7 +171,7 @@ const AddData = () => {
         <button
           className="button"
           type="submit"
-          style={{ marginTop: "50px", height: "70px" }}
+          style={{ marginTop: "40px", height: "70px" }}
         >
           Calculate Cost of Harvest
         </button>
