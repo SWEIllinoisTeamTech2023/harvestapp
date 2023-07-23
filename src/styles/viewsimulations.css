@@ -1,0 +1,18 @@
+.view-parent {
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    justify-content: center;
+    
+
+    /* background-color: aqua; */
+}
+
+.sim-card {
+    /* width:"600px"; */
+    background-color: white;
+    /* height:"40%"; */
+    width: 50%;
+    height: 30%;
+}

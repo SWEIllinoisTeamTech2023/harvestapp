@@ -43,6 +43,10 @@ const Simulate = () => {
     console.log(inputVars);
   };
 
+  const handleSaveSim = () => {
+    console.log("in savesimulation");
+  };
+
   useEffect(() => {
     fetchUser();
   }, []);
@@ -59,13 +63,6 @@ const Simulate = () => {
               value={inputVars.chafferClear}
               name="chafferClear"
               onChange={handleVariablesChange}
-              // onChange={() => {
-              //   setInputVars((prevInputVars) => ({
-              //     ...prevInputVars,
-              //     chafferClear: inputVars.chafferClear,
-              //   }));
-              //   console.log("HIIIII: ", inputVars.chafferClear);
-              // }}
               min="0"
               placeholder="Chaffer Clearance"
             />
@@ -75,12 +72,6 @@ const Simulate = () => {
               value={inputVars.concaveClear}
               name="concaveClear"
               onChange={handleVariablesChange}
-              // onChange={() => {
-              //   setInputVars((prevInputVars) => ({
-              //     ...prevInputVars,
-              //     chafferClear: inputVars.concaveClear,
-              //   }));
-              // }}
               min="0"
               placeholder="Concave Clearance"
             />
@@ -90,12 +81,6 @@ const Simulate = () => {
               value={inputVars.sieveClear}
               name="sieveClear"
               onChange={handleVariablesChange}
-              // onChange={() => {
-              //   setInputVars((prevInputVars) => ({
-              //     ...prevInputVars,
-              //     chafferClear: inputVars.sieveClear,
-              //   }));
-              // }}
               min="0"
               placeholder="Sieve Clearance"
             />
@@ -105,12 +90,6 @@ const Simulate = () => {
               value={inputVars.speed}
               name="speed"
               onChange={handleVariablesChange}
-              // onChange={() => {
-              //   setInputVars((prevInputVars) => ({
-              //     ...prevInputVars,
-              //     chafferClear: inputVars.speed,
-              //   }));
-              // }}
               min="0"
               placeholder="Speed"
             />
@@ -120,12 +99,6 @@ const Simulate = () => {
               value={inputVars.fanSpeed}
               name="fanSpeed"
               onChange={handleVariablesChange}
-              // onChange={() => {
-              //   setInputVars((prevInputVars) => ({
-              //     ...prevInputVars,
-              //     chafferClear: inputVars.fanSpeed,
-              //   }));
-              // }}
               min="0"
               placeholder="Fan Speed"
             />
@@ -135,12 +108,6 @@ const Simulate = () => {
               value={inputVars.rotorSpeed}
               name="rotorSpeed"
               onChange={handleVariablesChange}
-              // onChange={() => {
-              //   setInputVars((prevInputVars) => ({
-              //     ...prevInputVars,
-              //     chafferClear: inputVars.rotorSpeed,
-              //   }));
-              // }}
               min="0"
               placeholder="Rotor Speed"
             />
@@ -150,10 +117,17 @@ const Simulate = () => {
               style={{ marginTop: "30px" }}
               onClick={() => handleSaveVariables()}
             >
-              Save Edited Variables
+              Save Changes
             </button>
             <button className="button" type="submit">
-              Copy Optimized Variables
+              Copy Optimal Values
+            </button>
+            <button
+              className="button"
+              type="submit"
+              onClick={() => handleSaveSim}
+            >
+              Save Simulation
             </button>
           </div>
           <div class="display-simulation">
