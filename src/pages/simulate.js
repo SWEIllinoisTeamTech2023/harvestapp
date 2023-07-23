@@ -9,6 +9,14 @@ import Linegraph from "../components/linegraph";
 
 const Simulate = () => {
   const [user, setUser] = useState();
+  const [inputVars, setInputVars] = useState({
+    chafferClear: null,
+    concaveClear: null,
+    sieveClear: null,
+    speed: null,
+    fanSpeed: null,
+    rotorSpeed: null,
+  });
 
   async function fetchUser() {
     Auth.currentAuthenticatedUser({
@@ -20,6 +28,20 @@ const Simulate = () => {
       })
       .catch((err) => console.log(err));
   }
+
+  const handleVariablesChange = (e) => {
+    setInputVars((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+    // console.log("in handleVariableChange: ");
+    // console.log(inputVars);
+  };
+
+  const handleSaveVariables = () => {
+    console.log("in handleVariableChange: ");
+    console.log(inputVars);
+  };
 
   useEffect(() => {
     fetchUser();
@@ -34,56 +56,91 @@ const Simulate = () => {
             <input
               className="inputBox"
               type="number"
-              // value={yieldValue}
-              // onChange={handleYieldChange}
+              value={inputVars.chafferClear}
+              name="chafferClear"
+              onChange={handleVariablesChange}
+              // onChange={() => {
+              //   setInputVars((prevInputVars) => ({
+              //     ...prevInputVars,
+              //     chafferClear: inputVars.chafferClear,
+              //   }));
+              //   console.log("HIIIII: ", inputVars.chafferClear);
+              // }}
               min="0"
               placeholder="Chaffer Clearance"
             />
             <input
               className="inputBox"
               type="number"
-              // value={yieldValue}
-              // onChange={handleYieldChange}
+              value={inputVars.concaveClear}
+              name="concaveClear"
+              onChange={handleVariablesChange}
+              // onChange={() => {
+              //   setInputVars((prevInputVars) => ({
+              //     ...prevInputVars,
+              //     chafferClear: inputVars.concaveClear,
+              //   }));
+              // }}
               min="0"
               placeholder="Concave Clearance"
             />
             <input
               className="inputBox"
               type="number"
-              // value={yieldValue}
-              // onChange={handleYieldChange}
+              value={inputVars.sieveClear}
+              name="sieveClear"
+              onChange={handleVariablesChange}
+              // onChange={() => {
+              //   setInputVars((prevInputVars) => ({
+              //     ...prevInputVars,
+              //     chafferClear: inputVars.sieveClear,
+              //   }));
+              // }}
               min="0"
               placeholder="Sieve Clearance"
             />
             <input
               className="inputBox"
               type="number"
-              // value={yieldValue}
-              // onChange={handleYieldChange}
-              min="0"
-              placeholder="Harvest Cost"
-            />
-            <input
-              className="inputBox"
-              type="number"
-              // value={yieldValue}
-              // onChange={handleYieldChange}
+              value={inputVars.speed}
+              name="speed"
+              onChange={handleVariablesChange}
+              // onChange={() => {
+              //   setInputVars((prevInputVars) => ({
+              //     ...prevInputVars,
+              //     chafferClear: inputVars.speed,
+              //   }));
+              // }}
               min="0"
               placeholder="Speed"
             />
             <input
               className="inputBox"
               type="number"
-              // value={yieldValue}
-              // onChange={handleYieldChange}
+              value={inputVars.fanSpeed}
+              name="fanSpeed"
+              onChange={handleVariablesChange}
+              // onChange={() => {
+              //   setInputVars((prevInputVars) => ({
+              //     ...prevInputVars,
+              //     chafferClear: inputVars.fanSpeed,
+              //   }));
+              // }}
               min="0"
               placeholder="Fan Speed"
             />
             <input
               className="inputBox"
               type="number"
-              // value={yieldValue}
-              // onChange={handleYieldChange}
+              value={inputVars.rotorSpeed}
+              name="rotorSpeed"
+              onChange={handleVariablesChange}
+              // onChange={() => {
+              //   setInputVars((prevInputVars) => ({
+              //     ...prevInputVars,
+              //     chafferClear: inputVars.rotorSpeed,
+              //   }));
+              // }}
               min="0"
               placeholder="Rotor Speed"
             />
@@ -91,6 +148,7 @@ const Simulate = () => {
               className="button"
               type="submit"
               style={{ marginTop: "30px" }}
+              onClick={() => handleSaveVariables()}
             >
               Save Edited Variables
             </button>

@@ -147,7 +147,7 @@ const Linegraph = () => {
       .on("mousemove", function (event, d) {
         // console.log("hereeeee: ", d);
         d.forEach((element) => {
-          console.log("ojoijo: ", element);
+          //   console.log("ojoijo: ", element);
           return tooltip
             .style("top", event.pageY + 30 + "px")
             .style("left", event.pageX + 20 + "px")
@@ -195,7 +195,7 @@ const Linegraph = () => {
       .on("mousemove", function (event, d) {
         // console.log("hereeeee: ", d);
         d.forEach((element) => {
-          console.log("ojoijo: ", element);
+          //   console.log("ojoijo: ", element);
           return tooltip
             .style("top", event.pageY + 30 + "px")
             .style("left", event.pageX + 20 + "px")
@@ -242,9 +242,9 @@ const Linegraph = () => {
         return tooltip.style("visibility", "visible");
       })
       .on("mousemove", function (event, d) {
-        // console.log("hereeeee: ", d);
+        // console.log("hereeeee: ", d.keys());
         d.forEach((element) => {
-          console.log("ojoijo: ", element);
+          //   console.log("ojoijo: ", element);
           return tooltip
             .style("top", event.pageY + 30 + "px")
             .style("left", event.pageX + 20 + "px")
