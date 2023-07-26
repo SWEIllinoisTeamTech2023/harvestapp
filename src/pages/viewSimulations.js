@@ -18,6 +18,14 @@ import SavedSim from "../components/savedsim";
 
 const ViewSimulations = () => {
   const [user, setUser] = useState();
+  const [cardData, setCardData] = useState({
+    date: null,
+    id: null,
+    name: null,
+    cropType: null,
+    machineType: null,
+    inputVar: null,
+  });
 
   async function fetchUser() {
     Auth.currentAuthenticatedUser({
@@ -30,18 +38,42 @@ const ViewSimulations = () => {
       .catch((err) => console.log(err));
   }
 
+  async function fetchData() {
+    var data = {
+      date: "07/25/2023",
+      id: "123467",
+      name: "Harvest Operation #1",
+      cropType: "Corn",
+      machineType: "X-Series",
+      inputVar: {
+        chafferClear: 10,
+        concaveClear: 10,
+        sieveClear: 10,
+        speed: 10,
+        fanSpeed: 10,
+        rotorSpeed: 10,
+      },
+    };
+
+    setCardData(data);
+    console.log("IN FETCHDATA: ", cardData);
+  }
+
   useEffect(() => {
     fetchUser();
+    fetchData();
   }, []);
 
   return (
-    <div>
-      <Header title="View Saved Simulations"></Header>
-      <div class="view-parent">
-        <SavedSim />
-        <SavedSim />
+    console.log("IN return: ", cardData),
+    (
+      <div>
+        <Header title="View Saved Simulations"></Header>
+        <div class="view-parent">
+          <SavedSim cardData={cardData}></SavedSim>
+        </div>
       </div>
-    </div>
+    )
   );
 };
 
