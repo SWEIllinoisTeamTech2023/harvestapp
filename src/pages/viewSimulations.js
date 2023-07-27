@@ -71,6 +71,11 @@ const ViewSimulations = () => {
         <Header title="View Saved Simulations"></Header>
         <div class="view-parent">
           <SavedSim cardData={cardData}></SavedSim>
+          <SavedSim cardData={cardData}></SavedSim>
+          <SavedSim cardData={cardData}></SavedSim>
+          <SavedSim cardData={cardData}></SavedSim>
+          <SavedSim cardData={cardData}></SavedSim>
+          <SavedSim cardData={cardData}></SavedSim>
         </div>
       </div>
     )

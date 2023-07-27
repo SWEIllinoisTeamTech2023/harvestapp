@@ -1,17 +1,22 @@
 .view-parent {
     height:100vh;
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column;
     justify-self: center;
-    justify-items: center;
+    justify-items: center; */
+    display:grid;
+    column-gap: 10px;
+    grid-template-columns: auto auto auto;
+    margin-right:100px;
 }
 
 .sim-card {
     background-color: white;
-    width: 55%;
+    /* width: 80%; */
+    width:400px;
     margin-left: 25%;
     margin-bottom:100px;
-    height: 400px;
+    height: 550px;
     border-radius: 20px;
     padding-top:20px;
     flex-direction: column;
@@ -29,8 +34,8 @@
 
 .text-row {
     margin-bottom:10px;
-    justify-content: left;
-    text-align: left;
+    justify-content: center;
+    text-align: center;
     margin-left:30px;
     color:darkgreen;
 }
@@ -47,10 +52,11 @@
     display:grid;
     column-gap: 30px;
     grid-template-columns: auto auto auto;
+    margin-right:25px;
 }
 
 .view-button {
-    margin-left:35px;
+    margin-left:100px;
     margin-top:50px;
     width:200px;
     color: darkgreen;
