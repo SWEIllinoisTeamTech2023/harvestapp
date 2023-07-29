@@ -44,6 +44,8 @@ const Simulate = () => {
   };
 
   const handleSaveSim = () => {
+    //input name of simulation
+    //write to rds the simulation data which is saved
     console.log("in savesimulation");
   };
 
@@ -57,70 +59,108 @@ const Simulate = () => {
       <div class="simulate-parent">
         <div class="simulate-piechart">
           <div class="input-variables">
-            <input
-              className="inputBox"
+            <TextField
+              InputProps={{
+                style: {
+                  borderRadius: "15px",
+                  height: "50px",
+                  marginBottom: "12px",
+                },
+              }}
+              id="outlined-basic"
+              className="inputBoxNext"
               type="number"
+              label="Chaffer Clearance"
+              variant="outlined"
               value={inputVars.chafferClear}
-              name="chafferClear"
               onChange={handleVariablesChange}
-              min="0"
-              placeholder="Chaffer Clearance"
             />
-            <input
-              className="inputBox"
+            <TextField
+              InputProps={{
+                style: {
+                  borderRadius: "15px",
+                  height: "50px",
+                  marginBottom: "12px",
+                },
+              }}
+              id="outlined-basic"
+              className="inputBoxNext"
               type="number"
+              label="Concave Clearance"
+              variant="outlined"
               value={inputVars.concaveClear}
-              name="concaveClear"
               onChange={handleVariablesChange}
-              min="0"
-              placeholder="Concave Clearance"
             />
-            <input
-              className="inputBox"
+            <TextField
+              InputProps={{
+                style: {
+                  borderRadius: "15px",
+                  height: "50px",
+                  marginBottom: "12px",
+                },
+              }}
+              id="outlined-basic"
+              className="inputBoxNext"
               type="number"
+              label="Sieve Clearance"
+              variant="outlined"
               value={inputVars.sieveClear}
-              name="sieveClear"
               onChange={handleVariablesChange}
-              min="0"
-              placeholder="Sieve Clearance"
             />
-            <input
-              className="inputBox"
+            <TextField
+              InputProps={{
+                style: {
+                  borderRadius: "15px",
+                  height: "50px",
+                  marginBottom: "12px",
+                },
+              }}
+              id="outlined-basic"
+              className="inputBoxNext"
               type="number"
+              label="Speed"
+              variant="outlined"
               value={inputVars.speed}
-              name="speed"
               onChange={handleVariablesChange}
-              min="0"
-              placeholder="Speed"
             />
-            <input
-              className="inputBox"
+            <TextField
+              InputProps={{
+                style: {
+                  borderRadius: "15px",
+                  height: "50px",
+                  marginBottom: "12px",
+                },
+              }}
+              id="outlined-basic"
+              className="inputBoxNext"
               type="number"
+              label="Fan Speed"
+              variant="outlined"
               value={inputVars.fanSpeed}
-              name="fanSpeed"
               onChange={handleVariablesChange}
-              min="0"
-              placeholder="Fan Speed"
             />
-            <input
-              className="inputBox"
+            <TextField
+              InputProps={{
+                style: {
+                  borderRadius: "15px",
+                  height: "50px",
+                },
+              }}
+              id="outlined-basic"
+              className="inputBoxNext"
               type="number"
+              label="Rotor Speed"
+              variant="outlined"
               value={inputVars.rotorSpeed}
-              name="rotorSpeed"
               onChange={handleVariablesChange}
-              min="0"
-              placeholder="Rotor Speed"
             />
             <button
               className="button"
               type="submit"
-              style={{ marginTop: "30px" }}
+              style={{ marginTop: "8px" }}
               onClick={() => handleSaveVariables()}
             >
-              Save Changes
-            </button>
-            <button className="button" type="submit">
-              Copy Optimal Values
+              Edit Simulation
             </button>
             <button
               className="button"

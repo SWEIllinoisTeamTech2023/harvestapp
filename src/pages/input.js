@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { TextField } from "@mui/material";
 import corn from "../images/corn.png";
 import soy from "../images/soy.png";
 import wheat from "../images/wheat.png";
@@ -27,7 +28,7 @@ const AddData = () => {
         setUser(user);
       })
       .catch((err) => console.log(err));
-  };
+  }
 
   useEffect(() => {
     fetchUser();
@@ -102,7 +103,6 @@ const AddData = () => {
       });
   };
 
-
   return (
     <div>
       <Header title="Input Data"></Header>
@@ -131,8 +131,9 @@ const AddData = () => {
           {cropTypeOptions.map((option) => (
             <div
               key={option.id}
-              className={`crop-type ${cropTypeValue === option.id ? "selected" : ""
-                }`}
+              className={`crop-type ${
+                cropTypeValue === option.id ? "selected" : ""
+              }`}
               onClick={() => handleCropTypeChange(option.id)}
             >
               <img src={option.src} alt={option.alt} width={100} height={100} />
@@ -140,28 +141,51 @@ const AddData = () => {
             </div>
           ))}
         </div>
-        <div>
-          <input
-            className="inputBoxMain"
+        <div style={{ marginTop: "20px" }}>
+          <TextField
+            InputProps={{
+              style: {
+                width: "300px",
+                height: "50px",
+                background: "white",
+                borderRadius: "10px",
+                fontSize: "larger",
+              },
+            }}
+            id="filled"
             type="number"
+            label="Yield (lbs)"
+            variant="filled"
             value={yieldValue}
             onChange={handleYieldChange}
-            min="0"
-            placeholder="Yield (lbs)"
           />
         </div>
-        <div>
-          <input
-            className="inputBoxMain"
+        <div style={{ marginTop: "20px" }}>
+          <TextField
+            InputProps={{
+              style: {
+                width: "300px",
+                height: "50px",
+                background: "white",
+                borderRadius: "10px",
+                fontSize: "larger",
+              },
+            }}
+            id="filled"
             type="number"
+            label="Header Width (ft)"
+            variant="filled"
             value={headerWidthValue}
             onChange={handleHeaderWidthChange}
-            min="0"
-            placeholder="Header Width (ft)"
           />
         </div>
         <div>
-          <select id="dropdown" value={annualHoursValue} className="inputBoxMain" onChange={handleAnnualHoursChange}>
+          <select
+            id="dropdown"
+            value={annualHoursValue}
+            className="inputBoxMain"
+            onChange={handleAnnualHoursChange}
+          >
             <option value="">Select Estimated Annual Hours</option>
             <option value={100}>100</option>
             <option value={300}>300</option>

@@ -5,17 +5,6 @@ import Header from "../components/header";
 import "../styles/viewsimulations.css";
 import SavedSim from "../components/savedsim";
 
-//condensed version
-//date
-//name
-//crop type
-//machine type
-
-//full version
-//condensed version +
-//all input variables
-//pie chart (maybe view in simulate button)
-
 const ViewSimulations = () => {
   const [user, setUser] = useState();
   const [cardData, setCardData] = useState({

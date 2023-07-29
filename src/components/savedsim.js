@@ -50,6 +50,7 @@ const SavedSim = (props) => {
         </div>
       </div>
       <button
+        //pass on data to create chart
         className="view-button"
         // onClick={() => handleSaveSim}
       >
