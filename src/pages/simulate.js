@@ -3,12 +3,22 @@ import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import Header from "../components/header";
 import "../styles/simulate.css";
-import { TextField } from "@mui/material";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  DialogActions,
+  Button,
+} from "@mui/material";
 import Piechart from "../components/piechart";
 import Linegraph from "../components/linegraph";
 
 const Simulate = () => {
   const [user, setUser] = useState();
+  const [openSaveSim, setOpenSaveSim] = React.useState(false);
+  const [simName, setSimName] = useState("");
   const [inputVars, setInputVars] = useState({
     chafferClear: null,
     concaveClear: null,
@@ -38,15 +48,50 @@ const Simulate = () => {
     // console.log(inputVars);
   };
 
+  //edit simulation --> call model file again
   const handleSaveVariables = () => {
     console.log("in handleVariableChange: ");
     console.log(inputVars);
   };
 
-  const handleSaveSim = () => {
-    //input name of simulation
-    //write to rds the simulation data which is saved
-    console.log("in savesimulation");
+  const handleNameChange = (event) => {
+    setSimName(event.target.value);
+  };
+
+  const handleOpenSaveSim = () => {
+    setOpenSaveSim(true);
+  };
+
+  const handleSaveSim = (event) => {
+    event.preventDefault();
+    console.log("in savesimulation: ", simName);
+
+    //add inputId
+    const param = {
+      // user: user.attributes.email,
+      name: simName,
+      chafferClear: inputVars.chafferClear,
+      concaveClear: inputVars.concaveClear,
+      sieveClear: inputVars.sieveClear,
+      speed: inputVars.speed,
+      fanSpeed: inputVars.fanSpeed,
+      rotorSpeed: inputVars.rotorSpeed,
+    };
+    console.log("Param: ", param);
+    fetch("/saveSimulation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(param),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.message);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   useEffect(() => {
@@ -71,6 +116,7 @@ const Simulate = () => {
               className="inputBoxNext"
               type="number"
               label="Chaffer Clearance"
+              name="chafferClear"
               variant="outlined"
               value={inputVars.chafferClear}
               onChange={handleVariablesChange}
@@ -87,6 +133,7 @@ const Simulate = () => {
               className="inputBoxNext"
               type="number"
               label="Concave Clearance"
+              name="concaveClear"
               variant="outlined"
               value={inputVars.concaveClear}
               onChange={handleVariablesChange}
@@ -103,6 +150,7 @@ const Simulate = () => {
               className="inputBoxNext"
               type="number"
               label="Sieve Clearance"
+              name="sieveClear"
               variant="outlined"
               value={inputVars.sieveClear}
               onChange={handleVariablesChange}
@@ -119,6 +167,7 @@ const Simulate = () => {
               className="inputBoxNext"
               type="number"
               label="Speed"
+              name="speed"
               variant="outlined"
               value={inputVars.speed}
               onChange={handleVariablesChange}
@@ -135,6 +184,7 @@ const Simulate = () => {
               className="inputBoxNext"
               type="number"
               label="Fan Speed"
+              name="fanSpeed"
               variant="outlined"
               value={inputVars.fanSpeed}
               onChange={handleVariablesChange}
@@ -150,6 +200,7 @@ const Simulate = () => {
               className="inputBoxNext"
               type="number"
               label="Rotor Speed"
+              name="rotorSpeed"
               variant="outlined"
               value={inputVars.rotorSpeed}
               onChange={handleVariablesChange}
@@ -165,7 +216,7 @@ const Simulate = () => {
             <button
               className="button"
               type="submit"
-              onClick={() => handleSaveSim}
+              onClick={() => handleOpenSaveSim()}
             >
               Save Simulation
             </button>
@@ -175,6 +226,50 @@ const Simulate = () => {
             <Piechart />
           </div>
         </div>
+        <Dialog
+          className="saveName"
+          open={openSaveSim}
+          fullWidth
+          onClose={() => setOpenSaveSim(false)}
+          maxWidth="sm"
+          PaperProps={{
+            style: {
+              maxWidth: "40%",
+              minHeight: "35%",
+              maxHeight: "35%",
+              border: "2px",
+              borderRadius: "30px",
+              paddingLeft: "8px",
+              paddingRight: "30px",
+              paddingBottom: "10px",
+            },
+          }}
+        >
+          <DialogTitle sx={{ fontSize: "30px", fontWeight: "bold" }}>
+            Save Simulation
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText sx={{ marginBottom: "10%" }}>
+              Please enter the name of this simulation
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              fullWidth
+              id="name"
+              label="Name"
+              type="text"
+              variant="standard"
+              sx={{ fontSize: "50px" }}
+              onChange={handleNameChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleSaveSim}>Save Simulation</Button>
+            <Button onClick={() => setOpenSaveSim(false)}>Cancel</Button>
+          </DialogActions>
+        </Dialog>
+
         <div class="simulate-linegraph">
           <div class="display-simulation">
             <h2>Cost vs Feedrate</h2>

@@ -27,9 +27,33 @@ def storeInputs():
     # fuel_price = getFuelPrice()
     # crop_price = getCropPrice(data['crop_type'])
 
-    # TODO: Run model with inputs
+    # TODO: Run model with inputs & return simulation variables
 
     # Return a response
+    return jsonify(response), 200
+
+
+@app.route('/saveSimulation', methods=['POST'])
+def saveSimulation():
+    data = request.get_json()
+    print("this is the data: ", data)
+    response = rdsData.execute_statement(
+        resourceArn=CLUSTER_ARN,
+        secretArn=SECRET_ARN,
+        database='harvest',
+        sql='INSERT INTO harvest.SavedSimulations (inputId, user, name, rotor_speed, fan_speed, speed, sieve_clearance, concave_clearance, chaffer_clearance) VALUES ({},{},"{}",{},{},{},{},{},{})'.format(data["user"], data["name"], data["rotorSpeed"], data["speed"], data["sieveClear"], data["concaveClear"], data["chafferClear"]))
+
+    return jsonify(response), 200
+
+
+@app.route('/getSavedSimulations', methods=['GET'])
+def viewSavedSimulations():
+    response = rdsData.execute_statement(
+        resourceArn=CLUSTER_ARN,
+        secretArn=SECRET_ARN,
+        database='harvest',
+        sql='SELECT * FROM harvest.SavedSimulations (inputId, user, name, rotor_speed, fan_speed, speed, sieve_clearance, concave_clearance, chaffer_clearance)'
+    )
     return jsonify(response), 200
 
 
@@ -62,7 +86,7 @@ def getCropPrice(crop):
 # TODO: Create request to store model outputs in RDS and send to app
 
 
-@app.route('/storeOutputs', methods=['POST'])
+@ app.route('/storeOutputs', methods=['POST'])
 def storeOutputs():
     # Testing purposes, this data should be sent over from model
     # id should represent foreign key from inputs table
