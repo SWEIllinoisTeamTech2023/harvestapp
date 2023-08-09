@@ -31,7 +31,7 @@ const AddData = () => {
   }
 
   useEffect(() => {
-    fetchUser();
+    // fetchUser();
   }, []);
 
   const handleYieldChange = (event) => {
@@ -79,7 +79,8 @@ const AddData = () => {
     navigate("/simulate");
 
     const param = {
-      user: user.attributes.email,
+      // user: user.attributes.email,
+      user: "test@gmail.com",
       machine_type: machineTypeValue,
       header_width: headerWidthValue,
       yield: yieldValue,

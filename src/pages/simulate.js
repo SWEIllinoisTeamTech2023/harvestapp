@@ -33,8 +33,8 @@ const Simulate = () => {
       bypassCache: true, // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
     })
       .then((user) => {
-        console.log("in fetchUser: ", user.attributes.email);
-        setUser(user);
+        // console.log("in fetchUser: ", user.attributes.email);
+        setUser("Test User");
       })
       .catch((err) => console.log(err));
   }
@@ -69,6 +69,7 @@ const Simulate = () => {
     //add inputId
     const param = {
       // user: user.attributes.email,
+      user: "test@gmail.com",
       name: simName,
       chafferClear: inputVars.chafferClear,
       concaveClear: inputVars.concaveClear,
@@ -87,15 +88,16 @@ const Simulate = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.message);
+        console.log("IN DATAT: ", data.message);
       })
       .catch((error) => {
+        console.log("IN ERROR");
         console.error("Error:", error);
       });
   };
 
   useEffect(() => {
-    fetchUser();
+    // fetchUser();
   }, []);
 
   return (
