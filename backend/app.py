@@ -41,7 +41,7 @@ def saveSimulation():
         resourceArn=CLUSTER_ARN,
         secretArn=SECRET_ARN,
         database='harvest',
-        sql='INSERT INTO harvest.SavedSimulations (inputId, user, name, rotor_speed, fan_speed, speed, sieve_clearance, concave_clearance, chaffer_clearance) VALUES ({},{},"{}",{},{},{},{},{},{})'.format(data["user"], data["name"], data["rotorSpeed"], data["speed"], data["sieveClear"], data["concaveClear"], data["chafferClear"]))
+        sql='INSERT INTO harvest.SavedSimulations (user, name, rotor_speed, fan_speed, speed, sieve_clearance, concave_clearance, chaffer_clearance) VALUES ("{}","{}",{},{},{},{},{},{})'.format( data["user"],data["name"], data["rotorSpeed"], data["fanSpeed"], data["speed"], data["sieveClear"], data["concaveClear"], data["chafferClear"]))
 
     return jsonify(response), 200
 
@@ -98,6 +98,9 @@ def storeOutputs():
         database='harvest',
         sql='INSERT INTO harvest.Outputs (fan_speed, rotor_speed, concave_clearance, speed, chaffer_clearance, sieve_clearance, optimized_cost_of_harvest, id) VALUES ({},{},{},{},{},{},{},{})'.format(data["fan_speed"], data["rotor_speed"], data["concave_clearance"], data["speed"], data["chaffer_clearance"], data["sieve_clearance"], data["optimized_cost_of_harvest"], data["id"]))
 
+@ app.route('/test', methods=['POST'])
+def test():
+    return "hi"
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5000)
