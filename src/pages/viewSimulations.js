@@ -6,7 +6,7 @@ import "../styles/viewsimulations.css";
 import SavedSim from "../components/savedsim";
 
 const ViewSimulations = () => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState("test@gmail.com");
   const [cardData, setCardData] = useState({
     date: null,
     id: null,
@@ -28,24 +28,42 @@ const ViewSimulations = () => {
   }
 
   async function fetchData() {
-    var data = {
-      date: "07/25/2023",
-      id: "123467",
-      name: "Harvest Operation #1",
-      cropType: "Corn",
-      machineType: "X-Series",
-      inputVar: {
-        chafferClear: 10,
-        concaveClear: 10,
-        sieveClear: 10,
-        speed: 10,
-        fanSpeed: 10,
-        rotorSpeed: 10,
-      },
+    const param = {
+      user: user,
     };
+    console.log("IN fetch data: ", param);
+    fetch("/getSavedSimulations", {
+      method: "GET",
+    })
+      .then((response) => {
+        response.json();
+        // console.log("response.json ", message["records"]);
+        // console.log("user: ", message.user);
+      })
+      .then((data) => {
+        console.log("message: ", data.message);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    // var data = {
+    //   date: "07/25/2023",
+    //   id: "123467",
+    //   name: "Harvest Operation #1",
+    //   cropType: "Corn",
+    //   machineType: "X-Series",
+    //   inputVar: {
+    //     chafferClear: 10,
+    //     concaveClear: 10,
+    //     sieveClear: 10,
+    //     speed: 10,
+    //     fanSpeed: 10,
+    //     rotorSpeed: 10,
+    //   },
+    // };
 
-    setCardData(data);
-    console.log("IN FETCHDATA: ", cardData);
+    // setCardData(data);
+    // console.log("IN FETCHDATA: ", cardData);
   }
 
   useEffect(() => {
@@ -59,12 +77,12 @@ const ViewSimulations = () => {
       <div>
         <Header title="View Saved Simulations"></Header>
         <div class="view-parent">
+          {/* <SavedSim cardData={cardData}></SavedSim>
           <SavedSim cardData={cardData}></SavedSim>
           <SavedSim cardData={cardData}></SavedSim>
           <SavedSim cardData={cardData}></SavedSim>
           <SavedSim cardData={cardData}></SavedSim>
-          <SavedSim cardData={cardData}></SavedSim>
-          <SavedSim cardData={cardData}></SavedSim>
+          <SavedSim cardData={cardData}></SavedSim> */}
         </div>
       </div>
     )
