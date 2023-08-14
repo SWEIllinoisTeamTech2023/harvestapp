@@ -71,6 +71,7 @@ const Simulate = () => {
       // user: user.attributes.email,
       user: "test@gmail.com",
       name: simName,
+      date: Date.now(),
       chafferClear: inputVars.chafferClear,
       concaveClear: inputVars.concaveClear,
       sieveClear: inputVars.sieveClear,
