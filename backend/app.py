@@ -1,6 +1,7 @@
 from flask import Flask, request
 import json
 from secret import CLUSTER_ARN, SECRET_ARN, EIA_FUEL_PRICE_API_KEY
+# import jsonpickle
 
 from flask.json import jsonify
 import boto3
@@ -55,8 +56,8 @@ def viewSavedSimulations():
         database='harvest',
         sql='SELECT * FROM harvest.SavedSimulations'
     )
-    print("jsonify reponse: ", response['records'])
-    return jsonify(response), 200
+    # print("jsonify reponse: ", response['records'])
+    return json.dumps(response['records'])
 
 
 def getFuelPrice():

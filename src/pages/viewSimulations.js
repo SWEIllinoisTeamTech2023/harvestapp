@@ -7,14 +7,17 @@ import SavedSim from "../components/savedsim";
 
 const ViewSimulations = () => {
   const [user, setUser] = useState("test@gmail.com");
-  const [cardData, setCardData] = useState({
-    date: null,
-    id: null,
-    name: null,
-    cropType: null,
-    machineType: null,
-    inputVar: null,
-  });
+  const [cardData, setCardData] = useState([
+    {
+      inputId: null,
+      id: null,
+      name: null,
+      date: null,
+      cropType: null,
+      machineType: null,
+      inputVar: null,
+    },
+  ]);
 
   async function fetchUser() {
     Auth.currentAuthenticatedUser({
@@ -32,38 +35,37 @@ const ViewSimulations = () => {
       user: user,
     };
     console.log("IN fetch data: ", param);
-    fetch("/getSavedSimulations", {
+    const response = await fetch("/getSavedSimulations", {
       method: "GET",
-    })
-      .then((response) => {
-        response.json();
-        // console.log("response.json ", message["records"]);
-        // console.log("user: ", message.user);
-      })
-      .then((data) => {
-        console.log("message: ", data.message);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-    // var data = {
-    //   date: "07/25/2023",
-    //   id: "123467",
-    //   name: "Harvest Operation #1",
-    //   cropType: "Corn",
-    //   machineType: "X-Series",
-    //   inputVar: {
-    //     chafferClear: 10,
-    //     concaveClear: 10,
-    //     sieveClear: 10,
-    //     speed: 10,
-    //     fanSpeed: 10,
-    //     rotorSpeed: 10,
-    //   },
-    // };
+    });
+    const responseRec = await response.json();
+    console.log("responseRec: ", responseRec);
+    var data = [];
+    responseRec.forEach((element) => {
+      console.log(element);
+      var currData = {
+        inputId: element[0].longValue,
+        id: element[1].longValue,
+        user: element[2].stringValue,
+        name: element[3].stringValue,
+        date: element[4].stringValue,
+        cropType: element[5].stringValue,
+        machineType: element[6].stringValue,
+        inputVar: {
+          rotorSpeed: element[7].longValue,
+          fanSpeed: element[8].longValue,
+          speed: element[9].longValue,
+          sieveClear: element[10].longValue,
+          concaveClear: element[11].longValue,
+          chafferClear: element[12].longValue,
+        },
+      };
+      data.push(currData);
+      console.log("this is currData", currData);
+    });
 
-    // setCardData(data);
-    // console.log("IN FETCHDATA: ", cardData);
+    setCardData(data);
+    console.log("IN FETCHDATA: ", cardData);
   }
 
   useEffect(() => {
@@ -77,12 +79,11 @@ const ViewSimulations = () => {
       <div>
         <Header title="View Saved Simulations"></Header>
         <div class="view-parent">
-          {/* <SavedSim cardData={cardData}></SavedSim>
-          <SavedSim cardData={cardData}></SavedSim>
-          <SavedSim cardData={cardData}></SavedSim>
-          <SavedSim cardData={cardData}></SavedSim>
-          <SavedSim cardData={cardData}></SavedSim>
-          <SavedSim cardData={cardData}></SavedSim> */}
+          {Object.values(cardData).map((cards) => {
+            for (let i in cards) {
+              return <SavedSim cardData={cards}></SavedSim>;
+            }
+          })}
         </div>
       </div>
     )

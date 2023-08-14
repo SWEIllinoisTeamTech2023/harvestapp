@@ -4,6 +4,8 @@ import "../styles/viewsimulations.css";
 const SavedSim = (props) => {
   const cardData = props.cardData;
   const inputVar = props.cardData.inputVar;
+  var date = new Date(cardData.date);
+  date = date.toDateString();
 
   console.log("IN SAVEDSIM: ", cardData);
 
@@ -12,9 +14,10 @@ const SavedSim = (props) => {
       <div class="text-row" style={{ fontWeight: "bold", fontSize: "25px" }}>
         {cardData.name}
       </div>
-      <div class="text-row">{cardData.date}</div>
+      <div class="text-row">{date}</div>
       <div class="text-row">Crop Type: {cardData.cropType}</div>
       <div class="text-row">Machine Type: {cardData.machineType}</div>
+      <div class="text-row">Overall Cost: 12345</div>
       <div
         style={{
           border: "2px solid darkgray",
