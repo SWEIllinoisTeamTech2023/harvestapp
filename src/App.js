@@ -30,7 +30,7 @@ function App() {
           <Route exact path="/home" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/input" element={<Input />} />
-          {/* <Route exact path="/view-simulations" element={<ViewSimulations />} /> */}
+          <Route exact path="/view-simulations" element={<ViewSimulations />} />
           <Route exact path="/simulate" element={<Simulate />} />
         </Routes>
       </Router>

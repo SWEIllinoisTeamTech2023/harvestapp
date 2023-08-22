@@ -1,6 +1,7 @@
 from flask import Flask, request
 import json
 from secret import CLUSTER_ARN, SECRET_ARN, EIA_FUEL_PRICE_API_KEY
+from test_endpoint import temporary_endpoint
 # import jsonpickle
 
 from flask.json import jsonify
@@ -24,6 +25,8 @@ def storeInputs():
         database='harvest',
         sql='INSERT INTO harvest.Inputs (user, machine_type, header_width, yield, crop_type, annual_hours) VALUES ("{}","{}", {}, {}, "{}",{})'.format(data["user"], data["machine_type"], data["header_width"], data["yield"], data["crop_type"], data["annual_hours"]))
 
+    storeCostDistributions()
+
     # Call API and store API results into APIPrice Table
     # fuel_price = getFuelPrice()
     # crop_price = getCropPrice(data['crop_type'])
@@ -32,6 +35,17 @@ def storeInputs():
 
     # Return a response
     return jsonify(response), 200
+
+
+def storeCostDistributions():
+    data = temporary_endpoint()
+    response = rdsData.execute_statement(
+        resourceArn=CLUSTER_ARN,
+        secretArn=SECRET_ARN,
+        database='harvest',
+        sql='INSERT INTO harvest.CostDistribution(id, grain_loss, labor_cost, fuel_cost, depreciation_cost, total_costofharvest) VALUES (2,{},{},{},{},{})'.format(data["grain_loss"], data["labor_cost"], data["fuel_cost"], data["depreciation_cost"], data["total_costofharvest"]))
+
+    return jsonify(response, 200)
 
 
 @app.route('/saveSimulation', methods=['POST'])
