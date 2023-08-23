@@ -3,16 +3,17 @@ import * as d3 from "d3";
 import { setRef } from "@mui/material";
 import "../styles/simulate.css";
 
-const Piechart = () => {
+const Piechart = (props) => {
+  const rawData = props.data[0];
+  console.log("in piechart: ", rawData);
   const data = [
-    { name: "Grain Dockage", value: 4000 },
-    { name: "Grain Loss", value: 80000 },
-    { name: "Fleet Labor", value: 30000 },
-    { name: "Fleet Fuel and Lubrication", value: 93840 },
-    { name: "Fleet Repair Cost", value: 19420 },
-    { name: "Fleet Tax Insurance Housing", value: 24472 },
-    { name: "Fleet Interest and Depreciation", value: 415760 },
+    { name: "Grain Loss", value: rawData[1].doubleValue },
+    { name: "Labor Cost", value: rawData[2].doubleValue },
+    { name: "Fuel Cost", value: rawData[3].doubleValue },
+    { name: "Depreciation Cost", value: rawData[4].doubleValue },
+    { name: "Total Cost of Harvest", value: rawData[5].doubleValue }, //add total cost somehwere else
   ];
+  console.log("HERE IS DATA: ", data);
 
   const svgRef = React.useRef(null);
   useEffect(() => {
@@ -35,8 +36,8 @@ const Piechart = () => {
         "#9cd95b",
         "#48800d",
         "#6b6e68",
-        "#5fed80",
-        "#023d10",
+        // "#5fed80",
+        // "#023d10",
       ]);
 
     // Create the pie layout and arc generator.

@@ -16,9 +16,11 @@ import Piechart from "../components/piechart";
 import Linegraph from "../components/linegraph";
 
 const Simulate = () => {
-  const {state} = useLocation();
+  const { state } = useLocation();
   const [user, setUser] = useState();
+  const [costData, setCostData] = useState();
   const [openSaveSim, setOpenSaveSim] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [simName, setSimName] = useState("");
   const [inputVars, setInputVars] = useState({
     chafferClear: null,
@@ -28,7 +30,6 @@ const Simulate = () => {
     fanSpeed: null,
     rotorSpeed: null,
   });
-  console.log(state)
 
   async function fetchUser() {
     Auth.currentAuthenticatedUser({
@@ -46,8 +47,6 @@ const Simulate = () => {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-    // console.log("in handleVariableChange: ");
-    // console.log(inputVars);
   };
 
   //edit simulation --> call model file again
@@ -99,9 +98,24 @@ const Simulate = () => {
       });
   };
 
+  const getCost = async () => {
+    console.log("here in getCost");
+    // setIsLoading(true);
+    const response = await fetch("/getcost", {
+      method: "GET",
+    });
+    const responseRec = await response.json();
+    console.log("responseRec: ", responseRec);
+    setCostData(responseRec);
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     // fetchUser();
-  }, []);
+    console.log("loading: ", isLoading);
+    getCost();
+    console.log("after loading: ", isLoading);
+  }, [isLoading]);
 
   return (
     <div>
@@ -228,7 +242,7 @@ const Simulate = () => {
           </div>
           <div class="display-simulation">
             <h2>Cost Distribution</h2>
-            <Piechart />
+            {!isLoading && <Piechart data={costData} />}
           </div>
         </div>
         <Dialog
