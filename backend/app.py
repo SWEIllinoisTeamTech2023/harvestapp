@@ -54,10 +54,9 @@ def getCostDistributions():
         resourceArn=CLUSTER_ARN,
         secretArn=SECRET_ARN,
         database='harvest',
-        sql='INSERT INTO harvest.CostDistribution(grain_loss, labor_cost, fuel_cost, depreciation_cost, total_costofharvest) VALUES (2,{},{},{},{},{})'.format(data["grain_loss"], data["labor_cost"], data["fuel_cost"], data["depreciation_cost"], data["total_costofharvest"]))
-    print("stored cost distributions")
+        sql='SELECT * FROM harvest.CostDistribution WHERE inputId = 3')
+    print("cost distribution received: ", response)
     return jsonify(response, 200)
-
 
 @app.route('/saveSimulation', methods=['POST'])
 def saveSimulation():
@@ -110,26 +109,6 @@ def getCropPrice(crop):
         database='harvest',
         sql='INSERT INTO harvest.APIPrices (date, {}) VALUES (CURDATE(),{}) ON DUPLICATE KEY UPDATE {}={}'.format(crop, crop_price))
     return crop_price
-
-# TODO: Create request to store model outputs in RDS and send to app
-
-
-# @ app.route('/storeOutputs', methods=['POST'])
-# def storeOutputs():
-#     # Testing purposes, this data should be sent over from model
-#     # id should represent foreign key from inputs table
-#     data = {"fan_speed": 30, "rotor_speed": 12, "concave_clearance": 200, "speed": 30,
-#             "chaffer_clearance": 20, "sieve_clearance": 10, "optimized_cost_of_harvest": 100, "id": 123}
-#     rdsData.execute_statement(
-#         resourceArn=CLUSTER_ARN,
-#         secretArn=SECRET_ARN,
-#         database='harvest',
-#         sql='INSERT INTO harvest.Outputs (fan_speed, rotor_speed, concave_clearance, speed, chaffer_clearance, sieve_clearance, optimized_cost_of_harvest, id) VALUES ({},{},{},{},{},{},{},{})'.format(data["fan_speed"], data["rotor_speed"], data["concave_clearance"], data["speed"], data["chaffer_clearance"], data["sieve_clearance"], data["optimized_cost_of_harvest"], data["id"]))
-
-
-# @ app.route('/test', methods=['POST'])
-# def test():
-#     return "hi"
 
 
 if __name__ == '__main__':
