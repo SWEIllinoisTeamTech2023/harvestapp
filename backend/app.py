@@ -25,6 +25,7 @@ def storeInputs():
         database='harvest',
         sql='INSERT INTO harvest.Inputs (user, machine_type, header_width, yield, crop_type, annual_hours) VALUES ("{}","{}", {}, {}, "{}",{})'.format(data["user"], data["machine_type"], data["header_width"], data["yield"], data["crop_type"], data["annual_hours"]))
 
+    # send inputs and API results as parameter
     storeCostDistributions()
 
     # Call API and store API results into APIPrice Table
@@ -43,8 +44,18 @@ def storeCostDistributions():
         resourceArn=CLUSTER_ARN,
         secretArn=SECRET_ARN,
         database='harvest',
-        sql='INSERT INTO harvest.CostDistribution(id, grain_loss, labor_cost, fuel_cost, depreciation_cost, total_costofharvest) VALUES (2,{},{},{},{},{})'.format(data["grain_loss"], data["labor_cost"], data["fuel_cost"], data["depreciation_cost"], data["total_costofharvest"]))
+        sql='INSERT INTO harvest.CostDistribution(grain_loss, labor_cost, fuel_cost, depreciation_cost, total_costofharvest) VALUES ({},{},{},{},{})'.format(data["grain_loss"], data["labor_cost"], data["fuel_cost"], data["depreciation_cost"], data["total_costofharvest"]))
+    print("stored cost distributions")
+    return jsonify(response, 200)
 
+def getCostDistributions():
+    data = temporary_endpoint()
+    response = rdsData.execute_statement(
+        resourceArn=CLUSTER_ARN,
+        secretArn=SECRET_ARN,
+        database='harvest',
+        sql='INSERT INTO harvest.CostDistribution(grain_loss, labor_cost, fuel_cost, depreciation_cost, total_costofharvest) VALUES (2,{},{},{},{},{})'.format(data["grain_loss"], data["labor_cost"], data["fuel_cost"], data["depreciation_cost"], data["total_costofharvest"]))
+    print("stored cost distributions")
     return jsonify(response, 200)
 
 
@@ -103,22 +114,22 @@ def getCropPrice(crop):
 # TODO: Create request to store model outputs in RDS and send to app
 
 
-@ app.route('/storeOutputs', methods=['POST'])
-def storeOutputs():
-    # Testing purposes, this data should be sent over from model
-    # id should represent foreign key from inputs table
-    data = {"fan_speed": 30, "rotor_speed": 12, "concave_clearance": 200, "speed": 30,
-            "chaffer_clearance": 20, "sieve_clearance": 10, "optimized_cost_of_harvest": 100, "id": 123}
-    rdsData.execute_statement(
-        resourceArn=CLUSTER_ARN,
-        secretArn=SECRET_ARN,
-        database='harvest',
-        sql='INSERT INTO harvest.Outputs (fan_speed, rotor_speed, concave_clearance, speed, chaffer_clearance, sieve_clearance, optimized_cost_of_harvest, id) VALUES ({},{},{},{},{},{},{},{})'.format(data["fan_speed"], data["rotor_speed"], data["concave_clearance"], data["speed"], data["chaffer_clearance"], data["sieve_clearance"], data["optimized_cost_of_harvest"], data["id"]))
+# @ app.route('/storeOutputs', methods=['POST'])
+# def storeOutputs():
+#     # Testing purposes, this data should be sent over from model
+#     # id should represent foreign key from inputs table
+#     data = {"fan_speed": 30, "rotor_speed": 12, "concave_clearance": 200, "speed": 30,
+#             "chaffer_clearance": 20, "sieve_clearance": 10, "optimized_cost_of_harvest": 100, "id": 123}
+#     rdsData.execute_statement(
+#         resourceArn=CLUSTER_ARN,
+#         secretArn=SECRET_ARN,
+#         database='harvest',
+#         sql='INSERT INTO harvest.Outputs (fan_speed, rotor_speed, concave_clearance, speed, chaffer_clearance, sieve_clearance, optimized_cost_of_harvest, id) VALUES ({},{},{},{},{},{},{},{})'.format(data["fan_speed"], data["rotor_speed"], data["concave_clearance"], data["speed"], data["chaffer_clearance"], data["sieve_clearance"], data["optimized_cost_of_harvest"], data["id"]))
 
 
-@ app.route('/test', methods=['POST'])
-def test():
-    return "hi"
+# @ app.route('/test', methods=['POST'])
+# def test():
+#     return "hi"
 
 
 if __name__ == '__main__':

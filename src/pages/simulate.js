@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Header from "../components/header";
 import "../styles/simulate.css";
 import {
@@ -16,6 +16,7 @@ import Piechart from "../components/piechart";
 import Linegraph from "../components/linegraph";
 
 const Simulate = () => {
+  const {state} = useLocation();
   const [user, setUser] = useState();
   const [openSaveSim, setOpenSaveSim] = React.useState(false);
   const [simName, setSimName] = useState("");
@@ -27,6 +28,7 @@ const Simulate = () => {
     fanSpeed: null,
     rotorSpeed: null,
   });
+  console.log(state)
 
   async function fetchUser() {
     Auth.currentAuthenticatedUser({

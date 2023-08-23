@@ -76,7 +76,6 @@ const AddData = () => {
     setMachineTypeValue("");
     setHeaderWidthValue(0);
     setAnnualHoursValue(0);
-    navigate("/simulate");
 
     const param = {
       // user: user.attributes.email,
@@ -87,6 +86,7 @@ const AddData = () => {
       crop_type: cropTypeValue,
       annual_hours: annualHoursValue,
     };
+    navigate("/simulate", {state: {data: param}});
     console.log("Param: ", param);
     fetch("/storeInputs", {
       method: "POST",
