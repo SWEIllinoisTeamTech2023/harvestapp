@@ -7,6 +7,7 @@ import SavedSim from "../components/savedsim";
 
 const ViewSimulations = () => {
   const [user, setUser] = useState("test@gmail.com");
+  const [isLoading, setIsLoading] = useState(true);
   const [cardData, setCardData] = useState([
     {
       inputId: null,
@@ -30,7 +31,7 @@ const ViewSimulations = () => {
       .catch((err) => console.log(err));
   }
 
-  async function fetchData() {
+  const fetchData = async () => {
     const param = {
       user: user,
     };
@@ -61,17 +62,18 @@ const ViewSimulations = () => {
         },
       };
       data.push(currData);
+      setIsLoading(false);
       console.log("this is currData", currData);
     });
 
     setCardData(data);
     console.log("IN FETCHDATA: ", cardData);
-  }
+  };
 
   useEffect(() => {
     fetchUser();
     fetchData();
-  }, []);
+  }, [isLoading]);
 
   return (
     console.log("IN return: ", cardData),
@@ -79,11 +81,12 @@ const ViewSimulations = () => {
       <div>
         <Header title="View Saved Simulations"></Header>
         <div class="view-parent">
-          {Object.values(cardData).map((cards) => {
-            for (let i in cards) {
-              return <SavedSim cardData={cards}></SavedSim>;
-            }
-          })}
+          {!isLoading &&
+            Object.values(cardData).map((cards) => {
+              for (let i in cards) {
+                return <SavedSim cardData={cards}></SavedSim>;
+              }
+            })}
         </div>
       </div>
     )
