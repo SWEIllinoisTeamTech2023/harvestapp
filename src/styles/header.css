@@ -1,12 +1,14 @@
 .Header {
-    box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: baseline;
-    padding: 0.5%;
-    margin-bottom: 5%;
-    background-color:#5e775a;
-    color: #fff;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: baseline;
+  margin-bottom: 5%;
+  background-color: #5e775a;
+  color: #fff;
 }

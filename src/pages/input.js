@@ -63,7 +63,7 @@ const AddData = () => {
     setAnnualHoursValue(value);
   };
 
- const handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Yield: ", yieldValue);
     console.log("Crop Type: ", cropTypeValue);
@@ -95,13 +95,12 @@ const AddData = () => {
     })
       .then(async (data) => {
         // const d = await data
-        const d = await data.json()
-        const input_id = d['data']
+        const d = await data.json();
+        const input_id = d["data"];
         // console.log("data: ", input_id);
-        param['input_id'] = input_id
+        param["input_id"] = input_id;
         console.log("Param: ", param);
-        navigate("/simulate", {state: {data: param}});
-        
+        navigate("/simulate", { state: { data: param } });
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -111,7 +110,7 @@ const AddData = () => {
   return (
     <div>
       <Header title="Input Data"></Header>
-      <form onSubmit={handleSubmit}>
+      <form style={{ marginTop: "150px" }} onSubmit={handleSubmit}>
         <div>
           <h3> Machine Type: </h3>
           <div>
@@ -200,7 +199,7 @@ const AddData = () => {
         <button
           className="button"
           type="submit"
-          style={{ marginTop: "40px", height: "70px" }}
+          style={{ marginTop: "40px", marginBottom: "40px", height: "70px" }}
         >
           Calculate Cost of Harvest
         </button>
