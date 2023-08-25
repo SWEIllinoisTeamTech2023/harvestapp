@@ -67,18 +67,24 @@ const Simulate = () => {
     event.preventDefault();
     console.log("in savesimulation: ", simName);
     var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date+' '+time;
+    var date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
+    var time =
+      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date + " " + time;
 
     //add inputId
     const param = {
       // user: user.attributes.email,
       user: "test@gmail.com",
       name: simName,
-      crop_type: state['data']['crop_type'],
-      machine_type: state['data']['machine_type'],
-      input_id: state['data']['input_id'],
+      crop_type: state["data"]["crop_type"],
+      machine_type: state["data"]["machine_type"],
+      input_id: state["data"]["input_id"],
       date: dateTime,
       chafferClear: inputVars.chafferClear,
       concaveClear: inputVars.concaveClear,
@@ -110,9 +116,12 @@ const Simulate = () => {
     // console.log("state: ", state)
     // console.log("inputid: ", state['data']['input_id'])
     // setIsLoading(true);
-    const response = await fetch("/getCostDistribution?input_id=" + state['data']['input_id'], {
-      method: "GET",
-    });
+    const response = await fetch(
+      "/getCostDistribution?input_id=" + state["data"]["input_id"],
+      {
+        method: "GET",
+      }
+    );
     const responseRec = await response.json();
     console.log("responseRec: ", responseRec);
     setCostData(responseRec);

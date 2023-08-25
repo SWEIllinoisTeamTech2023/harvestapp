@@ -11,8 +11,8 @@ const Piechart = (props) => {
     { name: "Labor Cost", value: rawData[2].doubleValue },
     { name: "Fuel Cost", value: rawData[3].doubleValue },
     { name: "Depreciation Cost", value: rawData[4].doubleValue },
-    { name: "Total Cost of Harvest", value: rawData[5].doubleValue }, //add total cost somehwere else
   ];
+  const totalCost = rawData[5].doubleValue;
   console.log("HERE IS DATA: ", data);
 
   const svgRef = React.useRef(null);
@@ -102,6 +102,7 @@ const Piechart = (props) => {
 
   return (
     <div style={{ width: "110%", height: "110%" }}>
+      <h2 style={{ marginRight: "10%" }}> Total: ${totalCost}</h2>
       <svg ref={svgRef} />
     </div>
   );
