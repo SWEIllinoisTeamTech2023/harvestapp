@@ -71,7 +71,7 @@ def saveSimulation():
         resourceArn=CLUSTER_ARN,
         secretArn=SECRET_ARN,
         database='harvest',
-        sql='INSERT INTO harvest.SavedSimulations (inputId, date, crop_type, machine_type, user, name, rotor_speed, fan_speed, speed, sieve_clearance, concave_clearance, chaffer_clearance) VALUES ({},"{}","{}","{}","{}","{}",{},{},{},{},{},{})'.format(data["input_id"], data["date"], data["crop_type"], data["machine_type"], data["user"], data["name"], data["rotorSpeed"], data["fanSpeed"], data["speed"], data["sieveClear"], data["concaveClear"], data["chafferClear"]))
+        sql='INSERT INTO harvest.SavedSimulations (inputId, date, crop_type, total_costofharvest, machine_type, user, name, rotor_speed, fan_speed, speed, sieve_clearance, concave_clearance, chaffer_clearance) VALUES ({},"{}","{}",{},"{}","{}","{}",{},{},{},{},{},{})'.format(data["input_id"], data["date"], data["crop_type"], data["total_costofharvest"], data["machine_type"], data["user"], data["name"], data["rotorSpeed"], data["fanSpeed"], data["speed"], data["sieveClear"], data["concaveClear"], data["chafferClear"]))
 
     return jsonify(response), 200
 

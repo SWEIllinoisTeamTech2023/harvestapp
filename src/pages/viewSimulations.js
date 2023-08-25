@@ -45,7 +45,7 @@ const ViewSimulations = () => {
     responseRec.forEach((element) => {
       console.log(element);
       var currData = {
-        inputId: element[0].longValue,
+        input_id: element[0].longValue,
         id: element[1].longValue,
         user: element[2].stringValue,
         name: element[3].stringValue,
@@ -60,6 +60,7 @@ const ViewSimulations = () => {
           concaveClear: element[11].longValue,
           chafferClear: element[12].longValue,
         },
+        totalCost: element[13].longValue
       };
       data.push(currData);
       setIsLoading(false);

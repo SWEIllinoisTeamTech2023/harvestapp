@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "../styles/viewsimulations.css";
+import { useNavigate } from "react-router-dom";
 
 const SavedSim = (props) => {
   const cardData = props.cardData;
+  const navigate = useNavigate();
   const inputVar = props.cardData.inputVar;
   var date = new Date(cardData.date);
   date = date.toDateString();
 
   console.log("IN SAVEDSIM: ", cardData);
+
+  const handleSaveSim = () => {
+    console.log("carddata: ", cardData)
+    navigate("/simulate", { state: { data: cardData } });
+  };
 
   return (
     <div class="sim-card">
@@ -17,7 +24,7 @@ const SavedSim = (props) => {
       <div class="text-row">{date}</div>
       <div class="text-row">Crop Type: {cardData.cropType}</div>
       <div class="text-row">Machine Type: {cardData.machineType}</div>
-      <div class="text-row">Overall Cost: 12345</div>
+      <div class="text-row">Overall Cost: {cardData.totalCost}</div>
       <div
         style={{
           border: "2px solid darkgray",
@@ -55,8 +62,9 @@ const SavedSim = (props) => {
       <button
         //pass on data to create chart
         className="view-button"
-        // onClick={() => handleSaveSim}
-      >
+        type="submit"
+        onClick={() => handleSaveSim()}
+      > 
         View in Simulation
       </button>
     </div>

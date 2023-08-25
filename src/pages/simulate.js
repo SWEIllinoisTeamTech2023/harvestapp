@@ -76,7 +76,7 @@ const Simulate = () => {
     var time =
       today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date + " " + time;
-
+    console.log("costdata: ", costData)
     //add inputId
     const param = {
       // user: user.attributes.email,
@@ -85,6 +85,7 @@ const Simulate = () => {
       crop_type: state["data"]["crop_type"],
       machine_type: state["data"]["machine_type"],
       input_id: state["data"]["input_id"],
+      total_costofharvest: costData[0][5].doubleValue,
       date: dateTime,
       chafferClear: inputVars.chafferClear,
       concaveClear: inputVars.concaveClear,
@@ -109,6 +110,7 @@ const Simulate = () => {
         console.log("IN ERROR");
         console.error("Error:", error);
       });
+      setOpenSaveSim(false);
   };
 
   const getCost = async () => {
