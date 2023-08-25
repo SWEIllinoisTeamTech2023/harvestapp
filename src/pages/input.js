@@ -63,7 +63,7 @@ const AddData = () => {
     setAnnualHoursValue(value);
   };
 
-  const handleSubmit = (event) => {
+ const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Yield: ", yieldValue);
     console.log("Crop Type: ", cropTypeValue);
@@ -86,8 +86,6 @@ const AddData = () => {
       crop_type: cropTypeValue,
       annual_hours: annualHoursValue,
     };
-    navigate("/simulate", {state: {data: param}});
-    console.log("Param: ", param);
     fetch("/storeInputs", {
       method: "POST",
       headers: {
@@ -95,9 +93,15 @@ const AddData = () => {
       },
       body: JSON.stringify(param),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.message);
+      .then(async (data) => {
+        // const d = await data
+        const d = await data.json()
+        const input_id = d['data']
+        // console.log("data: ", input_id);
+        param['input_id'] = input_id
+        console.log("Param: ", param);
+        navigate("/simulate", {state: {data: param}});
+        
       })
       .catch((error) => {
         console.error("Error:", error);

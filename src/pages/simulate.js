@@ -100,8 +100,10 @@ const Simulate = () => {
 
   const getCost = async () => {
     console.log("here in getCost");
+    // console.log("state: ", state)
+    // console.log("inputid: ", state['data']['input_id'])
     // setIsLoading(true);
-    const response = await fetch("/getcost", {
+    const response = await fetch("/getCostDistribution?input_id=" + state['data']['input_id'], {
       method: "GET",
     });
     const responseRec = await response.json();

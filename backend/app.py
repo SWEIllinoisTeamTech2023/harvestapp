@@ -26,28 +26,23 @@ def storeInputs():
         sql='INSERT INTO harvest.Inputs (user, machine_type, header_width, yield, crop_type, annual_hours) VALUES ("{}","{}", {}, {}, "{}",{})'.format(data["user"], data["machine_type"], data["header_width"], data["yield"], data["crop_type"], data["annual_hours"]))
 
     # send inputs and API results as parameter
-    storeCostDistributions()
+    input_id = response['generatedFields'][0]['longValue']
+    # print("input id: ", input_id)
+    storeCostDistributions(input_id)
 
     # Call API and store API results into APIPrice Table
     # fuel_price = getFuelPrice()
     # crop_price = getCropPrice(data['crop_type'])
-
+    res = {
+        'data' : input_id
+    }
     # TODO: Run model with inputs & return simulation variables
-
+    # print("response: ", response['generatedFields'][0]['longValue'])
     # Return a response
-    return jsonify(response), 200
+    return res, 200
 
-
-def storeCostDistributions():
+def storeCostDistributions(input_id):
     data = temporary_endpoint()
-    response1 = rdsData.execute_statement(
-        resourceArn=CLUSTER_ARN,
-        secretArn=SECRET_ARN,
-        database='harvest',
-        sql = 'SELECT COUNT(*) FROM Inputs'
-    )
-    input_id = response1['records'][0][0]['longValue']
-    print("input id: ", input_id)
     response = rdsData.execute_statement(
         resourceArn=CLUSTER_ARN,
         secretArn=SECRET_ARN,
@@ -56,15 +51,16 @@ def storeCostDistributions():
     print("stored cost distributions")
     return jsonify(response, 200)
 
-@app.route('/getCostDistributions', methods=['GET'])
+@app.route('/getCostDistribution', methods=['GET'])
 def getCostDistributions():
-    input_id = request.get_json()['input_id']
+    input_id = request.args['input_id']
+    # print(input_id)
     response = rdsData.execute_statement(
         resourceArn=CLUSTER_ARN,
         secretArn=SECRET_ARN,
         database='harvest',
         sql='SELECT * FROM harvest.CostDistribution WHERE inputId = {}'.format(input_id))
-    print("cost distribution received: ", response)
+    # print("cost distribution received: ", response)
     return json.dumps(response['records'])
 
 @app.route('/saveSimulation', methods=['POST'])
