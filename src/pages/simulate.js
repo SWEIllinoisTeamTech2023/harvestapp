@@ -66,13 +66,20 @@ const Simulate = () => {
   const handleSaveSim = (event) => {
     event.preventDefault();
     console.log("in savesimulation: ", simName);
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
 
     //add inputId
     const param = {
       // user: user.attributes.email,
       user: "test@gmail.com",
       name: simName,
-      date: Date.now(),
+      crop_type: state['data']['crop_type'],
+      machine_type: state['data']['machine_type'],
+      input_id: state['data']['input_id'],
+      date: dateTime,
       chafferClear: inputVars.chafferClear,
       concaveClear: inputVars.concaveClear,
       sieveClear: inputVars.sieveClear,
