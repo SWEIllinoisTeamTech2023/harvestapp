@@ -14,8 +14,8 @@ const ViewSimulations = () => {
       id: null,
       name: null,
       date: null,
-      cropType: null,
-      machineType: null,
+      crop_type: null,
+      machine_type: null,
       inputVar: null,
     },
   ]);
@@ -52,8 +52,8 @@ const ViewSimulations = () => {
         user: element[2].stringValue,
         name: element[3].stringValue,
         date: element[4].stringValue,
-        cropType: element[5].stringValue,
-        machineType: element[6].stringValue,
+        crop_type: element[5].stringValue,
+        machine_type: element[6].stringValue,
         inputVar: {
           rotorSpeed: element[7].longValue,
           fanSpeed: element[8].longValue,

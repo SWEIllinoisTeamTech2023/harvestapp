@@ -94,7 +94,6 @@ const AddData = () => {
       body: JSON.stringify(param),
     })
       .then(async (data) => {
-        // const d = await data
         const d = await data.json();
         const input_id = d["data"];
         // console.log("data: ", input_id);

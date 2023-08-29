@@ -12,7 +12,7 @@ const SavedSim = (props) => {
   console.log("IN SAVEDSIM: ", cardData);
 
   const handleSaveSim = () => {
-    console.log("carddata: ", cardData)
+    console.log("carddata: ", cardData);
     navigate("/simulate", { state: { data: cardData } });
   };
 
@@ -24,6 +24,9 @@ const SavedSim = (props) => {
       <div class="text-row">{date}</div>
       <div class="text-row">Crop Type: {cardData.cropType}</div>
       <div class="text-row">Machine Type: {cardData.machineType}</div>
+      {/* <div class="text-row">Yield: {cardData.yield}</div>
+      <div class="text-row">: {cardData.machineType}</div>
+      <div class="text-row">Machine Type: {cardData.machineType}</div> */}
       <div class="text-row">Overall Cost: ${cardData.totalCost}</div>
       <div
         style={{
@@ -64,7 +67,7 @@ const SavedSim = (props) => {
         className="view-button"
         type="submit"
         onClick={() => handleSaveSim()}
-      > 
+      >
         View in Simulation
       </button>
     </div>

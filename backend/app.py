@@ -34,12 +34,13 @@ def storeInputs():
     # fuel_price = getFuelPrice()
     # crop_price = getCropPrice(data['crop_type'])
     res = {
-        'data' : input_id
+        'data': input_id
     }
     # TODO: Run model with inputs & return simulation variables
     # print("response: ", response['generatedFields'][0]['longValue'])
     # Return a response
     return res, 200
+
 
 def storeCostDistributions(input_id):
     data = temporary_endpoint()
@@ -50,6 +51,7 @@ def storeCostDistributions(input_id):
         sql='INSERT INTO harvest.CostDistribution(inputId, grain_loss, labor_cost, fuel_cost, depreciation_cost, total_costofharvest) VALUES ({}, {},{},{},{},{})'.format(input_id, data["grain_loss"], data["labor_cost"], data["fuel_cost"], data["depreciation_cost"], data["total_costofharvest"]))
     print("stored cost distributions")
     return jsonify(response, 200)
+
 
 @app.route('/getCostDistribution', methods=['GET'])
 def getCostDistributions():
@@ -63,6 +65,7 @@ def getCostDistributions():
     # print("cost distribution received: ", response)
     return json.dumps(response['records'])
 
+
 @app.route('/saveSimulation', methods=['POST'])
 def saveSimulation():
     data = request.get_json()
@@ -71,15 +74,17 @@ def saveSimulation():
         resourceArn=CLUSTER_ARN,
         secretArn=SECRET_ARN,
         database='harvest',
-        sql='INSERT INTO harvest.SavedSimulations (inputId, date, crop_type, total_costofharvest, machine_type, user, name, rotor_speed, fan_speed, speed, sieve_clearance, concave_clearance, chaffer_clearance) VALUES ({},"{}","{}",{},"{}","{}","{}",{},{},{},{},{},{})'.format(data["input_id"], data["date"], data["crop_type"], data["total_costofharvest"], data["machine_type"], data["user"], data["name"], data["rotorSpeed"], data["fanSpeed"], data["speed"], data["sieveClear"], data["concaveClear"], data["chafferClear"]))
+        sql='INSERT INTO harvest.SavedSimulations (inputId, date, crop_type, yield, header_width, annual_hours, total_costofharvest, machine_type, user, name, rotor_speed, fan_speed, speed, sieve_clearance, concave_clearance, chaffer_clearance) VALUES ({},"{}","{}",{},{},{},{},"{}","{}","{}",{},{},{},{},{},{})'.format(data["input_id"], data["date"], data["crop_type"], data["yield"], data["header_width"], data["annual_hours"], data["total_costofharvest"], data["machine_type"], data["user"], data["name"], data["rotorSpeed"], data["fanSpeed"], data["speed"], data["sieveClear"], data["concaveClear"], data["chafferClear"]))
 
     return jsonify(response), 200
+
 
 @app.route('/sendSimulationInputs', methods=['POST'])
 def sendSimulationInputs():
     data = request.get_json()
     print("Simulation inputs", data)
     # send simulation inputs to model
+
 
 @app.route('/getSavedSimulations', methods=['GET'])
 def viewSavedSimulations():
@@ -89,7 +94,8 @@ def viewSavedSimulations():
         resourceArn=CLUSTER_ARN,
         secretArn=SECRET_ARN,
         database='harvest',
-        sql='SELECT * FROM harvest.SavedSimulations WHERE user = "{}"'.format(user)
+        sql='SELECT * FROM harvest.SavedSimulations WHERE user = "{}"'.format(
+            user)
     )
     return json.dumps(response['records'])
 
