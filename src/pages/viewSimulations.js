@@ -27,18 +27,18 @@ const ViewSimulations = () => {
       .then((user) => {
         console.log("in fetchUser: ", user.attributes.email);
         setUser(user);
-        fetchData()
+        fetchData(user.attributes.email);
       })
       .catch((err) => console.log(err));
   }
   useEffect(() => {
     fetchUser();
-    fetchData();
+    // fetchData();
   }, [isLoading]);
 
-  const fetchData = async () => {
-    // console.log("IN fetch data: ", user.attributes.email);
-    const response = await fetch("/getSavedSimulations?user=" + user.attributes.email, {
+  const fetchData = async (email) => {
+    console.log("IN fetch data: ", email);
+    const response = await fetch("/getSavedSimulations?user=" + email, {
       method: "GET",
     });
     const responseRec = await response.json();
@@ -62,7 +62,7 @@ const ViewSimulations = () => {
           concaveClear: element[11].longValue,
           chafferClear: element[12].longValue,
         },
-        totalCost: element[13].longValue
+        totalCost: element[13].longValue,
       };
       data.push(currData);
       setIsLoading(false);
@@ -72,8 +72,6 @@ const ViewSimulations = () => {
     setCardData(data);
     console.log("IN FETCHDATA: ", cardData);
   };
-
-  
 
   return (
     console.log("IN return: ", cardData),
