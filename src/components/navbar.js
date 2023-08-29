@@ -3,6 +3,7 @@ import Hamburger from "hamburger-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/navbar.css";
+import { Amplify, Auth } from "aws-amplify";
 
 function Navbar() {
   //   const [isOpen, setOpen] = useState(false);
@@ -52,6 +53,22 @@ function Navbar() {
           }}
         >
           View Saved Simulations
+        </button>
+        <button
+          style={{ marginTop: "220px" }}
+          className="NavButton"
+          type="button"
+          onClick={async () => {
+            try {
+              await Auth.signOut({ global: true });
+            } catch (error) {
+              console.log("error signing out: ", error);
+            }
+            let path = "/login";
+            navigate(path);
+          }}
+        >
+          Logout
         </button>
       </div>
     </div>
