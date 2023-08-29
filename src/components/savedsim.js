@@ -24,7 +24,7 @@ const SavedSim = (props) => {
       <div class="text-row">{date}</div>
       <div class="text-row">Crop Type: {cardData.cropType}</div>
       <div class="text-row">Machine Type: {cardData.machineType}</div>
-      <div class="text-row">Overall Cost: {cardData.totalCost}</div>
+      <div class="text-row">Overall Cost: ${cardData.totalCost}</div>
       <div
         style={{
           border: "2px solid darkgray",
@@ -48,15 +48,15 @@ const SavedSim = (props) => {
         </div>
         <div class="input-var-grid">
           <div class="text-elem">
-            Chaffer Clearance: {inputVar.chafferClear}
+            Chaffer Clearance: {inputVar.chafferClear} mm
           </div>
           <div class="text-elem">
-            Concave Clearance: {inputVar.concaveClear}
+            Concave Clearance: {inputVar.concaveClear} mm
           </div>
-          <div class="text-elem">Sieve Clearance: {inputVar.sieveClear}</div>
-          <div class="text-elem">Speed: {inputVar.speed}</div>
-          <div class="text-elem">Fan Speed: {inputVar.fanSpeed}</div>
-          <div class="text-elem">Rotor Speed: {inputVar.rotorSpeed}</div>
+          <div class="text-elem">Sieve Clearance: {inputVar.sieveClear} mm</div>
+          <div class="text-elem">Speed: {inputVar.speed} km/hr</div>
+          <div class="text-elem">Fan Speed: {inputVar.fanSpeed} RPM</div>
+          <div class="text-elem">Rotor Speed: {inputVar.rotorSpeed} RPM</div>
         </div>
       </div>
       <button

@@ -27,6 +27,7 @@ const ViewSimulations = () => {
       .then((user) => {
         console.log("in fetchUser: ", user.attributes.email);
         setUser(user);
+        fetchData()
       })
       .catch((err) => console.log(err));
   }
