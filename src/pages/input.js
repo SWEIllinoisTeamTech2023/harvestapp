@@ -31,7 +31,7 @@ const AddData = () => {
   }
 
   useEffect(() => {
-    // fetchUser();
+    fetchUser();
   }, []);
 
   const handleYieldChange = (event) => {
@@ -78,8 +78,8 @@ const AddData = () => {
     setAnnualHoursValue(0);
 
     const param = {
-      // user: user.attributes.email,
-      user: "test@gmail.com",
+      user: user.attributes.email,
+      // user: "test@gmail.com",
       machine_type: machineTypeValue,
       header_width: headerWidthValue,
       yield: yieldValue,

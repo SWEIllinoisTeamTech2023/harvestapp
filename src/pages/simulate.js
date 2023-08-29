@@ -37,7 +37,7 @@ const Simulate = () => {
     })
       .then((user) => {
         // console.log("in fetchUser: ", user.attributes.email);
-        setUser("Test User");
+        setUser(user);
       })
       .catch((err) => console.log(err));
   }
@@ -79,8 +79,8 @@ const Simulate = () => {
     console.log("costdata: ", costData)
     //add inputId
     const param = {
-      // user: user.attributes.email,
-      user: "test@gmail.com",
+      user: user.attributes.email,
+      // user: "test@gmail.com",
       name: simName,
       crop_type: state["data"]["crop_type"],
       machine_type: state["data"]["machine_type"],
@@ -131,7 +131,7 @@ const Simulate = () => {
   };
 
   useEffect(() => {
-    // fetchUser();
+    fetchUser();
     console.log("loading: ", isLoading);
     getCost();
     console.log("after loading: ", isLoading);

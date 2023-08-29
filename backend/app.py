@@ -79,16 +79,17 @@ def saveSimulation():
 def sendSimulationInputs():
     data = request.get_json()
     print("Simulation inputs", data)
-    # send simulation inputs to model 
+    # send simulation inputs to model
 
 @app.route('/getSavedSimulations', methods=['GET'])
 def viewSavedSimulations():
-    print("in viewSavedSimul")
+    user = request.args['user']
+    print("in viewSavedSimul for ", user)
     response = rdsData.execute_statement(
         resourceArn=CLUSTER_ARN,
         secretArn=SECRET_ARN,
         database='harvest',
-        sql='SELECT * FROM harvest.SavedSimulations'
+        sql='SELECT * FROM harvest.SavedSimulations WHERE user = "{}"'.format(user)
     )
     return json.dumps(response['records'])
 

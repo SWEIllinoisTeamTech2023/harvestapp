@@ -6,7 +6,7 @@ import "../styles/viewsimulations.css";
 import SavedSim from "../components/savedsim";
 
 const ViewSimulations = () => {
-  const [user, setUser] = useState("test@gmail.com");
+  const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [cardData, setCardData] = useState([
     {
@@ -30,13 +30,14 @@ const ViewSimulations = () => {
       })
       .catch((err) => console.log(err));
   }
+  useEffect(() => {
+    fetchUser();
+    fetchData();
+  }, [isLoading]);
 
   const fetchData = async () => {
-    const param = {
-      user: user,
-    };
-    console.log("IN fetch data: ", param);
-    const response = await fetch("/getSavedSimulations", {
+    // console.log("IN fetch data: ", user.attributes.email);
+    const response = await fetch("/getSavedSimulations?user=" + user.attributes.email, {
       method: "GET",
     });
     const responseRec = await response.json();
@@ -71,10 +72,7 @@ const ViewSimulations = () => {
     console.log("IN FETCHDATA: ", cardData);
   };
 
-  useEffect(() => {
-    fetchUser();
-    fetchData();
-  }, [isLoading]);
+  
 
   return (
     console.log("IN return: ", cardData),
