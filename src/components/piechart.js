@@ -98,6 +98,35 @@ const Piechart = (props) => {
       .on("mouseout", function () {
         return tooltip.style("visibility", "hidden");
       });
+
+    var legend = svg
+      .selectAll(".legend")
+      .data(["Grain Loss", "Labor Cost", "Fuel Cost", "Depreciation Cost"])
+      .enter()
+      .append("g")
+      .attr("class", "legend")
+      .attr("transform", function (d, i) {
+        return "translate(-8," + i * 2 + ")";
+      });
+
+    legend
+      .append("rect")
+      .attr("x", width - 8)
+      .attr("y", -21)
+      .attr("width", 5)
+      .attr("height", 2)
+      .style("fill", color);
+
+    legend
+      .append("text")
+      .attr("x", width - 10)
+      .attr("y", -20)
+      .attr("font-size", "1.3em")
+      .attr("dy", ".55em")
+      .style("text-anchor", "end")
+      .text(function (d) {
+        return d;
+      });
   }
 
   return (
