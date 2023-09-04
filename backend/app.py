@@ -1,7 +1,7 @@
 from flask import Flask, request
 import json
 from secret import CLUSTER_ARN, SECRET_ARN, EIA_FUEL_PRICE_API_KEY
-from test_endpoint import temporary_endpoint
+from test_endpoint import temporary_endpoint, edit_endpoint
 # import jsonpickle
 
 from flask.json import jsonify
@@ -28,41 +28,47 @@ def storeInputs():
     # send inputs and API results as parameter
     input_id = response['generatedFields'][0]['longValue']
     # print("input id: ", input_id)
-    storeCostDistributions(input_id)
+
+    modelResults = temporary_endpoint() # REPLACE WITH MODEL OUTPUTS
+    costresponse = storeCostDistributions(modelResults, input_id)
+    print(costresponse)
+    cost_id = costresponse['generatedFields'][0]['longValue']
+    # cost_id = 1
 
     # Call API and store API results into APIPrice Table
     # fuel_price = getFuelPrice()
     # crop_price = getCropPrice(data['crop_type'])
     res = {
-        'data': input_id
+        'data': {"input_id": input_id, "cost_id":cost_id}
     }
+    print("store input res:: ", res)
     # TODO: Run model with inputs & return simulation variables
     # print("response: ", response['generatedFields'][0]['longValue'])
     # Return a response
     return res, 200
 
 
-def storeCostDistributions(input_id):
-    data = temporary_endpoint()
+def storeCostDistributions(data, input_id):
     response = rdsData.execute_statement(
         resourceArn=CLUSTER_ARN,
         secretArn=SECRET_ARN,
         database='harvest',
         sql='INSERT INTO harvest.CostDistribution(inputId, grain_loss, labor_cost, fuel_cost, depreciation_cost, total_costofharvest) VALUES ({}, {},{},{},{},{})'.format(input_id, data["grain_loss"], data["labor_cost"], data["fuel_cost"], data["depreciation_cost"], data["total_costofharvest"]))
     print("stored cost distributions")
-    return jsonify(response, 200)
+    print(response)
+    return response
 
 
 @app.route('/getCostDistribution', methods=['GET'])
 def getCostDistributions():
-    input_id = request.args['input_id']
+    cost_id = request.args['id']
     # print(input_id)
     response = rdsData.execute_statement(
         resourceArn=CLUSTER_ARN,
         secretArn=SECRET_ARN,
         database='harvest',
-        sql='SELECT * FROM harvest.CostDistribution WHERE inputId = {}'.format(input_id))
-    # print("cost distribution received: ", response)
+        sql='SELECT * FROM harvest.CostDistribution WHERE id = {}'.format(cost_id))
+    print("cost distribution received: ", response)
     return json.dumps(response['records'])
 
 
@@ -74,7 +80,7 @@ def saveSimulation():
         resourceArn=CLUSTER_ARN,
         secretArn=SECRET_ARN,
         database='harvest',
-        sql='INSERT INTO harvest.SavedSimulations (inputId, date, crop_type, yield, header_width, annual_hours, total_costofharvest, machine_type, user, name, rotor_speed, fan_speed, speed, sieve_clearance, concave_clearance, chaffer_clearance) VALUES ({},"{}","{}",{},{},{},{},"{}","{}","{}",{},{},{},{},{},{})'.format(data["input_id"], data["date"], data["crop_type"], data["yield"], data["header_width"], data["annual_hours"], data["total_costofharvest"], data["machine_type"], data["user"], data["name"], data["rotorSpeed"], data["fanSpeed"], data["speed"], data["sieveClear"], data["concaveClear"], data["chafferClear"]))
+        sql='INSERT INTO harvest.SavedSimulations (costId, inputId, date, crop_type, yield, header_width, annual_hours, total_costofharvest, machine_type, user, name, rotor_speed, fan_speed, speed, sieve_clearance, concave_clearance, chaffer_clearance) VALUES ({},{},"{}","{}",{},{},{},{},"{}","{}","{}",{},{},{},{},{},{})'.format(data["cost_id"],data["input_id"], data["date"], data["crop_type"], data["yield"], data["header_width"], data["annual_hours"], data["total_costofharvest"], data["machine_type"], data["user"], data["name"], data["rotorSpeed"], data["fanSpeed"], data["speed"], data["sieveClear"], data["concaveClear"], data["chafferClear"]))
 
     return jsonify(response), 200
 
@@ -126,6 +132,19 @@ def getCropPrice(crop):
         sql='INSERT INTO harvest.APIPrices (date, {}) VALUES (CURDATE(),{}) ON DUPLICATE KEY UPDATE {}={}'.format(crop, crop_price))
     return crop_price
 
+@app.route('/editSimulation', methods=['POST'])
+def editSimulation():
+    # Call edit Simulation function in model with parameters
+    inputId = request.get_json()['inputId']
+    modelResults = edit_endpoint()
+    print("in edit simulation endpoint: ", modelResults)
+    costResponse = storeCostDistributions(modelResults, inputId)
+    cost_id = costResponse['generatedFields'][0]['longValue']
+    res = {
+        'data': {"cost_id":cost_id}
+    }
+    return res
+    
 
 if __name__ == '__main__':
     app.run(host='localhost', port=8000)

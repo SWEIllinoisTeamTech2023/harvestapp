@@ -22,8 +22,8 @@ const SavedSim = (props) => {
         {cardData.name}
       </div>
       <div class="text-row">{date}</div>
-      <div class="text-row">Crop Type: {cardData.cropType}</div>
-      <div class="text-row">Machine Type: {cardData.machineType}</div>
+      <div class="text-row">Crop Type: {cardData.crop_type}</div>
+      <div class="text-row">Machine Type: {cardData.machine_type}</div>
       {/* <div class="text-row">Yield: {cardData.yield}</div>
       <div class="text-row">: {cardData.machineType}</div>
       <div class="text-row">Machine Type: {cardData.machineType}</div> */}

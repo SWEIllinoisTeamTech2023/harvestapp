@@ -52,7 +52,29 @@ const Simulate = () => {
   //edit simulation --> call model file again
   const handleSaveVariables = () => {
     console.log("in handleVariableChange: ");
-    console.log(inputVars);
+    // console.log(inputVars);
+    const param = inputVars;
+    param['inputId'] = state["data"]["input_id"]
+    console.log("Param: ", param);
+    fetch("/editSimulation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(param),
+    })
+      .then(async (data) => {
+        const d = await data.json();
+        const cost_id = d["data"]["cost_id"];
+        // console.log("data: ", input_id);
+        state["data"]["cost_id"] = cost_id;
+        getCost()
+      })
+      .catch((error) => {
+        console.log("IN ERROR");
+        console.error("Error:", error);
+      });
+     
   };
 
   const handleNameChange = (event) => {
@@ -86,6 +108,7 @@ const Simulate = () => {
       crop_type: state["data"]["crop_type"],
       machine_type: state["data"]["machine_type"],
       input_id: state["data"]["input_id"],
+      cost_id: state["data"]["cost_id"],
       yield: state["data"]["yield"],
       header_width: state["data"]["header_width"],
       annual_hours: state["data"]["annual_hours"],
@@ -123,7 +146,7 @@ const Simulate = () => {
     // console.log("inputid: ", state['data']['input_id'])
     // setIsLoading(true);
     const response = await fetch(
-      "/getCostDistribution?input_id=" + state["data"]["input_id"],
+      "/getCostDistribution?id=" + state["data"]["cost_id"],
       {
         method: "GET",
       }

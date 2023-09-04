@@ -63,6 +63,10 @@ const ViewSimulations = () => {
           chafferClear: element[12].longValue,
         },
         totalCost: element[13].longValue,
+        yield: element[14].longValue,
+        header_width: element[15].longValue,
+        annual_hours: element[16].longValue,
+        cost_id: element[17].longValue,
       };
       data.push(currData);
       setIsLoading(false);
