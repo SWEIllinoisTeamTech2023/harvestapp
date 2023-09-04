@@ -146,7 +146,7 @@ const Simulate = () => {
   return (
     <div>
       <Header title="Simulate"></Header>
-      <div class="simulate-parent">
+      <div style={{ marginTop: 160 }} class="simulate-parent">
         <div class="simulate-piechart">
           <div class="input-variables">
             <TextField

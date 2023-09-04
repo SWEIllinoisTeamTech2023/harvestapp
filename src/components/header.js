@@ -7,9 +7,9 @@ import "../styles/header.css";
 
 function Header(props) {
   return (
-    <div className="Header">
+    <div style={{ zIndex: 2 }} className="Header">
       <Navbar />
-      <h1 style={{paddingLeft:120}}>{props.title}</h1>
+      <h1 style={{ paddingLeft: 120 }}>{props.title}</h1>
       <img src={logo} width={120} height={100} alt="Logo"></img>
     </div>
   );

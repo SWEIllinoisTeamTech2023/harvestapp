@@ -78,7 +78,7 @@ const ViewSimulations = () => {
     (
       <div>
         <Header title="View Saved Simulations"></Header>
-        <div class="view-parent">
+        <div style={{ marginTop: 170 }} class="view-parent">
           {!isLoading &&
             Object.values(cardData).map((cards) => {
               for (let i in cards) {
