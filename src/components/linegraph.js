@@ -145,19 +145,14 @@ const Linegraph = () => {
         return tooltip.style("visibility", "visible");
       })
       .on("mousemove", function (event, d) {
-        // console.log("hereeeee: ", d);
-        d.forEach((element) => {
-          //   console.log("ojoijo: ", element);
-          return tooltip
-            .style("top", event.pageY + 30 + "px")
-            .style("left", event.pageX + 20 + "px")
-            .html(
-              "Feedrate : " +
-                element.feedrate +
-                " Total Cost: $" +
-                element.totalCost
-            );
-        });
+        const bisect = d3.bisector((d) => d.feedrate).center;
+        const i = bisect(d, x0.invert(d3.pointer(event)[0]));
+        return tooltip
+          .style("top", event.pageY + 30 + "px")
+          .style("left", event.pageX + 20 + "px")
+          .html(
+            "Feedrate : " + d[i].feedrate + " Total Cost: $" + d[i].totalCost
+          );
       })
       // Make div disappear
       .on("mouseout", function () {
@@ -194,19 +189,18 @@ const Linegraph = () => {
       })
       .on("mousemove", function (event, d) {
         // console.log("hereeeee: ", d);
-        d.forEach((element) => {
-          //   console.log("ojoijo: ", element);
-          return tooltip
-            .style("top", event.pageY + 30 + "px")
-            .style("left", event.pageX + 20 + "px")
-            .html(
-              "Feedrate : " +
-                element.feedrate +
-                " Harvest Loss: " +
-                element.harvestLoss +
-                "%"
-            );
-        });
+        const bisect = d3.bisector((d) => d.feedrate).center;
+        const i = bisect(d, x0.invert(d3.pointer(event)[0]));
+        return tooltip
+          .style("top", event.pageY + 30 + "px")
+          .style("left", event.pageX + 20 + "px")
+          .html(
+            "Feedrate : " +
+              d[i].feedrate +
+              " Harvest Loss: " +
+              d[i].harvestLoss +
+              "%"
+          );
       })
       // Make div disappear
       .on("mouseout", function () {
@@ -243,18 +237,17 @@ const Linegraph = () => {
       })
       .on("mousemove", function (event, d) {
         // console.log("hereeeee: ", d.keys());
-        d.forEach((element) => {
-          //   console.log("ojoijo: ", element);
-          return tooltip
-            .style("top", event.pageY + 30 + "px")
-            .style("left", event.pageX + 20 + "px")
-            .html(
-              "Feedrate : " +
-                element.feedrate +
-                " Machine Cost: $" +
-                element.machineCost
-            );
-        });
+        const bisect = d3.bisector((d) => d.feedrate).center;
+        const i = bisect(d, x0.invert(d3.pointer(event)[0]));
+        return tooltip
+          .style("top", event.pageY + 30 + "px")
+          .style("left", event.pageX + 20 + "px")
+          .html(
+            "Feedrate : " +
+              d[i].feedrate +
+              " Machine Cost: $" +
+              d[i].machineCost
+          );
       })
       // Make div disappear
       .on("mouseout", function () {
