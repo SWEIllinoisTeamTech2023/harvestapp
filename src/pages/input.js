@@ -97,9 +97,11 @@ const AddData = () => {
         const d = await data.json();
         const input_id = d["data"]["input_id"];
         const cost_id = d["data"]["cost_id"];
+        const line_data = d["data"]["line_data"];
         // console.log("data: ", input_id);
         param["input_id"] = input_id;
         param["cost_id"] = cost_id
+        // param["line_data"] = line_data
         console.log("Param: ", param);
         navigate("/simulate", { state: { data: param } });
       })

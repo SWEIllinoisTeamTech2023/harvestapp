@@ -4,6 +4,8 @@ import * as d3Fetch from "d3-fetch";
 import "../styles/simulate.css";
 
 const Linegraph = () => {
+  // const rawData = props.data[0];
+  // console.log("in line graph: ", rawData)
   const data = [
     { feedrate: 10, totalCost: 30, machineCost: 30, harvestLoss: 0.1 },
     { feedrate: 20, totalCost: 25, machineCost: 25, harvestLoss: 0.2 },

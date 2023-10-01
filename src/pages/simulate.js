@@ -65,6 +65,7 @@ const Simulate = () => {
     })
       .then(async (data) => {
         const d = await data.json();
+       console.log("data in simulate: ", d)
         const cost_id = d["data"]["cost_id"];
         // console.log("data: ", input_id);
         state["data"]["cost_id"] = cost_id;
@@ -342,6 +343,7 @@ const Simulate = () => {
           <div class="display-simulation">
             <h2>Cost vs Feedrate</h2>
             <Linegraph />
+            {/* <Linegraph data = {state['data']['line_data']}/> */}
           </div>
         </div>
       </div>

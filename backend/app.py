@@ -2,6 +2,7 @@ from flask import Flask, request
 import json
 from secret import CLUSTER_ARN, SECRET_ARN, EIA_FUEL_PRICE_API_KEY
 from test_endpoint import temporary_endpoint, edit_endpoint
+from model import train
 # import jsonpickle
 
 from flask.json import jsonify
@@ -29,7 +30,10 @@ def storeInputs():
     input_id = response['generatedFields'][0]['longValue']
     # print("input id: ", input_id)
 
-    modelResults = temporary_endpoint() # REPLACE WITH MODEL OUTPUTS
+    # modelResults = temporary_endpoint() # REPLACE WITH MODEL OUTPUTS
+    modelResults = train({})
+    print(modelResults)
+    # res = {}
     costresponse = storeCostDistributions(modelResults, input_id)
     print(costresponse)
     cost_id = costresponse['generatedFields'][0]['longValue']
@@ -136,10 +140,13 @@ def getCropPrice(crop):
 def editSimulation():
     # Call edit Simulation function in model with parameters
     inputId = request.get_json()['inputId']
-    modelResults = edit_endpoint()
+    # modelResults = edit_endpoint()
+    modelResults = train(request.get_json())
     print("in edit simulation endpoint: ", modelResults)
     costResponse = storeCostDistributions(modelResults, inputId)
+    print(costResponse)
     cost_id = costResponse['generatedFields'][0]['longValue']
+    print(cost_id)
     res = {
         'data': {"cost_id":cost_id}
     }
