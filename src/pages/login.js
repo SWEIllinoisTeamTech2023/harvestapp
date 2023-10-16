@@ -118,7 +118,7 @@ function LoginForm({ navigation }) {
       const localuser = await Auth.signIn(email, password);
       setUser(localuser);
       console.log("in signin: ", localuser);
-      navigate("/home", { state: { user: email } });
+      navigate("/input", { state: { user: email } });
       // routeChange();
     } catch (e) {
       showError(e);
@@ -144,7 +144,7 @@ function LoginForm({ navigation }) {
   const signInForgotPassword = async () => {
     await Auth.forgotPasswordSubmit(email, forgotCode, password);
     const user = Auth.signIn(email, password);
-    navigate("/home", { state: { user: email } });
+    navigate("/input", { state: { user: email } });
   };
 
   return (
@@ -285,7 +285,7 @@ function LoginForm({ navigation }) {
             className="loginButton"
             type="button"
             onClick={() => {
-              navigate("/");
+              navigate("/create");
             }}
           // disabled={validUserContext.isLoggedIn}
           >

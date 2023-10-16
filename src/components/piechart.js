@@ -131,7 +131,7 @@ const Piechart = (props) => {
 
   return (
     <div style={{ width: "110%", height: "110%" }}>
-      <h2 style={{ marginRight: "10%" }}> Total: ${totalCost}</h2>
+      <h2 style={{ marginRight: "10%" }}> Total: ${totalCost.toFixed(2)}</h2>
       <svg ref={svgRef} />
     </div>
   );

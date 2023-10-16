@@ -25,8 +25,8 @@ function App() {
       {/* {authStatus !== "authenticated" ? <Authenticator /> : <Home />} */}
       <Router>
         <Routes>
-          {/* <Route exact path="/" element={<CreateAccount />} /> */}
-          <Route exact path="/" element={<ViewSimulations />} />
+          <Route exact path="/create" element={<CreateAccount />} />
+          <Route exact path="/" element={<Login />} />
           <Route exact path="/home" element={<Home />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/input" element={<Input />} />
