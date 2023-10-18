@@ -184,7 +184,7 @@ const Simulate = () => {
               id="outlined-basic"
               className="inputBoxNext"
               type="number"
-              label="Chaffer Clearance"
+              label="Chaffer Clearance (mm)"
               name="chafferClear"
               variant="outlined"
               value={inputVars.chafferClear}
@@ -201,7 +201,7 @@ const Simulate = () => {
               id="outlined-basic"
               className="inputBoxNext"
               type="number"
-              label="Concave Clearance"
+              label="Concave Clearance (mm)"
               name="concaveClear"
               variant="outlined"
               value={inputVars.concaveClear}
@@ -218,7 +218,7 @@ const Simulate = () => {
               id="outlined-basic"
               className="inputBoxNext"
               type="number"
-              label="Sieve Clearance"
+              label="Sieve Clearance (mm)"
               name="sieveClear"
               variant="outlined"
               value={inputVars.sieveClear}
@@ -235,7 +235,7 @@ const Simulate = () => {
               id="outlined-basic"
               className="inputBoxNext"
               type="number"
-              label="Speed"
+              label="Speed (km/hr)"
               name="speed"
               variant="outlined"
               value={inputVars.speed}
@@ -252,7 +252,7 @@ const Simulate = () => {
               id="outlined-basic"
               className="inputBoxNext"
               type="number"
-              label="Fan Speed"
+              label="Fan Speed (RPM)"
               name="fanSpeed"
               variant="outlined"
               value={inputVars.fanSpeed}
@@ -268,7 +268,7 @@ const Simulate = () => {
               id="outlined-basic"
               className="inputBoxNext"
               type="number"
-              label="Rotor Speed"
+              label="Rotor Speed (RPM)"
               name="rotorSpeed"
               variant="outlined"
               value={inputVars.rotorSpeed}

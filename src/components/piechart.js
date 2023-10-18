@@ -92,7 +92,7 @@ const Piechart = (props) => {
         return tooltip
           .style("top", event.pageY + 30 + "px")
           .style("left", event.pageX + 20 + "px")
-          .html(d.data.name + ": $" + d.data.value);
+          .html(d.data.name + ": $" + d.data.value + "/ac");
       })
       // Make div disappear
       .on("mouseout", function () {
@@ -131,7 +131,7 @@ const Piechart = (props) => {
 
   return (
     <div style={{ width: "110%", height: "110%" }}>
-      <h2 style={{ marginRight: "10%" }}> Total: ${totalCost.toFixed(2)}</h2>
+      <h2 style={{ marginRight: "10%" }}> Total: ${totalCost.toFixed(2)}/ac</h2>
       <svg ref={svgRef} />
     </div>
   );

@@ -27,7 +27,7 @@ const SavedSim = (props) => {
       {/* <div class="text-row">Yield: {cardData.yield}</div>
       <div class="text-row">: {cardData.machineType}</div>
       <div class="text-row">Machine Type: {cardData.machineType}</div> */}
-      <div class="text-row">Overall Cost: ${cardData.totalCost}</div>
+      <div class="text-row">Overall Cost: ${cardData.totalCost.toFixed(2)}/ac</div>
       <div
         style={{
           border: "2px solid darkgray",

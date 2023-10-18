@@ -214,8 +214,9 @@ def train(params):
         # Access the required parameters from the dataset --- NOT SURE ABOUT THIS
         # print("predict: ",
         mass_flow = model_mass_flow.predict(np.array((mass_flow)).reshape(1, -1))
+        print("mass_flow: ", mass_flow)
         if (mass_flow < 0):
-            return [1e6,0 ,0]
+            return [1e6,0 ,0,0,0,0]
 
         # print(mass_flow)
         #
@@ -240,20 +241,27 @@ def train(params):
             SFC_RotorDrivePressure = float(params["rotorSpeed"])
             print("getting input from params")
         
-        Machine_MassFlow_Rate = mass_flow
+        Machine_MassFlow_Rate = mass_flow 
 
         seploss = calculateTotalSepLoss(Machine_ThreshingSpeed,Machine_ThreshingClearance,Machine_FanSpeed,Machine_ChafferPostion,Machine_SievePostion,SFC_RotorDrivePressure,Machine_MassFlow_Rate)
         shoeloss = calculateTotalShoeLoss(Machine_ThreshingSpeed,Machine_ThreshingClearance,Machine_FanSpeed,Machine_ChafferPostion,Machine_SievePostion,SFC_RotorDrivePressure,Machine_MassFlow_Rate)
 
-        total_loss_percent =( seploss+shoeloss)
+        total_loss_percent =abs( seploss+shoeloss)[0] 
+        print(total_loss_percent)
+        # total_loss_percent = 0.01 
         sec_per_hour= 3600
         wheat_lb_per_bu = 60
         kg_to_lbs = 2.20462
         # loss_cost_per_hr = total_loss_percent * mass_flow * sec_per_hour * kg_to_lbs * (1/wheat_lb_per_bu) * GRAIN_PRICE_PER_BU  # $/hr
         # total_grain_loss = mass_flow * 3600 * total_loss_percent  #(kg/h)
         # loss_bu_per_hr = (total_grain_loss ) / ( BU_IN_KG)
+        #NEW STUFF
+        # bu_per_hour = mass_flow * sec_per_hour / BU_IN_KG # bu/h
+        # loss_bu_per_hr = bu_per_hour * total_loss_percent # bu/hr loss
+        # # loss_bu_per_hr = (total_grain_loss ) / ( BU_IN_KG)
         total_grain_loss = mass_flow * total_loss_percent  #(kg/h)
-        loss_bu_per_hr = (total_grain_loss *60) / (GRAIN_PRICE_PER_BU * BU_IN_KG)
+        loss_bu_per_hr = (total_grain_loss *3600) / (  BU_IN_KG)
+
 
         # Calculate loss cost per hour
         loss_cost_per_hr = loss_bu_per_hr * GRAIN_PRICE_PER_BU
@@ -261,23 +269,31 @@ def train(params):
         # loss_cost_per_hr = loss_bu_per_hr * GRAIN_PRICE_PER_BU
 
         # Calculate productivity in acres/hr
-        productivity_acres_hr = data['Machine_VehicleSpeed'] *1000 * header_width * M2_TO_ACRES
+        productivity_acres_hr = parameters['Machine_VehicleSpeed'] *1000 * header_width * M2_TO_ACRES
+        # m2_per_acre = 4046.86
+        # productivity_acres_hr = (data['Machine_VehicleSpeed'] *1000 * header_width)/m2_per_acre
 
         # grainprice = GRAIN_PRICE_PER_BU # CONSTANT
         # consumablecostperhour = consumable # CONSTANT
         # laborcostperhour = labor # CONSTANT
         # gps_speed = parameters["Machine_VehicleSpeed"]
-        trade_cost= 1043978 * (1-0.69)
+        # trade_cost= 1043978 * (1-0.69)
+        trade_cost = 19.75
         estimated_annual_hours = 300 # user input
+
+        bu_per_hr = mass_flow * 3600 / BU_IN_KG
+        # fuel_consumption_per_bu = 0.0196  #(gal/bu)
+        # fuel_cost = fuel_consumption_per_bu * bu_per_hr * dollars_per_gallon
+        print("fuel_cost: ", fuel_cost)
         # print(trade_cost / estimated_annual_hours)
         # Calculate cost of harvest
-        cost_per_hour = (fuel_cost + loss_cost_per_hr + consumable + labor
-    ) /productivity_acres_hr
+        cost_per_hour = (fuel_cost + loss_cost_per_hr + labor 
+    ) /productivity_acres_hr + consumable + trade_cost
         # print("cost: ", cost_per_hour[0], " loss: ", total_loss_percent)
         print("loss cost per hour: ",loss_cost_per_hr )
         # print("total loss: ",total_grain_loss )
 
-        return cost_per_hour[0], total_loss_percent, loss_cost_per_hr, labor, fuel_cost, trade_cost/estimated_annual_hours
+        return cost_per_hour[0], total_loss_percent, round((loss_cost_per_hr/productivity_acres_hr[0])[0],2), round(labor/productivity_acres_hr[0],2), round(fuel_cost/productivity_acres_hr[0],2), trade_cost
     
     def objective_function(params={}):
         mass_flow = params
@@ -309,7 +325,7 @@ def train(params):
         current_mass_flow = model_mass_flow.predict([mass_flow])
         # current_mass_flow = np.exp(model_mass_flow.predict(np.log([mass_flow])))
         print(f"Iteration - Header Width: {header_width}, Crop Type: {crop_type}, Cost Per Hour: {cost_per_hour}, Massflow: {current_mass_flow}")
-    mass_flow_bounds = Bounds(10,220)
+    mass_flow_bounds = Bounds(10,69)
     # Perform optimization to minimize cost per hour with callback
     result = minimize(objective_function, initial_guess, method='Nelder-Mead', callback=print_iteration_results, options={'disp': True},bounds=mass_flow_bounds)
     # print(result)
@@ -330,9 +346,9 @@ def train(params):
     # Calculate the corresponding costs for each mass flow value
     def plotGraph():
         print("ploting values")
-        cost_values = [((calculate_cost(mf)[0])/mf) for mf in mass_flow_values]
+        cost_values = [((calculate_cost(mf)[0])) for mf in mass_flow_values]
         loss_values = [calculate_cost(mf)[1] for mf in mass_flow_values]
-        total_loss_values = [((calculate_cost(mf)[2]/mf)) for mf in mass_flow_values]
+        total_loss_values = [((calculate_cost(mf)[2])) for mf in mass_flow_values]
 
         # /3600)/mf)/0.00110231
         # Plot the simulation chart
@@ -341,28 +357,28 @@ def train(params):
         ax.set_xlabel('Mass Flow')
         ax.set_ylabel("Cost per hour")
 
-        ax3 = ax.twinx()
-        ax3.plot(mass_flow_values, total_loss_values, label='Cost of loss', color="green")
-        ax3.set_ylabel("Cost of loss")
+        # ax3 = ax.twinx()
+        # ax3.plot(mass_flow_values, total_loss_values, label='Cost of loss', color="green")
+        # ax3.set_ylabel("Cost of loss")
 
         ax2 = ax.twinx()
         ax2.plot(mass_flow_values, loss_values, label="Crop loss (%)")
         ax2.set_ylabel("Crop Loss(%)")
 
         lines1, labels1 = ax.get_legend_handles_labels()
-        lines2, labels2 = ax3.get_legend_handles_labels()
-        lines3, labels3 = ax2.get_legend_handles_labels()
-        lines = lines1  + lines2+ lines3
-        labels = labels1  + labels2+labels3
+        lines2, labels2 = ax2.get_legend_handles_labels()
+        # lines3, labels3 = ax2.get_legend_handles_labels()
+        lines = lines1  + lines2
+        labels = labels1  + labels2
 
         # Place the legend at the desired location
         ax.legend(lines, labels, loc="upper left")
         plt.show()
     # plotGraph()
     total_cost, total_loss_percent, grain_loss, labor_cost, fuel_cost, depreciation_cost = calculate_cost(optimized_mass_flow)
-    print({"grain_loss": grain_loss[0], "labor_cost":labor_cost, "fuel_cost": fuel_cost, "depreciation_cost": depreciation_cost, "total_costofharvest": total_cost})
-    return {"grain_loss": grain_loss[0], "labor_cost":labor_cost, "fuel_cost": fuel_cost, "depreciation_cost": depreciation_cost, "total_costofharvest": total_cost}
+    print({"grain_loss": grain_loss, "labor_cost":labor_cost, "fuel_cost": fuel_cost, "depreciation_cost": depreciation_cost, "total_costofharvest": total_cost})
+    return {"grain_loss": grain_loss, "labor_cost":labor_cost, "fuel_cost": fuel_cost, "depreciation_cost": depreciation_cost, "total_costofharvest": total_cost}
     # return json.dumps({"pie":{"grain_loss": grain_loss[0], "labor_cost":labor_cost, "fuel_cost": fuel_cost, "depreciation_cost": depreciation_cost, "total_costofharvest": total_cost}, "line": json.dumps(line_data)})
-# train()
+train({})
 
 

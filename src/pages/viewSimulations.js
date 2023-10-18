@@ -62,7 +62,7 @@ const ViewSimulations = () => {
           concaveClear: element[11].longValue,
           chafferClear: element[12].longValue,
         },
-        totalCost: element[13].longValue,
+        totalCost: element[13].doubleValue,
         yield: element[14].longValue,
         header_width: element[15].longValue,
         annual_hours: element[16].longValue,
